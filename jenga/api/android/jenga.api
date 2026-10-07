@@ -41,9 +41,11 @@ public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarSize : 
 public final class io/github/joelkanyi/jenga/component/badge/ComposableSingletons$JengaBadgePreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/badge/ComposableSingletons$JengaBadgePreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1126927282$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1669556493$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1698339123$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1108412540$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1335360126$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$400379390$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
@@ -63,10 +65,14 @@ public final class io/github/joelkanyi/jenga/component/badge/JengaBadgeDefaults 
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/badge/JengaBadgeDefaults;
 	public final fun colors (Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/badge/JengaBadgeKt {
-	public static final fun JengaBadge (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBadge (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBadge (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/badge/JengaBadgeTone : java/lang/Enum {

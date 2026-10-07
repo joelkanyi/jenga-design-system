@@ -91,7 +91,7 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 |------|--------|
 | Text | `JengaText` |
 | Buttons | `JengaButton`, `JengaIconButton`, `JengaFab` |
-| Inputs | `JengaTextField`, `JengaSearchField`, `JengaSlider`, `JengaStepper` |
+| Inputs | `JengaTextField`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper` |
 | Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
 | Containers | `JengaCard`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
 | Status and tags | `JengaBadge`, `JengaChip`, `JengaBanner`, `JengaVerdictBar` |
@@ -102,7 +102,7 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 | Progress | `JengaLinearProgress`, `JengaCircularProgress`, `JengaDotStrip`, shimmer |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection` |
-| Patterns | `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |
+| Patterns | `JengaSectionHeader`, `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |
 
 ### Tokens
 
