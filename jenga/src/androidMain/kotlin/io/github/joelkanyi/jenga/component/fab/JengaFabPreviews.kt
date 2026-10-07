@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
+import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -43,5 +44,21 @@ private fun FabShowcase() {
             onClick = {},
             icon = { JengaIcon(JengaIcons.MessageCircle, contentDescription = null) },
         )
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaFabGlowPreview() {
+    JengaTheme {
+        JengaInline(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.xl)) {
+            JengaExtendedFab(
+                label = "New ticket",
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Add, contentDescription = null) },
+                shape = JengaTheme.shapes.lg,
+                shadowColor = JengaTheme.colors.brand,
+            )
+        }
     }
 }

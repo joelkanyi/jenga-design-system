@@ -49,3 +49,20 @@ private fun VerdictShowcase() {
         )
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaVerdictBarNeutralPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            JengaVerdictBar(
+                amount = "KES 2,400",
+                amountSuffix = "of 4,000",
+                tone = JengaVerdictTone.Neutral,
+                label = "Paid so far",
+                progress = 0.6f,
+                sublines = JengaVerdictSublines(start = "Last paid 12 Mar", end = "KES 1,600 left"),
+            )
+        }
+    }
+}

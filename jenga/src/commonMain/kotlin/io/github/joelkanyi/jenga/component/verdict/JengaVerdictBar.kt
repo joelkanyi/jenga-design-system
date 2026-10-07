@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -26,7 +30,22 @@ import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** The verdict a [JengaVerdictBar] conveys; drives its color from theme tokens. */
-public enum class JengaVerdictTone { Positive, Caution, Negative, Brand }
+public enum class JengaVerdictTone {
+    /** A good outcome, on a rich success band. */
+    Positive,
+
+    /** Needs attention, on a rich warning band. */
+    Caution,
+
+    /** A bad outcome, on a rich error band. */
+    Negative,
+
+    /** A branded highlight, on a rich brand band. */
+    Brand,
+
+    /** A calm summary on the surface color, for figures that are informative rather than a verdict. */
+    Neutral,
+}
 
 /** Resolved colors for a [JengaVerdictBar]. Override via [JengaVerdictBarDefaults.colors]. */
 @Poko
@@ -38,6 +57,7 @@ public class JengaVerdictBarColors(
     public val muted: Color,
     public val trackFill: Color,
     public val track: Color,
+    public val trackComplete: Color = trackFill,
 ) {
     public fun copy(
         fill: Brush = this.fill,
@@ -46,13 +66,30 @@ public class JengaVerdictBarColors(
         muted: Color = this.muted,
         trackFill: Color = this.trackFill,
         track: Color = this.track,
-    ): JengaVerdictBarColors = JengaVerdictBarColors(fill, amount, accent, muted, trackFill, track)
+        trackComplete: Color = this.trackComplete,
+    ): JengaVerdictBarColors = JengaVerdictBarColors(fill, amount, accent, muted, trackFill, track, trackComplete)
 }
 
 /** Defaults and token mappings for [JengaVerdictBar]. */
 public object JengaVerdictBarDefaults {
     /** Progress bar height. */
     public val TrackHeight: Dp = 8.dp
+
+    /** Default banner shape. */
+    public val shape: Shape
+        @Composable get() = JengaTheme.shapes.cardLarge
+
+    /** Padding inside the banner. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(JengaTheme.spacing.lg)
+
+    /** Amount text style. */
+    public val amountStyle: TextStyle
+        @Composable get() = JengaTheme.typography.display
+
+    /** Amount suffix text style. */
+    public val amountSuffixStyle: TextStyle
+        @Composable get() = JengaTheme.typography.titleMedium
 
     /**
      * Themed colors for [tone]. The verdict hero reads as a rich, saturated
@@ -67,6 +104,15 @@ public object JengaVerdictBarDefaults {
             JengaVerdictTone.Caution -> c.warning
             JengaVerdictTone.Negative -> c.error
             JengaVerdictTone.Brand -> c.brand
+            JengaVerdictTone.Neutral -> return JengaVerdictBarColors(
+                fill = SolidColor(c.surface),
+                amount = c.textPrimary,
+                accent = c.textSecondary,
+                muted = c.textSecondary,
+                trackFill = c.brand,
+                track = c.surfaceSunk,
+                trackComplete = c.success,
+            )
         }
         // Light schemes start from an already-dark status color; dark schemes
         // start from a bright one; deepen each into the same rich band, using
@@ -84,6 +130,7 @@ public object JengaVerdictBarDefaults {
             muted = c.onOverlayMuted,
             trackFill = accent,
             track = c.onOverlay.copy(alpha = 0.18f),
+            trackComplete = accent,
         )
     }
 }
@@ -120,6 +167,11 @@ public class JengaVerdictSublines(
  * @param sublines the optional bottom start/end captions.
  * @param action optional trailing header action (label plus handler).
  * @param colors the color set; defaults to [JengaVerdictBarDefaults.colors] for [tone].
+ * @param shape the banner shape.
+ * @param contentPadding padding inside the banner.
+ * @param trackHeight the progress bar height.
+ * @param amountStyle the [amount] text style.
+ * @param amountSuffixStyle the [amountSuffix] text style.
  */
 @Composable
 public fun JengaVerdictBar(
@@ -132,13 +184,18 @@ public fun JengaVerdictBar(
     sublines: JengaVerdictSublines? = null,
     action: JengaAction? = null,
     colors: JengaVerdictBarColors = JengaVerdictBarDefaults.colors(tone),
+    shape: Shape = JengaVerdictBarDefaults.shape,
+    contentPadding: PaddingValues = JengaVerdictBarDefaults.contentPadding,
+    trackHeight: Dp = JengaVerdictBarDefaults.TrackHeight,
+    amountStyle: TextStyle = JengaVerdictBarDefaults.amountStyle,
+    amountSuffixStyle: TextStyle = JengaVerdictBarDefaults.amountSuffixStyle,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(JengaTheme.shapes.cardLarge)
+            .clip(shape)
             .background(colors.fill)
-            .padding(JengaTheme.spacing.lg),
+            .padding(contentPadding),
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
     ) {
         if (label != null || action != null) {
@@ -166,11 +223,11 @@ public fun JengaVerdictBar(
             }
         }
         Row(verticalAlignment = Alignment.Bottom) {
-            JengaText(text = amount, style = JengaTheme.typography.display, color = colors.amount, maxLines = 1)
+            JengaText(text = amount, style = amountStyle, color = colors.amount, maxLines = 1)
             if (amountSuffix != null) {
                 JengaText(
                     text = " $amountSuffix",
-                    style = JengaTheme.typography.titleMedium,
+                    style = amountSuffixStyle,
                     color = colors.accent,
                     maxLines = 1,
                     modifier = Modifier.padding(bottom = JengaTheme.spacing.xs),
@@ -181,16 +238,16 @@ public fun JengaVerdictBar(
             Box(
                 Modifier
                     .fillMaxWidth()
-                    .height(JengaVerdictBarDefaults.TrackHeight)
+                    .height(trackHeight)
                     .clip(RoundedCornerShape(percent = 50))
                     .background(colors.track),
             ) {
                 Box(
                     Modifier
                         .fillMaxWidth(progress.coerceIn(0f, 1f))
-                        .height(JengaVerdictBarDefaults.TrackHeight)
+                        .height(trackHeight)
                         .clip(RoundedCornerShape(percent = 50))
-                        .background(colors.trackFill),
+                        .background(if (progress >= 1f) colors.trackComplete else colors.trackFill),
                 )
             }
         }

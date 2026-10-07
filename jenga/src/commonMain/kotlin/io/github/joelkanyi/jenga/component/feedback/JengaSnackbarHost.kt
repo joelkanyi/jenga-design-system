@@ -1,15 +1,23 @@
 package io.github.joelkanyi.jenga.component.feedback
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import io.github.joelkanyi.jenga.theme.JengaTheme
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 /** The outcome of a snackbar shown via [JengaSnackbarHostState.showSnackbar]. */
 public enum class JengaSnackbarResult {
@@ -86,6 +94,39 @@ public class JengaSnackbarHostState internal constructor(
         }
     }
 
+    /**
+     * Shows a snackbar for exactly [durationMillis], or until its action is tapped,
+     * and suspends until then.
+     *
+     * @param message the message to display.
+     * @param durationMillis how long the snackbar stays, in milliseconds.
+     * @param tone the semantic tone (accent dot); see [JengaSnackbarTone].
+     * @param actionLabel optional action label.
+     * @return whether the action was performed or the snackbar was dismissed.
+     */
+    public suspend fun showSnackbar(
+        message: String,
+        durationMillis: Long,
+        tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
+        actionLabel: String? = null,
+    ): JengaSnackbarResult = coroutineScope {
+        currentTone = tone
+        val visuals = TimedVisuals(message, actionLabel)
+        val timer = launch {
+            val shown = snapshotFlow { m3.currentSnackbarData }.first { it?.visuals === visuals }
+            delay(durationMillis)
+            if (m3.currentSnackbarData === shown) shown?.dismiss()
+        }
+        try {
+            when (m3.showSnackbar(visuals)) {
+                SnackbarResult.ActionPerformed -> JengaSnackbarResult.ActionPerformed
+                SnackbarResult.Dismissed -> JengaSnackbarResult.Dismissed
+            }
+        } finally {
+            timer.cancel()
+        }
+    }
+
     internal var currentTone: JengaSnackbarTone = JengaSnackbarTone.Neutral
 }
 
@@ -102,6 +143,12 @@ public fun rememberJengaSnackbarHostState(): JengaSnackbarHostState {
  *
  * @param hostState the state from [rememberJengaSnackbarHostState].
  * @param modifier the [Modifier] for the host.
+ * @param snackbarPadding space around the snackbar inside the host.
+ * @param shape the snackbar shape.
+ * @param colors the snackbar color set.
+ * @param contentPadding padding inside the snackbar.
+ * @param messageStyle the message text style.
+ * @param actionStyle the action label text style.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarHostSample
  */
@@ -109,6 +156,12 @@ public fun rememberJengaSnackbarHostState(): JengaSnackbarHostState {
 public fun JengaSnackbarHost(
     hostState: JengaSnackbarHostState,
     modifier: Modifier = Modifier,
+    snackbarPadding: PaddingValues = JengaSnackbarDefaults.hostPadding,
+    shape: Shape = JengaSnackbarDefaults.shape,
+    colors: JengaSnackbarColors = JengaSnackbarDefaults.colors(),
+    contentPadding: PaddingValues = JengaSnackbarDefaults.contentPadding,
+    messageStyle: TextStyle = JengaSnackbarDefaults.messageStyle,
+    actionStyle: TextStyle = JengaSnackbarDefaults.actionStyle,
 ) {
     SnackbarHost(
         hostState = hostState.m3,
@@ -116,10 +169,23 @@ public fun JengaSnackbarHost(
     ) { data ->
         JengaSnackbar(
             message = data.visuals.message,
-            modifier = Modifier.padding(JengaTheme.spacing.lg),
+            modifier = Modifier.padding(snackbarPadding),
             tone = hostState.currentTone,
             actionLabel = data.visuals.actionLabel,
             onAction = data.visuals.actionLabel?.let { { data.performAction() } },
+            shape = shape,
+            colors = colors,
+            contentPadding = contentPadding,
+            messageStyle = messageStyle,
+            actionStyle = actionStyle,
         )
     }
+}
+
+private class TimedVisuals(
+    override val message: String,
+    override val actionLabel: String?,
+) : SnackbarVisuals {
+    override val withDismissAction: Boolean = false
+    override val duration: SnackbarDuration = SnackbarDuration.Indefinite
 }
