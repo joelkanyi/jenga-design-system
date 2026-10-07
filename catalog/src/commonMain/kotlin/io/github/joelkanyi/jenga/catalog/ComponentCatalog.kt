@@ -281,15 +281,31 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
                 onClick = {},
             )
+            JengaListItem(
+                headline = "Gate B",
+                supporting = "North wing",
+                supportingContent = { JengaBadge("Busy", tone = JengaBadgeTone.Warning) },
+                onClick = {},
+            )
+            JengaListItem(headline = "Gate C", supporting = "Closed", onClick = {}, enabled = false)
         """.trimIndent(),
     ) {
-        JengaListItem(
-            headline = "Gate A",
-            supporting = "Main entrance",
-            leadingContent = { JengaIcon(JengaIcons.Check, contentDescription = null, tint = JengaTheme.colors.success) },
-            trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
-            onClick = {},
-        )
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaListItem(
+                headline = "Gate A",
+                supporting = "Main entrance",
+                leadingContent = { JengaIcon(JengaIcons.Check, contentDescription = null, tint = JengaTheme.colors.success) },
+                trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
+                onClick = {},
+            )
+            JengaListItem(
+                headline = "Gate B",
+                supporting = "North wing",
+                supportingContent = { JengaBadge("Busy", tone = JengaBadgeTone.Warning) },
+                onClick = {},
+            )
+            JengaListItem(headline = "Gate C", supporting = "Closed", onClick = {}, enabled = false)
+        }
     },
     CatalogEntry(
         name = "Divider",

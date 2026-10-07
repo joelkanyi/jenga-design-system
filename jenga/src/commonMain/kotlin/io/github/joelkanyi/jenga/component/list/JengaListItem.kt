@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.component.list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -66,9 +67,15 @@ public object JengaListItemDefaults {
  * @param headline the primary text.
  * @param modifier the [Modifier] for this row.
  * @param supporting optional secondary text below the headline.
+ * @param supportingContent optional slot below the headline (and below [supporting]
+ *   when both are given), for rich supporting content such as badges or a status line.
+ *   Inherits the supporting color.
  * @param leadingContent optional start slot (inherits the leading/trailing color).
  * @param trailingContent optional end slot (inherits the leading/trailing color).
  * @param onClick optional click handler; makes the row focusable with a ripple.
+ * @param enabled when false, the row is drawn in the disabled color and [onClick] is ignored.
+ * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
+ * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
  * @param colors the color set; defaults to [JengaListItemDefaults.colors].
  */
 @Composable
@@ -76,18 +83,26 @@ public fun JengaListItem(
     headline: String,
     modifier: Modifier = Modifier,
     supporting: String? = null,
+    supportingContent: (@Composable () -> Unit)? = null,
     leadingContent: (@Composable () -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
+    headlineMaxLines: Int = 1,
+    supportingMaxLines: Int = 1,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
+    val disabled = JengaTheme.colors.contentDisabled
+    val headlineColor = if (enabled) colors.headline else disabled
+    val supportingColor = if (enabled) colors.supporting else disabled
+    val leadingTrailingColor = if (enabled) colors.leadingTrailing else disabled
     Row(
         modifier = modifier
             .fillMaxWidth()
             .background(colors.container)
             .then(
                 if (onClick != null) {
-                    Modifier.clickable(role = Role.Button, onClick = onClick)
+                    Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)
                 } else {
                     Modifier
                 },
@@ -98,23 +113,35 @@ public fun JengaListItem(
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
         if (leadingContent != null) {
-            CompositionLocalProvider(LocalJengaContentColor provides colors.leadingTrailing) {
+            CompositionLocalProvider(LocalJengaContentColor provides leadingTrailingColor) {
                 leadingContent()
             }
         }
         Column(modifier = Modifier.weight(1f)) {
-            JengaText(text = headline, style = JengaTheme.typography.titleSmall, color = colors.headline, maxLines = 1)
+            JengaText(
+                text = headline,
+                style = JengaTheme.typography.titleSmall,
+                color = headlineColor,
+                maxLines = headlineMaxLines,
+            )
             if (supporting != null) {
                 JengaText(
                     text = supporting,
                     style = JengaTheme.typography.bodySmall,
-                    color = colors.supporting,
-                    maxLines = 1,
+                    color = supportingColor,
+                    maxLines = supportingMaxLines,
                 )
+            }
+            if (supportingContent != null) {
+                CompositionLocalProvider(LocalJengaContentColor provides supportingColor) {
+                    Box(modifier = Modifier.padding(top = JengaTheme.spacing.xxs)) {
+                        supportingContent()
+                    }
+                }
             }
         }
         if (trailingContent != null) {
-            CompositionLocalProvider(LocalJengaContentColor provides colors.leadingTrailing) {
+            CompositionLocalProvider(LocalJengaContentColor provides leadingTrailingColor) {
                 trailingContent()
             }
         }
