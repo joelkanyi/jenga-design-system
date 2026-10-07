@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.component.chip
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -35,6 +37,7 @@ public class JengaChipColors(
     public val unselectedBorder: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
+    public val selectedBorder: Color,
 ) {
     public fun copy(
         selectedContainer: Color = this.selectedContainer,
@@ -44,7 +47,17 @@ public class JengaChipColors(
         unselectedBorder: Color = this.unselectedBorder,
         disabledContainer: Color = this.disabledContainer,
         disabledContent: Color = this.disabledContent,
-    ): JengaChipColors = JengaChipColors(selectedContainer, selectedContent, unselectedContainer, unselectedContent, unselectedBorder, disabledContainer, disabledContent)
+        selectedBorder: Color = this.selectedBorder,
+    ): JengaChipColors = JengaChipColors(
+        selectedContainer,
+        selectedContent,
+        unselectedContainer,
+        unselectedContent,
+        unselectedBorder,
+        disabledContainer,
+        disabledContent,
+        selectedBorder,
+    )
 }
 
 /** Defaults and token mappings for [JengaChip]. Override any of these per call. */
@@ -55,6 +68,14 @@ public object JengaChipDefaults {
 
     /** Minimum visual height (touch target is expanded to 48dp separately). */
     public val MinHeight: Dp = 36.dp
+
+    /** Padding inside the chip. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+
+    /** Label text style. */
+    public val textStyle: TextStyle
+        @Composable get() = JengaTheme.typography.bodySmall
 
     /** Themed colors for all chip states. */
     @Composable
@@ -68,6 +89,7 @@ public object JengaChipDefaults {
             unselectedBorder = c.borderStrong,
             disabledContainer = c.surfaceDisabled,
             disabledContent = c.contentDisabled,
+            selectedBorder = Color.Transparent,
         )
     }
 }
@@ -85,6 +107,11 @@ public object JengaChipDefaults {
  * @param leadingIcon optional icon before the label (inherits the content color).
  * @param shape the chip shape; defaults to [JengaChipDefaults.shape].
  * @param colors the color set; defaults to [JengaChipDefaults.colors].
+ * @param trailingContent optional slot after the label (e.g. a count); inherits the content color.
+ * @param textStyle the label text style.
+ * @param selectedTextStyle the label text style while selected; defaults to [textStyle].
+ * @param minHeight the minimum visual height.
+ * @param contentPadding padding inside the chip.
  */
 @Composable
 public fun JengaChip(
@@ -96,6 +123,11 @@ public fun JengaChip(
     leadingIcon: (@Composable () -> Unit)? = null,
     shape: Shape = JengaChipDefaults.shape,
     colors: JengaChipColors = JengaChipDefaults.colors(),
+    trailingContent: (@Composable () -> Unit)? = null,
+    textStyle: TextStyle = JengaChipDefaults.textStyle,
+    selectedTextStyle: TextStyle = textStyle,
+    minHeight: Dp = JengaChipDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaChipDefaults.contentPadding,
 ) {
     val container = when {
         !enabled -> colors.disabledContainer
@@ -107,7 +139,11 @@ public fun JengaChip(
         selected -> colors.selectedContent
         else -> colors.unselectedContent
     }
-    val borderColor = if (selected || !enabled) Color.Transparent else colors.unselectedBorder
+    val borderColor = when {
+        !enabled -> Color.Transparent
+        selected -> colors.selectedBorder
+        else -> colors.unselectedBorder
+    }
 
     Row(
         modifier = modifier
@@ -127,8 +163,8 @@ public fun JengaChip(
                 role = Role.Tab,
                 onClick = onClick,
             )
-            .defaultMinSize(minHeight = JengaChipDefaults.MinHeight)
-            .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm),
+            .defaultMinSize(minHeight = minHeight)
+            .padding(contentPadding),
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -136,10 +172,11 @@ public fun JengaChip(
             leadingIcon?.invoke()
             JengaText(
                 text = label,
-                style = JengaTheme.typography.bodySmall,
+                style = if (selected) selectedTextStyle else textStyle,
                 color = contentColor,
                 maxLines = 1,
             )
+            trailingContent?.invoke()
         }
     }
 }

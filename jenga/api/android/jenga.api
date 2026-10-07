@@ -280,18 +280,23 @@ public final class io/github/joelkanyi/jenga/component/chip/ComposableSingletons
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/chip/ComposableSingletons$JengaChipPreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$-1129607160$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1261675001$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1617082029$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1622887920$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1657841373$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$33474936$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$900294221$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/chip/JengaChipColors {
 	public static final field $stable I
-	public synthetic fun <init> (JJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-4JmcsL4 (JJJJJJJ)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
-	public static synthetic fun copy-4JmcsL4$default (Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;JJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
+	public synthetic fun <init> (JJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-FD3wquc (JJJJJJJJ)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
+	public static synthetic fun copy-FD3wquc$default (Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;JJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisabledContainer-0d7_KjU ()J
 	public final fun getDisabledContent-0d7_KjU ()J
+	public final fun getSelectedBorder-0d7_KjU ()J
 	public final fun getSelectedContainer-0d7_KjU ()J
 	public final fun getSelectedContent-0d7_KjU ()J
 	public final fun getUnselectedBorder-0d7_KjU ()J
@@ -305,12 +310,14 @@ public final class io/github/joelkanyi/jenga/component/chip/JengaChipDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/chip/JengaChipDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getMinHeight-D9Ej5fM ()F
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/chip/JengaChipKt {
-	public static final fun JengaChip (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaChip-Kp3ePZc (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/divider/ComposableSingletons$JengaDividerPreviewsKt {
@@ -1169,15 +1176,20 @@ public final class io/github/joelkanyi/jenga/component/scaffold/ComposableSingle
 public final class io/github/joelkanyi/jenga/component/scaffold/ComposableSingletons$JengaTopAppBarKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/scaffold/ComposableSingletons$JengaTopAppBarKt;
 	public fun <init> ()V
-	public final fun getLambda$-650314680$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1531848475$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$216814264$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class io/github/joelkanyi/jenga/component/scaffold/ComposableSingletons$JengaTopAppBarPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/scaffold/ComposableSingletons$JengaTopAppBarPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1156289339$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-3705108$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1310539226$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1381050819$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$260036113$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$352768508$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$975517564$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors {
@@ -1233,11 +1245,13 @@ public final class io/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarDe
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getHeight-D9Ej5fM ()F
 }
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarKt {
-	public static final fun JengaTopAppBar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTopAppBar-V-95POc (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;ZFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTopAppBar-eHTjO5g (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;ZFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/scanner/ComposableSingletons$JengaScanFeedbackPreviewsKt {
@@ -1687,6 +1701,7 @@ public final class io/github/joelkanyi/jenga/component/tabs/ComposableSingletons
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/tabs/ComposableSingletons$JengaSegmentedControlPreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$-1769224831$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1918688260$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-708503636$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1876586202$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
@@ -1697,14 +1712,16 @@ public final class io/github/joelkanyi/jenga/component/tabs/ComposableSingletons
 	public final fun getLambda$-605518726$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-79245029$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-946064314$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$848140798$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors {
 	public static final field $stable I
-	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
-	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
+	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
+	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisabledContent-0d7_KjU ()J
 	public final fun getSelectedContent-0d7_KjU ()J
 	public final fun getSelectedSegment-0d7_KjU ()J
 	public final fun getTrack-0d7_KjU ()J
@@ -1718,21 +1735,32 @@ public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedContro
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
 	public final fun getSegmentMinHeight-D9Ej5fM ()F
+	public final fun getSelectedElevation-D9Ej5fM ()F
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getTrackPadding-D9Ej5fM ()F
 }
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlKt {
-	public static final fun JengaSegmentedControl (ILjava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaSegmentedControl-jXF2sa8 (Ljava/lang/Integer;Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/graphics/Shape;FFFLandroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement : java/lang/Enum {
+	public static final field Fill Lio/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement;
+	public static final field Start Lio/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement;
 }
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsColors {
 	public static final field $stable I
-	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
-	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
+	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
+	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDivider-0d7_KjU ()J
+	public final fun getDot-0d7_KjU ()J
 	public final fun getIndicator-0d7_KjU ()J
 	public final fun getSelectedContent-0d7_KjU ()J
 	public final fun getUnselectedContent-0d7_KjU ()J
@@ -1744,11 +1772,16 @@ public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/tabs/JengaTabsDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getDotSize-D9Ej5fM ()F
 	public final fun getIndicatorThickness-D9Ej5fM ()F
+	public final fun getMinHeight-D9Ej5fM ()F
+	public final fun getSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsKt {
-	public static final fun JengaTabs (ILjava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTabs-BXK5RNM (ILjava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement;Ljava/util/Set;Landroidx/compose/ui/text/TextStyle;FFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/text/JengaTextKt {
@@ -2203,7 +2236,9 @@ public final class io/github/joelkanyi/jenga/pattern/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/pattern/ComposableSingletons$JengaSectionHeaderPreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$-1006671537$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1179653582$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1188830409$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1434640073$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$516841282$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
@@ -2223,8 +2258,24 @@ public final class io/github/joelkanyi/jenga/pattern/ComposableSingletons$JengaT
 	public final fun getLambda$832846543$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/pattern/JengaSectionHeaderDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderDefaults;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getMinHeight-D9Ej5fM ()F
+	public final fun titleStyle (Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+}
+
 public final class io/github/joelkanyi/jenga/pattern/JengaSectionHeaderKt {
-	public static final fun JengaSectionHeader (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaSectionHeader-tJlDC5Y (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle : java/lang/Enum {
+	public static final field Overline Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;
+	public static final field Title Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/pattern/JengaSectionHeaderStyle;
 }
 
 public final class io/github/joelkanyi/jenga/pattern/JengaStatCardKt {
