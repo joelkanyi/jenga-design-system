@@ -12,6 +12,7 @@ robolectric = "4.16"
 composablePreviewScanner = "0.9.0"
 composeLints = "1.4.2"
 coil = "3.4.0"
+kotlinxDatetime = "0.8.0"
 bcv = "0.18.1"
 dokka = "2.2.0"
 mavenPublish = "0.37.0"
@@ -37,6 +38,9 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+
+# Calendar dates (JengaCalendar, JengaDatePicker, JengaDateOfBirthPicker)
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 # Async image loading (JengaImage)
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
