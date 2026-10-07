@@ -950,11 +950,19 @@ public final class io/github/joelkanyi/jenga/component/scanner/JengaScannerViewf
 public final class io/github/joelkanyi/jenga/component/search/ComposableSingletons$JengaSearchFieldKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/search/ComposableSingletons$JengaSearchFieldKt;
 	public fun <init> ()V
-	public final fun getLambda$720568618$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1216185950$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$594133556$jenga ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/search/JengaSearchFieldDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/search/JengaSearchFieldDefaults;
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 }
 
 public final class io/github/joelkanyi/jenga/component/search/JengaSearchFieldKt {
-	public static final fun JengaSearchField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaSearchField-4u75S8o (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaSearchTrigger-gMrHQkA (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/selection/JengaCheckboxColors {
@@ -1284,14 +1292,50 @@ public final class io/github/joelkanyi/jenga/component/text/JengaTextKt {
 	public static final fun JengaText-ryoPdCg (Ljava/lang/String;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/style/TextAlign;IZIILjava/lang/Float;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/textfield/ComposableSingletons$JengaSelectFieldKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/textfield/ComposableSingletons$JengaSelectFieldKt;
+	public fun <init> ()V
+	public final fun getLambda$1092768678$jenga ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/textfield/JengaSelectFieldKt {
+	public static final fun JengaSelectField-_JjvS5Y (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-KpyCeHw (JJJJJJJJJJJ)Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;
+	public static synthetic fun copy-KpyCeHw$default (Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;JJJJJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorder-0d7_KjU ()J
+	public final fun getContainer-0d7_KjU ()J
+	public final fun getDisabledBorder-0d7_KjU ()J
+	public final fun getDisabledContainer-0d7_KjU ()J
+	public final fun getDisabledText-0d7_KjU ()J
+	public final fun getFocusRing-0d7_KjU ()J
+	public final fun getFocusedBorder-0d7_KjU ()J
+	public final fun getFocusedContainer-0d7_KjU ()J
+	public final fun getIcon-0d7_KjU ()J
+	public final fun getPlaceholder-0d7_KjU ()J
+	public final fun getText-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getFocusRingWidth-D9Ej5fM ()F
+	public final fun getMinHeight (Landroidx/compose/runtime/Composer;I)F
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldKt {
-	public static final fun JengaTextField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus;Ljava/lang/String;ZZZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaTextField-bgdKIqw (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus;Ljava/lang/String;ZZZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldColors;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus : java/lang/Enum {
@@ -1679,6 +1723,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-1954135018$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2138543669$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-2146798839$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-526265762$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-775096355$jenga ()Lkotlin/jvm/functions/Function3;

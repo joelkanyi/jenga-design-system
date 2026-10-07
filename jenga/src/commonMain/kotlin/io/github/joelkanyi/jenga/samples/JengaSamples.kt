@@ -68,6 +68,7 @@ import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerViewfinder
 import io.github.joelkanyi.jenga.component.search.JengaSearchField
+import io.github.joelkanyi.jenga.component.search.JengaSearchTrigger
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaToggle
@@ -84,6 +85,7 @@ import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
 import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
@@ -395,6 +397,36 @@ internal fun JengaSearchFieldSample() {
         placeholder = "Search tickets",
         clearContentDescription = "Clear search",
     )
+}
+
+@Composable
+internal fun JengaSearchTriggerSample() {
+    JengaSearchTrigger(
+        placeholder = "Search tickets",
+        onClick = {},
+        trailingContent = { JengaIcon(JengaIcons.QrCode, contentDescription = "Scan") },
+    )
+}
+
+@Composable
+internal fun JengaSelectFieldSample() {
+    var open by remember { mutableStateOf(false) }
+    var fault by remember { mutableStateOf<String?>(null) }
+    JengaSelectField(value = fault, onClick = { open = true }, label = "Fault", placeholder = "Choose a fault")
+    if (open) {
+        JengaListSheet(onDismissRequest = { open = false }, title = "Fault") {
+            items(listOf("Battery not charging", "Panel damaged")) { option ->
+                JengaRadioListItem(
+                    headline = option,
+                    selected = option == fault,
+                    onClick = {
+                        fault = option
+                        open = false
+                    },
+                )
+            }
+        }
+    }
 }
 
 @Composable
