@@ -791,6 +791,7 @@ public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons
 	public final fun getLambda$-1933889296$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-2044723094$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1755461513$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1758995380$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1848193908$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
@@ -812,7 +813,16 @@ public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons
 	public fun <init> ()V
 	public final fun getLambda$-702658485$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1455197430$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1594147862$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$907265498$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/list/JengaControlPosition : java/lang/Enum {
+	public static final field Leading Lio/github/joelkanyi/jenga/component/list/JengaControlPosition;
+	public static final field Trailing Lio/github/joelkanyi/jenga/component/list/JengaControlPosition;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/list/JengaControlPosition;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/list/JengaControlPosition;
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis : java/lang/Enum {
@@ -839,11 +849,14 @@ public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueRowColo
 public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueRowDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/list/JengaKeyValueRowDefaults;
+	public static final field ValueMaxWidthFraction F
 	public final fun colors (Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/list/JengaKeyValueRowColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getMinHeight-D9Ej5fM ()F
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueRowKt {
-	public static final fun JengaKeyValueRow (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/list/JengaKeyValueRowColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaKeyValueRow-ajgufuY (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;IFFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/list/JengaKeyValueRowColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemColors {
@@ -864,16 +877,17 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemDefault
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/list/JengaListItemDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getMinHeight-D9Ej5fM ()F
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
-	public static final fun JengaListItem (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIILio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaListItem-ajgufuY (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
-	public static final fun JengaCheckboxListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
-	public static final fun JengaRadioListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+	public static final fun JengaCheckboxListItem-f8-ukHw (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaRadioListItem-gMrHQkA (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaMediaHeroPreviewsKt {

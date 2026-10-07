@@ -2,10 +2,12 @@ package io.github.joelkanyi.jenga.component.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
@@ -51,5 +53,23 @@ private fun KeyValueRowShowcase() {
             valueStyle = JengaTheme.typography.bodyMedium.withTabularFigures(),
             emphasis = JengaKeyValueEmphasis.Total,
         )
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaKeyValueRowSingleLinePreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaKeyValueRow(
+                label = "Address",
+                value = "Plot 12, Mombasa Road, off Likoni Lane, Nairobi",
+                valueMaxLines = 1,
+                valueMaxWidthFraction = 0.62f,
+                minHeight = 50.dp,
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            )
+            JengaKeyValueRow(label = "Serial number", value = "SN-0042-7781", onClick = {})
+        }
     }
 }

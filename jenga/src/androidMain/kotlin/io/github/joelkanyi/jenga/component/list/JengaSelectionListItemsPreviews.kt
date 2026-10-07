@@ -34,3 +34,25 @@ private fun SelectionListItemsShowcase() {
         JengaCheckboxListItem(headline = "Panel", checked = true, onCheckedChange = {}, enabled = false)
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSelectionListItemsTrailingPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaCheckboxListItem(
+                headline = "Replace the fuse",
+                checked = true,
+                onCheckedChange = {},
+                supporting = "KES 350",
+                controlPosition = JengaControlPosition.Trailing,
+            )
+            JengaRadioListItem(
+                headline = "Pick up at the shop",
+                selected = false,
+                onClick = {},
+                controlPosition = JengaControlPosition.Trailing,
+            )
+        }
+    }
+}
