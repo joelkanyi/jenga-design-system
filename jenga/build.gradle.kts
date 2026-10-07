@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.4.1-SNAPSHOT"
+version = "0.4.1"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -106,7 +106,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
         consumerProguardFiles("consumer-rules.pro")
     }
 
