@@ -1,0 +1,6 @@
+<!-- Lucide "copy" icon (https://lucide.dev), ISC License, Copyright (c) Lucide Icons and Contributors. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:strokeColor="#000000" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M10,8 L20,8 A2,2 0 0,1 22,10 L22,20 A2,2 0 0,1 20,22 L10,22 A2,2 0 0,1 8,20 L8,10 A2,2 0 0,1 10,8 Z" />
+    <path android:strokeColor="#000000" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</vector>
