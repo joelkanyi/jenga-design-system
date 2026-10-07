@@ -1238,7 +1238,7 @@ public final class io/github/joelkanyi/jenga/component/scanner/JengaScannerViewf
 public final class io/github/joelkanyi/jenga/component/search/ComposableSingletons$JengaSearchFieldKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/search/ComposableSingletons$JengaSearchFieldKt;
 	public fun <init> ()V
-	public final fun getLambda$-365869211$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$720568618$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/search/ComposableSingletons$JengaSearchFieldPreviewsKt {
@@ -1250,7 +1250,7 @@ public final class io/github/joelkanyi/jenga/component/search/ComposableSingleto
 }
 
 public final class io/github/joelkanyi/jenga/component/search/JengaSearchFieldKt {
-	public static final fun JengaSearchField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaSearchField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/selection/ComposableSingletons$JengaCheckboxPreviewsKt {

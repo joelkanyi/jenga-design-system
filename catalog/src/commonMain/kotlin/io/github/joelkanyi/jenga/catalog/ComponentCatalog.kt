@@ -180,11 +180,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         keywords = "search query filter",
         code = """
             var query by remember { mutableStateOf("") }
-            JengaSearchField(query, { query = it })
+            JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
         """.trimIndent(),
     ) {
         var query by remember { mutableStateOf("") }
-        JengaSearchField(query, { query = it })
+        JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
     },
     CatalogEntry(
         name = "Toggle",

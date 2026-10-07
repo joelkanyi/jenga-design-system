@@ -374,7 +374,12 @@ internal fun JengaCheckboxListItemSample() {
 @Composable
 internal fun JengaSearchFieldSample() {
     var query by remember { mutableStateOf("") }
-    JengaSearchField(value = query, onValueChange = { query = it })
+    JengaSearchField(
+        value = query,
+        onValueChange = { query = it },
+        placeholder = "Search tickets",
+        clearContentDescription = "Clear search",
+    )
 }
 
 @Composable

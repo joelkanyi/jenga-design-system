@@ -41,6 +41,7 @@ fun ComponentsGallery(modifier: Modifier = Modifier) {
                 value = query,
                 onValueChange = { query = it },
                 placeholder = "Search components",
+                clearContentDescription = "Clear search",
                 modifier = Modifier.fillMaxWidth(),
             )
         }

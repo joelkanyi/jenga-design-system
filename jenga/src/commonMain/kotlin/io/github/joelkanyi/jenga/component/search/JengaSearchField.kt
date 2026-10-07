@@ -15,8 +15,9 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  *
  * @param value the current query.
  * @param onValueChange called when the query changes.
+ * @param placeholder hint shown when empty (e.g. "Search tickets").
+ * @param clearContentDescription accessibility label for the clear button.
  * @param modifier the [Modifier] for this field.
- * @param placeholder hint shown when empty.
  * @param enabled whether the field is editable.
  * @param onClear called when the clear button is tapped; defaults to clearing the text.
  */
@@ -24,8 +25,9 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public fun JengaSearchField(
     value: String,
     onValueChange: (String) -> Unit,
+    placeholder: String,
+    clearContentDescription: String,
     modifier: Modifier = Modifier,
-    placeholder: String = "Search",
     enabled: Boolean = true,
     onClear: (() -> Unit)? = null,
 ) {
@@ -42,7 +44,7 @@ public fun JengaSearchField(
             {
                 JengaIcon(
                     imageVector = JengaTheme.icons.close,
-                    contentDescription = "Clear search",
+                    contentDescription = clearContentDescription,
                     modifier = Modifier.clickable {
                         if (onClear != null) onClear() else onValueChange("")
                     },

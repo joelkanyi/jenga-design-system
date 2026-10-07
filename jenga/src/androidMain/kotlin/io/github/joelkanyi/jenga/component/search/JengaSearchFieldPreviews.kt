@@ -32,7 +32,7 @@ private fun SearchShowcase() {
             .padding(JengaTheme.spacing.xl),
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
-        JengaSearchField(value = "", onValueChange = {})
-        JengaSearchField(value = "Lovelace", onValueChange = {})
+        JengaSearchField(value = "", onValueChange = {}, placeholder = "Search", clearContentDescription = "Clear search")
+        JengaSearchField(value = "Lovelace", onValueChange = {}, placeholder = "Search", clearContentDescription = "Clear search")
     }
 }
