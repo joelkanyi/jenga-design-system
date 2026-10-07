@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
+import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -51,6 +53,24 @@ private fun IconButtonShowcase() {
         }
         JengaIconButton(onClick = {}, enabled = false) {
             JengaIcon(JengaIcons.Close, contentDescription = "Close")
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaIconButtonOutlinedPreview() {
+    JengaTheme {
+        JengaInline(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Outlined, shape = JengaTheme.shapes.md, size = 50.dp) {
+                JengaIcon(JengaIcons.MoreHorizontal, contentDescription = "More")
+            }
+            JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Outlined, size = 48.dp) {
+                JengaIcon(JengaIcons.Phone, contentDescription = "Call")
+            }
+            JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Outlined, enabled = false) {
+                JengaIcon(JengaIcons.Copy, contentDescription = "Copy")
+            }
         }
     }
 }

@@ -55,3 +55,33 @@ private fun MenuSurfacePreview() {
         }
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaDropdownMenuStatesPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            Column(modifier = Modifier.clip(JengaTheme.shapes.card).background(JengaTheme.colors.surface)) {
+                JengaDropdownMenuItem(
+                    text = "Edit",
+                    onClick = {},
+                    leadingIcon = { JengaIcon(JengaIcons.Pencil, contentDescription = null) },
+                )
+                JengaDropdownMenuItem(
+                    text = "Close ticket",
+                    onClick = {},
+                    leadingIcon = { JengaIcon(JengaIcons.Check, contentDescription = null) },
+                    enabled = false,
+                    supportingText = "Finish the open work order first",
+                )
+                JengaDropdownMenuDivider()
+                JengaDropdownMenuItem(
+                    text = "Cancel ticket",
+                    onClick = {},
+                    leadingIcon = { JengaIcon(JengaIcons.XCircle, contentDescription = null) },
+                    tone = JengaDropdownMenuItemTone.Danger,
+                )
+            }
+        }
+    }
+}
