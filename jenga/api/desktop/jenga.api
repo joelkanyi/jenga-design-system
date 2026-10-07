@@ -1551,11 +1551,15 @@ public final class io/github/joelkanyi/jenga/component/state/JengaStateDefaults 
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/state/JengaStateDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/state/JengaStateColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getDescriptionStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/state/JengaStatesKt {
-	public static final fun JengaEmptyState (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaErrorState (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaEmptyState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaErrorState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillColors {
