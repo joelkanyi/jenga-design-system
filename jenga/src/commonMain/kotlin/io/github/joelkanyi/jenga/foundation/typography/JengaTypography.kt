@@ -45,6 +45,8 @@ public class JengaTypography(
     public val caption: TextStyle,
     /** Button / call-to-action label. */
     public val button: TextStyle,
+    /** Monospaced text for codes, serials and IDs. Defaults to [bodyMedium] metrics. */
+    public val mono: TextStyle = bodyMedium.copy(fontFamily = FontFamily.Monospace),
 ) {
     public fun copy(
         display: TextStyle = this.display,
@@ -60,6 +62,7 @@ public class JengaTypography(
         label: TextStyle = this.label,
         caption: TextStyle = this.caption,
         button: TextStyle = this.button,
+        mono: TextStyle = this.mono,
     ): JengaTypography = JengaTypography(
         display,
         headingLarge,
@@ -74,6 +77,7 @@ public class JengaTypography(
         label,
         caption,
         button,
+        mono,
     )
 }
 
@@ -95,11 +99,13 @@ private val defaultLineHeightStyle = LineHeightStyle(
  *   brand family (see [rememberJengaFontFamily]) when none is supplied.
  * @param displayFontFamily the face for display, heading and title roles.
  * @param bodyFontFamily the face for body, label, caption and button roles.
+ * @param monoFontFamily the face for the mono role; [FontFamily.Monospace] by default.
  */
 public fun jengaTypography(
     fontFamily: FontFamily = FontFamily.Default,
     displayFontFamily: FontFamily = fontFamily,
     bodyFontFamily: FontFamily = fontFamily,
+    monoFontFamily: FontFamily = FontFamily.Monospace,
 ): JengaTypography = JengaTypography(
     display = TextStyle(
         fontFamily = displayFontFamily,
@@ -205,7 +211,29 @@ public fun jengaTypography(
         letterSpacing = 0.2.sp,
         lineHeightStyle = defaultLineHeightStyle,
     ),
+    mono = TextStyle(
+        fontFamily = monoFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 26.sp,
+        letterSpacing = 0.sp,
+        lineHeightStyle = defaultLineHeightStyle,
+    ),
 )
+
+/**
+ * Returns this style with tabular (fixed-width) figures, so digits line up in
+ * columns of amounts, counts and timers. Keeps any feature settings already set.
+ */
+public fun TextStyle.withTabularFigures(): TextStyle {
+    val existing = fontFeatureSettings
+    val settings = when {
+        existing.isNullOrBlank() -> "tnum"
+        existing.contains("tnum") -> existing
+        else -> "$existing, tnum"
+    }
+    return copy(fontFeatureSettings = settings)
+}
 
 /**
  * Recommended per-tier caps on the system font scale. Larger type is capped

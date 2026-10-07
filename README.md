@@ -111,7 +111,7 @@ Read these off `JengaTheme.*`. Never inline a raw value.
 | Token set | Access | Contents |
 |-----------|--------|----------|
 | Colors | `JengaTheme.colors` | `brand`, `surface`, `background`, `textPrimary/Secondary/Muted`, `border`, status roles (`success`/`warning`/`error`/`info` + containers), and more. Light and dark aware. |
-| Typography | `JengaTheme.typography` | `display`, `heading{Large,Medium,Small}`, `title*`, `body*`, `label`, `caption`, `button`. |
+| Typography | `JengaTheme.typography` | `display`, `heading{Large,Medium,Small}`, `title*`, `body*`, `label`, `caption`, `button`, `mono`. |
 | Spacing | `JengaTheme.spacing` | `none, xxs, xs, sm, md, lg, xl, xxl, xxxl`. |
 | Shapes | `JengaTheme.shapes` | corner radii (`sm`, `md`, `lg`, `pill`, and more). |
 | Sizing | `JengaTheme.sizing` | `minTouchTarget`, icon sizes, control heights, field sizes. |
