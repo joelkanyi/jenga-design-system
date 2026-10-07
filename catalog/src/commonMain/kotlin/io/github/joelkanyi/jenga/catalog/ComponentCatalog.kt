@@ -1191,23 +1191,23 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A month calendar for picking one date.",
         keywords = "date calendar day picker",
         code = """
-            var date by remember { mutableStateOf<LocalDate?>(null) }
+            var date by remember { mutableStateOf<LocalDate?>(LocalDate(2026, 3, 18)) }
             JengaDatePicker(
                 selectedDate = date,
                 onSelectedDateChange = { date = it },
-                monthTitle = { "${'$'}{it.month.name} ${'$'}{it.year}" },
-                dayOfWeekLabel = { it.name.take(2) },
+                monthTitle = { "${'$'}{it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${'$'}{it.year}" },
+                dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
                 previousMonthContentDescription = "Previous month",
                 nextMonthContentDescription = "Next month",
             )
         """.trimIndent(),
     ) {
-        var date by remember { mutableStateOf<LocalDate?>(null) }
+        var date by remember { mutableStateOf<LocalDate?>(LocalDate(2026, 3, 18)) }
         JengaDatePicker(
             selectedDate = date,
             onSelectedDateChange = { date = it },
-            monthTitle = { "${it.month.name} ${it.year}" },
-            dayOfWeekLabel = { it.name.take(2) },
+            monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
+            dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
             previousMonthContentDescription = "Previous month",
             nextMonthContentDescription = "Next month",
         )
@@ -1226,8 +1226,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     onConfirm = { open = false },
                     confirmLabel = "OK",
                     dismissLabel = "Cancel",
-                    monthTitle = { "${'$'}{it.month.name} ${'$'}{it.year}" },
-                    dayOfWeekLabel = { it.name.take(2) },
+                    monthTitle = { "${'$'}{it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${'$'}{it.year}" },
+                    dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
                     previousMonthContentDescription = "Previous month",
                     nextMonthContentDescription = "Next month",
                 )
@@ -1242,8 +1242,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 onConfirm = { open = false },
                 confirmLabel = "OK",
                 dismissLabel = "Cancel",
-                monthTitle = { "${it.month.name} ${it.year}" },
-                dayOfWeekLabel = { it.name.take(2) },
+                monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
+                dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
                 previousMonthContentDescription = "Previous month",
                 nextMonthContentDescription = "Next month",
             )
@@ -1286,10 +1286,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         keywords = "birthday dob date wheels age",
         code = """
             var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
-            JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name })
+            JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name.lowercase().replaceFirstChar(Char::uppercase) })
         """.trimIndent(),
     ) {
         var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
-        JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name })
+        JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name.lowercase().replaceFirstChar(Char::uppercase) })
     },
 )

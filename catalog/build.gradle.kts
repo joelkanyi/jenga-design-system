@@ -105,6 +105,8 @@ android {
             isIncludeAndroidResources = true
             all {
                 it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
+                // The full-gallery screenshot is a ~11,000px bitmap; the default 512m heap is not enough.
+                it.maxHeapSize = "2g"
             }
         }
     }
