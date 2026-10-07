@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -36,16 +37,22 @@ import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.layout.JengaBox
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
+import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
@@ -175,11 +182,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         keywords = "search query filter",
         code = """
             var query by remember { mutableStateOf("") }
-            JengaSearchField(query, { query = it })
+            JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
         """.trimIndent(),
     ) {
         var query by remember { mutableStateOf("") }
-        JengaSearchField(query, { query = it })
+        JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
     },
     CatalogEntry(
         name = "Toggle",
@@ -222,6 +229,40 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         JengaInline {
             JengaRadioButton(selected = selected == 0, onClick = { selected = 0 })
             JengaRadioButton(selected = selected == 1, onClick = { selected = 1 })
+        }
+    },
+    CatalogEntry(
+        name = "Radio list item",
+        group = "Selection",
+        description = "A list row with a radio button, for picking one option.",
+        keywords = "radio option single list row",
+        code = """
+            var selected by remember { mutableIntStateOf(0) }
+            JengaRadioListItem("Repair", selected = selected == 0, onClick = { selected = 0 })
+            JengaRadioListItem("Replace", selected = selected == 1, onClick = { selected = 1 })
+        """.trimIndent(),
+    ) {
+        var selected by remember { mutableIntStateOf(0) }
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaRadioListItem("Repair", selected = selected == 0, onClick = { selected = 0 })
+            JengaRadioListItem("Replace", selected = selected == 1, onClick = { selected = 1 })
+        }
+    },
+    CatalogEntry(
+        name = "Checkbox list item",
+        group = "Selection",
+        description = "A list row with a checkbox, for picking several options.",
+        keywords = "checkbox multi select list row",
+        code = """
+            var checked by remember { mutableStateOf(true) }
+            JengaCheckboxListItem("Battery", checked = checked, onCheckedChange = { checked = it })
+        """.trimIndent(),
+    ) {
+        var battery by remember { mutableStateOf(true) }
+        var panel by remember { mutableStateOf(false) }
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaCheckboxListItem("Battery", checked = battery, onCheckedChange = { battery = it })
+            JengaCheckboxListItem("Panel", checked = panel, onCheckedChange = { panel = it })
         }
     },
     CatalogEntry(
@@ -281,15 +322,31 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
                 onClick = {},
             )
+            JengaListItem(
+                headline = "Gate B",
+                supporting = "North wing",
+                supportingContent = { JengaBadge("Busy", tone = JengaBadgeTone.Warning) },
+                onClick = {},
+            )
+            JengaListItem(headline = "Gate C", supporting = "Closed", onClick = {}, enabled = false)
         """.trimIndent(),
     ) {
-        JengaListItem(
-            headline = "Gate A",
-            supporting = "Main entrance",
-            leadingContent = { JengaIcon(JengaIcons.Check, contentDescription = null, tint = JengaTheme.colors.success) },
-            trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
-            onClick = {},
-        )
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaListItem(
+                headline = "Gate A",
+                supporting = "Main entrance",
+                leadingContent = { JengaIcon(JengaIcons.Check, contentDescription = null, tint = JengaTheme.colors.success) },
+                trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
+                onClick = {},
+            )
+            JengaListItem(
+                headline = "Gate B",
+                supporting = "North wing",
+                supportingContent = { JengaBadge("Busy", tone = JengaBadgeTone.Warning) },
+                onClick = {},
+            )
+            JengaListItem(headline = "Gate C", supporting = "Closed", onClick = {}, enabled = false)
+        }
     },
     CatalogEntry(
         name = "Divider",
@@ -395,6 +452,45 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         }
     },
     CatalogEntry(
+        name = "List sheet",
+        group = "Feedback",
+        description = "A bottom sheet with a title, a lazy list body and a pinned footer, for pickers and short forms.",
+        keywords = "sheet modal picker select footer",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            var selected by remember { mutableStateOf("Gate A") }
+            JengaButton("List sheet", { open = true }, variant = JengaButtonVariant.Outline)
+            if (open) {
+                JengaListSheet(
+                    onDismissRequest = { open = false },
+                    title = "Select a gate",
+                    subtitle = "Choose which gate you're scanning at.",
+                    footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
+                ) {
+                    items(listOf("Gate A", "Gate B", "Gate C")) { gate ->
+                        JengaRadioListItem(gate, selected = gate == selected, onClick = { selected = gate })
+                    }
+                }
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        var selected by remember { mutableStateOf("Gate A") }
+        JengaButton("List sheet", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaListSheet(
+                onDismissRequest = { open = false },
+                title = "Select a gate",
+                subtitle = "Choose which gate you're scanning at.",
+                footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
+            ) {
+                items(listOf("Gate A", "Gate B", "Gate C")) { gate ->
+                    JengaRadioListItem(gate, selected = gate == selected, onClick = { selected = gate })
+                }
+            }
+        }
+    },
+    CatalogEntry(
         name = "Dropdown menu",
         group = "Feedback",
         description = "A list of actions anchored to a trigger.",
@@ -490,6 +586,43 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaBadge("Pending", tone = JengaBadgeTone.Warning)
             JengaBadge("Denied", tone = JengaBadgeTone.Error)
             JengaBadge("Info", tone = JengaBadgeTone.Info)
+        }
+    },
+    CatalogEntry(
+        name = "Icon tile",
+        group = "Data display",
+        description = "An icon on a tinted rounded square, in each tone.",
+        keywords = "icon tile leading tone",
+        code = """
+            JengaIconTile(JengaIcons.Wrench, contentDescription = null)
+            JengaIconTile(JengaIcons.Package, contentDescription = null, tone = JengaBadgeTone.Brand)
+            JengaIconTile(JengaIcons.XCircle, contentDescription = null, tone = JengaBadgeTone.Error)
+        """.trimIndent(),
+    ) {
+        JengaInline {
+            JengaIconTile(JengaIcons.Wrench, contentDescription = null)
+            JengaIconTile(JengaIcons.Package, contentDescription = null, tone = JengaBadgeTone.Brand)
+            JengaIconTile(JengaIcons.CheckCircle, contentDescription = null, tone = JengaBadgeTone.Success)
+            JengaIconTile(JengaIcons.XCircle, contentDescription = null, tone = JengaBadgeTone.Error)
+        }
+    },
+    CatalogEntry(
+        name = "Key value row",
+        group = "Data display",
+        description = "A label with an end-aligned value, for detail and summary sections.",
+        keywords = "detail summary total label value",
+        code = """
+            JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+            JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaDivider()
+            JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
+        """.trimIndent(),
+    ) {
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+            JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaDivider()
+            JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
         }
     },
     CatalogEntry(

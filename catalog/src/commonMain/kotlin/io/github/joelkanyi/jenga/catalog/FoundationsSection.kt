@@ -22,6 +22,7 @@ import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.foundation.typography.withTabularFigures
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
@@ -125,6 +126,7 @@ private fun TypographySection() {
             TypeRow("bodyMedium") { JengaText("Body: default text", style = t.bodyMedium) }
             TypeRow("label") { JengaText("LABEL", style = t.label) }
             TypeRow("caption") { JengaText("Caption", style = t.caption) }
+            TypeRow("mono") { JengaText("SN-0042-7781", style = t.mono.withTabularFigures()) }
         }
     }
 }

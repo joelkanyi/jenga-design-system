@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.joelkanyi.jenga.component.badge.JengaBadge
+import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
@@ -40,6 +42,20 @@ private fun ListItemShowcase() {
             supporting = "North wing",
             trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
             onClick = {},
+        )
+        JengaListItem(
+            headline = "Replace the inverter control board and recalibrate",
+            supporting = "Ticket TKT-2041",
+            supportingContent = { JengaBadge(text = "In progress", tone = JengaBadgeTone.Warning) },
+            headlineMaxLines = 2,
+            onClick = {},
+        )
+        JengaListItem(
+            headline = "Gate C",
+            supporting = "Closed for maintenance",
+            trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
+            onClick = {},
+            enabled = false,
         )
     }
 }

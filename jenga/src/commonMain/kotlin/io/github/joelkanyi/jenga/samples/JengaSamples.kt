@@ -5,6 +5,7 @@ package io.github.joelkanyi.jenga.samples
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,11 +31,13 @@ import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.layout.JengaBox
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
@@ -43,7 +46,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
+import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
@@ -229,6 +236,24 @@ internal fun JengaBottomSheetSample() {
 }
 
 @Composable
+internal fun JengaListSheetSample() {
+    var open by remember { mutableStateOf(true) }
+    var selected by remember { mutableStateOf("Gate A") }
+    if (open) {
+        JengaListSheet(
+            onDismissRequest = { open = false },
+            title = "Select a gate",
+            subtitle = "Choose which gate you're scanning at.",
+            footer = { JengaButton(text = "Done", onClick = { open = false }, modifier = Modifier.weight(1f)) },
+        ) {
+            items(listOf("Gate A", "Gate B")) { gate ->
+                JengaRadioListItem(headline = gate, selected = gate == selected, onClick = { selected = gate })
+            }
+        }
+    }
+}
+
+@Composable
 internal fun JengaTopAppBarSample() {
     JengaTopAppBar(title = "Events")
 }
@@ -284,6 +309,11 @@ internal fun JengaIconSample() {
 }
 
 @Composable
+internal fun JengaIconTileSample() {
+    JengaIconTile(JengaIcons.Wrench, contentDescription = null, tone = JengaBadgeTone.Brand)
+}
+
+@Composable
 internal fun JengaDividerSample() {
     JengaDivider()
 }
@@ -296,6 +326,15 @@ internal fun JengaListItemSample() {
         trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
         onClick = { },
     )
+}
+
+@Composable
+internal fun JengaKeyValueRowSample() {
+    Column {
+        JengaKeyValueRow(label = "Serial number", value = "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+        JengaDivider()
+        JengaKeyValueRow(label = "Total", value = "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
+    }
 }
 
 @Composable
@@ -333,9 +372,29 @@ internal fun JengaRadioButtonSample() {
 }
 
 @Composable
+internal fun JengaRadioListItemSample() {
+    var selected by remember { mutableIntStateOf(0) }
+    Column {
+        JengaRadioListItem(headline = "Repair", selected = selected == 0, onClick = { selected = 0 })
+        JengaRadioListItem(headline = "Replace", selected = selected == 1, onClick = { selected = 1 })
+    }
+}
+
+@Composable
+internal fun JengaCheckboxListItemSample() {
+    var checked by remember { mutableStateOf(true) }
+    JengaCheckboxListItem(headline = "Battery", checked = checked, onCheckedChange = { checked = it })
+}
+
+@Composable
 internal fun JengaSearchFieldSample() {
     var query by remember { mutableStateOf("") }
-    JengaSearchField(value = query, onValueChange = { query = it })
+    JengaSearchField(
+        value = query,
+        onValueChange = { query = it },
+        placeholder = "Search tickets",
+        clearContentDescription = "Clear search",
+    )
 }
 
 @Composable

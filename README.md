@@ -92,13 +92,13 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 | Text | `JengaText` |
 | Buttons | `JengaButton`, `JengaIconButton`, `JengaFab` |
 | Inputs | `JengaTextField`, `JengaSearchField`, `JengaSlider`, `JengaStepper` |
-| Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl` |
-| Containers | `JengaCard`, `JengaListItem`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
+| Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
+| Containers | `JengaCard`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
 | Status and tags | `JengaBadge`, `JengaChip`, `JengaBanner`, `JengaVerdictBar` |
 | Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaNavigationBar`, `JengaTabs` |
-| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
+| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
 | Refresh | `JengaPullToRefresh` |
-| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaMediaHero`, `JengaImageShelf` |
+| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaMediaHero`, `JengaImageShelf` |
 | Progress | `JengaLinearProgress`, `JengaCircularProgress`, `JengaDotStrip`, shimmer |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection` |
@@ -111,7 +111,7 @@ Read these off `JengaTheme.*`. Never inline a raw value.
 | Token set | Access | Contents |
 |-----------|--------|----------|
 | Colors | `JengaTheme.colors` | `brand`, `surface`, `background`, `textPrimary/Secondary/Muted`, `border`, status roles (`success`/`warning`/`error`/`info` + containers), and more. Light and dark aware. |
-| Typography | `JengaTheme.typography` | `display`, `heading{Large,Medium,Small}`, `title*`, `body*`, `label`, `caption`, `button`. |
+| Typography | `JengaTheme.typography` | `display`, `heading{Large,Medium,Small}`, `title*`, `body*`, `label`, `caption`, `button`, `mono`. |
 | Spacing | `JengaTheme.spacing` | `none, xxs, xs, sm, md, lg, xl, xxl, xxxl`. |
 | Shapes | `JengaTheme.shapes` | corner radii (`sm`, `md`, `lg`, `pill`, and more). |
 | Sizing | `JengaTheme.sizing` | `minTouchTarget`, icon sizes, control heights, field sizes. |

@@ -11,12 +11,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import io.github.joelkanyi.jenga.resources.Res
 import io.github.joelkanyi.jenga.resources.jenga_ic_add
+import io.github.joelkanyi.jenga.resources.jenga_ic_alert_circle
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_back
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_right
 import io.github.joelkanyi.jenga.resources.jenga_ic_ban
+import io.github.joelkanyi.jenga.resources.jenga_ic_banknote
 import io.github.joelkanyi.jenga.resources.jenga_ic_bell
 import io.github.joelkanyi.jenga.resources.jenga_ic_bulb
 import io.github.joelkanyi.jenga.resources.jenga_ic_calendar
+import io.github.joelkanyi.jenga.resources.jenga_ic_camera
 import io.github.joelkanyi.jenga.resources.jenga_ic_chart
 import io.github.joelkanyi.jenga.resources.jenga_ic_check
 import io.github.joelkanyi.jenga.resources.jenga_ic_check_circle
@@ -28,24 +31,39 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_clock
 import io.github.joelkanyi.jenga.resources.jenga_ic_close
 import io.github.joelkanyi.jenga.resources.jenga_ic_cloud
 import io.github.joelkanyi.jenga.resources.jenga_ic_cloud_off
+import io.github.joelkanyi.jenga.resources.jenga_ic_component
+import io.github.joelkanyi.jenga.resources.jenga_ic_copy
+import io.github.joelkanyi.jenga.resources.jenga_ic_cpu
 import io.github.joelkanyi.jenga.resources.jenga_ic_database
+import io.github.joelkanyi.jenga.resources.jenga_ic_download
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_heart
 import io.github.joelkanyi.jenga.resources.jenga_ic_history
+import io.github.joelkanyi.jenga.resources.jenga_ic_hourglass
 import io.github.joelkanyi.jenga.resources.jenga_ic_image
+import io.github.joelkanyi.jenga.resources.jenga_ic_image_plus
+import io.github.joelkanyi.jenga.resources.jenga_ic_images
 import io.github.joelkanyi.jenga.resources.jenga_ic_info
+import io.github.joelkanyi.jenga.resources.jenga_ic_key
 import io.github.joelkanyi.jenga.resources.jenga_ic_keyboard
 import io.github.joelkanyi.jenga.resources.jenga_ic_lock
 import io.github.joelkanyi.jenga.resources.jenga_ic_logout
 import io.github.joelkanyi.jenga.resources.jenga_ic_mail
+import io.github.joelkanyi.jenga.resources.jenga_ic_map_pin
 import io.github.joelkanyi.jenga.resources.jenga_ic_message_circle
+import io.github.joelkanyi.jenga.resources.jenga_ic_more_horizontal
+import io.github.joelkanyi.jenga.resources.jenga_ic_package
+import io.github.joelkanyi.jenga.resources.jenga_ic_pencil
+import io.github.joelkanyi.jenga.resources.jenga_ic_phone
 import io.github.joelkanyi.jenga.resources.jenga_ic_qr_code
+import io.github.joelkanyi.jenga.resources.jenga_ic_receipt
 import io.github.joelkanyi.jenga.resources.jenga_ic_refresh
 import io.github.joelkanyi.jenga.resources.jenga_ic_remove
 import io.github.joelkanyi.jenga.resources.jenga_ic_search
+import io.github.joelkanyi.jenga.resources.jenga_ic_send
 import io.github.joelkanyi.jenga.resources.jenga_ic_settings
 import io.github.joelkanyi.jenga.resources.jenga_ic_share
 import io.github.joelkanyi.jenga.resources.jenga_ic_shield
@@ -57,11 +75,18 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_sun
 import io.github.joelkanyi.jenga.resources.jenga_ic_swap
 import io.github.joelkanyi.jenga.resources.jenga_ic_thumbs_down
 import io.github.joelkanyi.jenga.resources.jenga_ic_thumbs_up
+import io.github.joelkanyi.jenga.resources.jenga_ic_ticket
 import io.github.joelkanyi.jenga.resources.jenga_ic_trash
+import io.github.joelkanyi.jenga.resources.jenga_ic_truck
 import io.github.joelkanyi.jenga.resources.jenga_ic_user
+import io.github.joelkanyi.jenga.resources.jenga_ic_user_cog
+import io.github.joelkanyi.jenga.resources.jenga_ic_user_x
+import io.github.joelkanyi.jenga.resources.jenga_ic_users
 import io.github.joelkanyi.jenga.resources.jenga_ic_vibrate
 import io.github.joelkanyi.jenga.resources.jenga_ic_volume
 import io.github.joelkanyi.jenga.resources.jenga_ic_warning
+import io.github.joelkanyi.jenga.resources.jenga_ic_wrench
+import io.github.joelkanyi.jenga.resources.jenga_ic_x_circle
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 import org.jetbrains.compose.resources.vectorResource
@@ -214,4 +239,56 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_sparkles)
     public val Bulb: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_bulb)
+
+    // --- Commerce, service & people line icons ---
+    public val Phone: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_phone)
+    public val Copy: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_copy)
+    public val Download: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_download)
+    public val Pencil: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_pencil)
+    public val Camera: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_camera)
+    public val ImagePlus: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_image_plus)
+    public val Images: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_images)
+    public val Send: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_send)
+    public val MapPin: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_map_pin)
+    public val Package: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_package)
+    public val Wrench: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_wrench)
+    public val Key: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_key)
+    public val Ticket: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_ticket)
+    public val Receipt: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_receipt)
+    public val Banknote: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_banknote)
+    public val Truck: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_truck)
+    public val MoreHorizontal: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_more_horizontal)
+    public val XCircle: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_x_circle)
+    public val AlertCircle: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_alert_circle)
+    public val Cpu: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_cpu)
+    public val Component: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_component)
+    public val Hourglass: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_hourglass)
+    public val UserX: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_user_x)
+    public val Users: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_users)
+    public val UserCog: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_user_cog)
 }
