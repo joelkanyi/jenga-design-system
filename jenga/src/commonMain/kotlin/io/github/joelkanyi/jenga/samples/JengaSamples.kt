@@ -34,6 +34,8 @@ import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
+import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -789,4 +791,16 @@ internal fun JengaWheelPickerSample() {
 internal fun JengaDateOfBirthPickerSample() {
     var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
     JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name })
+}
+
+@Composable
+internal fun JengaBarChartSample() {
+    var selected by remember { mutableStateOf<Int?>(null) }
+    val months = listOf(JengaBarChartEntry("May", 8200f), JengaBarChartEntry("Jun", 12400f), JengaBarChartEntry("Jul", 9100f))
+    JengaBarChart(
+        entries = months,
+        barContentDescription = { "${it.label}, ${it.value}" },
+        selectedIndex = selected,
+        onSelect = { selected = it },
+    )
 }

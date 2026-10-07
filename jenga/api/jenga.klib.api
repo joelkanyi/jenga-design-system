@@ -398,6 +398,25 @@ final enum class io.github.joelkanyi.jenga.pattern/JengaSectionHeaderStyle : kot
     final fun values(): kotlin/Array<io.github.joelkanyi.jenga.pattern/JengaSectionHeaderStyle> // io.github.joelkanyi.jenga.pattern/JengaSectionHeaderStyle.values|values#static(){}[0]
 }
 
+sealed interface io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement { // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement|null[0]
+    final class Scroll : io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement { // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll|null[0]
+        constructor <init>(androidx.compose.ui.unit/Dp) // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.<init>|<init>(androidx.compose.ui.unit.Dp){}[0]
+
+        final val slotWidth // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.slotWidth|{}slotWidth[0]
+            final fun <get-slotWidth>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.slotWidth.<get-slotWidth>|<get-slotWidth>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Scroll.toString|toString(){}[0]
+    }
+
+    final object Fill : io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement { // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Fill|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Fill.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Fill.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement.Fill.toString|toString(){}[0]
+    }
+}
+
 final class io.github.joelkanyi.jenga.component.action/JengaAction { // io.github.joelkanyi.jenga.component.action/JengaAction|null[0]
     constructor <init>(kotlin/String, kotlin/Function0<kotlin/Unit>) // io.github.joelkanyi.jenga.component.action/JengaAction.<init>|<init>(kotlin.String;kotlin.Function0<kotlin.Unit>){}[0]
 
@@ -575,6 +594,39 @@ final class io.github.joelkanyi.jenga.component.card/JengaCardFooterColors { // 
     final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.card/JengaCardFooterColors.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.card/JengaCardFooterColors.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.card/JengaCardFooterColors.toString|toString(){}[0]
+}
+
+final class io.github.joelkanyi.jenga.component.chart/JengaBarChartColors { // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors|null[0]
+    constructor <init>(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color) // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.<init>|<init>(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+
+    final val bar // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.bar|{}bar[0]
+        final fun <get-bar>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.bar.<get-bar>|<get-bar>(){}[0]
+    final val label // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.label|{}label[0]
+        final fun <get-label>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.label.<get-label>|<get-label>(){}[0]
+    final val selectedBar // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.selectedBar|{}selectedBar[0]
+        final fun <get-selectedBar>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.selectedBar.<get-selectedBar>|<get-selectedBar>(){}[0]
+    final val selectedLabel // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.selectedLabel|{}selectedLabel[0]
+        final fun <get-selectedLabel>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.selectedLabel.<get-selectedLabel>|<get-selectedLabel>(){}[0]
+    final val unselectedBar // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.unselectedBar|{}unselectedBar[0]
+        final fun <get-unselectedBar>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.unselectedBar.<get-unselectedBar>|<get-unselectedBar>(){}[0]
+
+    final fun copy(androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ...): io.github.joelkanyi.jenga.component.chart/JengaBarChartColors // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.copy|copy(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.chart/JengaBarChartColors.toString|toString(){}[0]
+}
+
+final class io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry { // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry|null[0]
+    constructor <init>(kotlin/String, kotlin/Float) // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.<init>|<init>(kotlin.String;kotlin.Float){}[0]
+
+    final val label // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.label|{}label[0]
+        final fun <get-label>(): kotlin/String // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.label.<get-label>|<get-label>(){}[0]
+    final val value // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.value|{}value[0]
+        final fun <get-value>(): kotlin/Float // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry.toString|toString(){}[0]
 }
 
 final class io.github.joelkanyi.jenga.component.chip/JengaChipColors { // io.github.joelkanyi.jenga.component.chip/JengaChipColors|null[0]
@@ -1637,6 +1689,31 @@ final object io.github.joelkanyi.jenga.component.card/JengaCardFooterDefaults { 
     final fun colors(androidx.compose.runtime/Composer?, kotlin/Int): io.github.joelkanyi.jenga.component.card/JengaCardFooterColors // io.github.joelkanyi.jenga.component.card/JengaCardFooterDefaults.colors|colors(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 }
 
+final object io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults { // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults|null[0]
+    final val BarMaxWidth // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.BarMaxWidth|{}BarMaxWidth[0]
+        final fun <get-BarMaxWidth>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.BarMaxWidth.<get-BarMaxWidth>|<get-BarMaxWidth>(){}[0]
+    final val MinBarHeight // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.MinBarHeight|{}MinBarHeight[0]
+        final fun <get-MinBarHeight>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.MinBarHeight.<get-MinBarHeight>|<get-MinBarHeight>(){}[0]
+    final val PlotHeight // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.PlotHeight|{}PlotHeight[0]
+        final fun <get-PlotHeight>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.PlotHeight.<get-PlotHeight>|<get-PlotHeight>(){}[0]
+    final val animationSpec // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.animationSpec|{}animationSpec[0]
+        final fun <get-animationSpec>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.animation.core/AnimationSpec<kotlin/Float> // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.animationSpec.<get-animationSpec>|<get-animationSpec>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val barShape // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.barShape|{}barShape[0]
+        final fun <get-barShape>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.graphics/Shape // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.barShape.<get-barShape>|<get-barShape>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val barSpacing // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.barSpacing|{}barSpacing[0]
+        final fun <get-barSpacing>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.barSpacing.<get-barSpacing>|<get-barSpacing>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val contentPadding // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.contentPadding|{}contentPadding[0]
+        final fun <get-contentPadding>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.foundation.layout/PaddingValues // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.contentPadding.<get-contentPadding>|<get-contentPadding>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val labelSpacing // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.labelSpacing|{}labelSpacing[0]
+        final fun <get-labelSpacing>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.labelSpacing.<get-labelSpacing>|<get-labelSpacing>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val labelStyle // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.labelStyle|{}labelStyle[0]
+        final fun <get-labelStyle>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.text/TextStyle // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.labelStyle.<get-labelStyle>|<get-labelStyle>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val selectedLabelStyle // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.selectedLabelStyle|{}selectedLabelStyle[0]
+        final fun <get-selectedLabelStyle>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.text/TextStyle // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.selectedLabelStyle.<get-selectedLabelStyle>|<get-selectedLabelStyle>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+
+    final fun colors(androidx.compose.runtime/Composer?, kotlin/Int): io.github.joelkanyi.jenga.component.chart/JengaBarChartColors // io.github.joelkanyi.jenga.component.chart/JengaBarChartDefaults.colors|colors(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
 final object io.github.joelkanyi.jenga.component.chip/JengaChipDefaults { // io.github.joelkanyi.jenga.component.chip/JengaChipDefaults|null[0]
     final val MinHeight // io.github.joelkanyi.jenga.component.chip/JengaChipDefaults.MinHeight|{}MinHeight[0]
         final fun <get-MinHeight>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.chip/JengaChipDefaults.MinHeight.<get-MinHeight>|<get-MinHeight>(){}[0]
@@ -2412,6 +2489,11 @@ final val io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_com
 final val io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop|#static{}io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop[0]
 final val io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop[0]
+final val io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop|#static{}io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop[0]
+final val io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop|#static{}io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop[0]
+final val io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop|#static{}io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop[0]
+final val io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop[0]
+final val io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop|#static{}io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop[0]
 final val io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop // io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop|#static{}io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop[0]
 final val io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop // io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.divider/io_github_joelkanyi_jenga_component_divider_JengaDividerDefaults$stableprop // io.github.joelkanyi.jenga.component.divider/io_github_joelkanyi_jenga_component_divider_JengaDividerDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_divider_JengaDividerDefaults$stableprop[0]
@@ -2566,6 +2648,12 @@ final fun io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_com
 final fun io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_card_JengaCardDefaults$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop_getter|io_github_joelkanyi_jenga_component_card_JengaCardFooterColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.card/io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_card_JengaCardFooterDefaults$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/JengaBarChart(kotlin.collections/List<io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry>, kotlin/Function1<io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry, kotlin/String>, androidx.compose.ui/Modifier?, kotlin/Int?, kotlin/Function1<kotlin/Int, kotlin/Unit>?, kotlin/Float?, io.github.joelkanyi.jenga.component.chart/JengaBarChartArrangement?, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.graphics/Shape?, androidx.compose.ui.unit/Dp, androidx.compose.foundation.layout/PaddingValues?, androidx.compose.ui.text/TextStyle?, androidx.compose.ui.text/TextStyle?, io.github.joelkanyi.jenga.component.chart/JengaBarChartColors?, androidx.compose.animation.core/AnimationSpec<kotlin/Float>?, kotlin/Function4<io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry, kotlin/Boolean, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Function4<io.github.joelkanyi.jenga.component.chart/JengaBarChartEntry, kotlin/Boolean, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.chart/JengaBarChart|JengaBarChart(kotlin.collections.List<io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry>;kotlin.Function1<io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry,kotlin.String>;androidx.compose.ui.Modifier?;kotlin.Int?;kotlin.Function1<kotlin.Int,kotlin.Unit>?;kotlin.Float?;io.github.joelkanyi.jenga.component.chart.JengaBarChartArrangement?;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.graphics.Shape?;androidx.compose.ui.unit.Dp;androidx.compose.foundation.layout.PaddingValues?;androidx.compose.ui.text.TextStyle?;androidx.compose.ui.text.TextStyle?;io.github.joelkanyi.jenga.component.chart.JengaBarChartColors?;androidx.compose.animation.core.AnimationSpec<kotlin.Float>?;kotlin.Function4<io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry,kotlin.Boolean,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function4<io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry,kotlin.Boolean,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop_getter|io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Fill$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop_getter|io_github_joelkanyi_jenga_component_chart_JengaBarChartArrangement_Scroll$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop_getter|io_github_joelkanyi_jenga_component_chart_JengaBarChartColors$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_chart_JengaBarChartDefaults$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chart/io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop_getter|io_github_joelkanyi_jenga_component_chart_JengaBarChartEntry$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.chip/JengaChip(kotlin/String, kotlin/Boolean, kotlin/Function0<kotlin/Unit>, androidx.compose.ui/Modifier?, kotlin/Boolean, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.ui.graphics/Shape?, io.github.joelkanyi.jenga.component.chip/JengaChipColors?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.ui.text/TextStyle?, androidx.compose.ui.text/TextStyle?, androidx.compose.ui.unit/Dp, androidx.compose.foundation.layout/PaddingValues?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.chip/JengaChip|JengaChip(kotlin.String;kotlin.Boolean;kotlin.Function0<kotlin.Unit>;androidx.compose.ui.Modifier?;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.ui.graphics.Shape?;io.github.joelkanyi.jenga.component.chip.JengaChipColors?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.ui.text.TextStyle?;androidx.compose.ui.text.TextStyle?;androidx.compose.ui.unit.Dp;androidx.compose.foundation.layout.PaddingValues?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop_getter|io_github_joelkanyi_jenga_component_chip_JengaChipColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.chip/io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_chip_JengaChipDefaults$stableprop_getter(){}[0]

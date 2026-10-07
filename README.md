@@ -99,6 +99,7 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 | Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
 | Refresh | `JengaPullToRefresh` |
 | Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaMediaHero`, `JengaImageShelf`, `JengaThumbnailStrip`, `JengaImageViewer` |
+| Charts | `JengaBarChart` |
 | Progress | `JengaLinearProgress`, `JengaLabelledProgress`, `JengaTimelineItem`, `JengaCircularProgress`, `JengaDotStrip`, shimmer |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection`, `JengaFormLayout` |

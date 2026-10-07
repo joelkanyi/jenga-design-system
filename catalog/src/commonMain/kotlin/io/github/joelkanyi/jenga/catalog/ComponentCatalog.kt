@@ -39,6 +39,8 @@ import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
+import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -1291,5 +1293,30 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     ) {
         var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
         JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name.lowercase().replaceFirstChar(Char::uppercase) })
+    },
+    CatalogEntry(
+        name = "Bar chart",
+        group = "Data display",
+        description = "Vertical bars from a shared baseline, optionally selectable.",
+        keywords = "chart bar graph data visualization month",
+        code = """
+            var selected by remember { mutableIntStateOf(1) }
+            val months = listOf(JengaBarChartEntry("May", 8200f), JengaBarChartEntry("Jun", 12400f), JengaBarChartEntry("Jul", 9100f))
+            JengaBarChart(
+                entries = months,
+                barContentDescription = { "${'$'}{it.label}, ${'$'}{it.value}" },
+                selectedIndex = selected,
+                onSelect = { selected = it },
+            )
+        """.trimIndent(),
+    ) {
+        var selected by remember { mutableIntStateOf(1) }
+        val months = listOf(JengaBarChartEntry("May", 8200f), JengaBarChartEntry("Jun", 12400f), JengaBarChartEntry("Jul", 9100f))
+        JengaBarChart(
+            entries = months,
+            barContentDescription = { "${it.label}, ${it.value}" },
+            selectedIndex = selected,
+            onSelect = { selected = it },
+        )
     },
 )
