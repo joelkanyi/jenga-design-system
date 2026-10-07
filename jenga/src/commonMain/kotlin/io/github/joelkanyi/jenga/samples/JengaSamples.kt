@@ -44,9 +44,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
+import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
@@ -346,6 +348,21 @@ internal fun JengaSegmentedControlSample() {
 internal fun JengaRadioButtonSample() {
     var selected by remember { mutableStateOf(true) }
     JengaRadioButton(selected = selected, onClick = { selected = !selected })
+}
+
+@Composable
+internal fun JengaRadioListItemSample() {
+    var selected by remember { mutableIntStateOf(0) }
+    Column {
+        JengaRadioListItem(headline = "Repair", selected = selected == 0, onClick = { selected = 0 })
+        JengaRadioListItem(headline = "Replace", selected = selected == 1, onClick = { selected = 1 })
+    }
+}
+
+@Composable
+internal fun JengaCheckboxListItemSample() {
+    var checked by remember { mutableStateOf(true) }
+    JengaCheckboxListItem(headline = "Battery", checked = checked, onCheckedChange = { checked = it })
 }
 
 @Composable

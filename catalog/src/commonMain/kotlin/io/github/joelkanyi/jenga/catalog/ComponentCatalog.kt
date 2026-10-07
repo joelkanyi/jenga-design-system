@@ -46,9 +46,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
+import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
@@ -225,6 +227,40 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         JengaInline {
             JengaRadioButton(selected = selected == 0, onClick = { selected = 0 })
             JengaRadioButton(selected = selected == 1, onClick = { selected = 1 })
+        }
+    },
+    CatalogEntry(
+        name = "Radio list item",
+        group = "Selection",
+        description = "A list row with a radio button, for picking one option.",
+        keywords = "radio option single list row",
+        code = """
+            var selected by remember { mutableIntStateOf(0) }
+            JengaRadioListItem("Repair", selected = selected == 0, onClick = { selected = 0 })
+            JengaRadioListItem("Replace", selected = selected == 1, onClick = { selected = 1 })
+        """.trimIndent(),
+    ) {
+        var selected by remember { mutableIntStateOf(0) }
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaRadioListItem("Repair", selected = selected == 0, onClick = { selected = 0 })
+            JengaRadioListItem("Replace", selected = selected == 1, onClick = { selected = 1 })
+        }
+    },
+    CatalogEntry(
+        name = "Checkbox list item",
+        group = "Selection",
+        description = "A list row with a checkbox, for picking several options.",
+        keywords = "checkbox multi select list row",
+        code = """
+            var checked by remember { mutableStateOf(true) }
+            JengaCheckboxListItem("Battery", checked = checked, onCheckedChange = { checked = it })
+        """.trimIndent(),
+    ) {
+        var battery by remember { mutableStateOf(true) }
+        var panel by remember { mutableStateOf(false) }
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaCheckboxListItem("Battery", checked = battery, onCheckedChange = { battery = it })
+            JengaCheckboxListItem("Panel", checked = panel, onCheckedChange = { panel = it })
         }
     },
     CatalogEntry(

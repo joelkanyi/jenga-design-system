@@ -604,6 +604,11 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 	public static final fun JengaListItem (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIILio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
+public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
+	public static final fun JengaCheckboxListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+	public static final fun JengaRadioListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroColors {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJLkotlin/jvm/internal/DefaultConstructorMarker;)V

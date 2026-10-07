@@ -775,6 +775,14 @@ public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons
 	public final fun getLambda$38496817$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons$JengaSelectionListItemsPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/list/ComposableSingletons$JengaSelectionListItemsPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-702658485$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1455197430$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$907265498$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis : java/lang/Enum {
 	public static final field Default Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
 	public static final field Total Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
@@ -810,6 +818,11 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemDefault
 
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 	public static final fun JengaListItem (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIILio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
+	public static final fun JengaCheckboxListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+	public static final fun JengaRadioListItem (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaMediaHeroPreviewsKt {
