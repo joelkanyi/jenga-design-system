@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
+import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
@@ -43,6 +44,7 @@ private fun KeyValueRowShowcase() {
         )
         JengaKeyValueRow(label = "Status", value = "Paid", valueTone = JengaBadgeTone.Success)
         JengaKeyValueRow(label = "Address", value = "Plot 12, Mombasa Road, off Likoni Lane, Nairobi")
+        JengaDivider()
         JengaKeyValueRow(
             label = "Total",
             value = "KES 12,450",
