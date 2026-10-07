@@ -39,6 +39,7 @@ import io.github.joelkanyi.jenga.component.feedback.JengaDialog
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.layout.JengaBox
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
@@ -506,6 +507,24 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaBadge("Pending", tone = JengaBadgeTone.Warning)
             JengaBadge("Denied", tone = JengaBadgeTone.Error)
             JengaBadge("Info", tone = JengaBadgeTone.Info)
+        }
+    },
+    CatalogEntry(
+        name = "Icon tile",
+        group = "Data display",
+        description = "An icon on a tinted rounded square, in each tone.",
+        keywords = "icon tile leading tone",
+        code = """
+            JengaIconTile(JengaIcons.Wrench, contentDescription = null)
+            JengaIconTile(JengaIcons.Package, contentDescription = null, tone = JengaBadgeTone.Brand)
+            JengaIconTile(JengaIcons.XCircle, contentDescription = null, tone = JengaBadgeTone.Error)
+        """.trimIndent(),
+    ) {
+        JengaInline {
+            JengaIconTile(JengaIcons.Wrench, contentDescription = null)
+            JengaIconTile(JengaIcons.Package, contentDescription = null, tone = JengaBadgeTone.Brand)
+            JengaIconTile(JengaIcons.CheckCircle, contentDescription = null, tone = JengaBadgeTone.Success)
+            JengaIconTile(JengaIcons.XCircle, contentDescription = null, tone = JengaBadgeTone.Error)
         }
     },
     CatalogEntry(

@@ -35,6 +35,7 @@ import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.layout.JengaBox
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
@@ -281,6 +282,11 @@ internal fun JengaTicketRowSample() {
 @Composable
 internal fun JengaIconSample() {
     JengaIcon(JengaIcons.Check, contentDescription = "Valid")
+}
+
+@Composable
+internal fun JengaIconTileSample() {
+    JengaIconTile(JengaIcons.Wrench, contentDescription = null, tone = JengaBadgeTone.Brand)
 }
 
 @Composable

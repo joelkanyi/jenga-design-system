@@ -504,6 +504,17 @@ public final class io/github/joelkanyi/jenga/component/icon/ComposableSingletons
 	public final fun getLambda$363579168$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/component/icon/ComposableSingletons$JengaIconTilePreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/icon/ComposableSingletons$JengaIconTilePreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1820541777$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-190905906$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1917078396$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2061083899$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-337992939$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$409605022$jenga_release ()Lkotlin/jvm/functions/Function3;
+}
+
 public final class io/github/joelkanyi/jenga/component/icon/JengaIconKt {
 	public static final fun JengaIcon-q9LK7_k (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Landroidx/compose/ui/Modifier;JFLandroidx/compose/runtime/Composer;II)V
 }
@@ -529,6 +540,26 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIconSet {
 
 public final class io/github/joelkanyi/jenga/component/icon/JengaIconSetKt {
 	public static final fun rememberJengaIconSet (Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/runtime/Composer;III)Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;
+}
+
+public final class io/github/joelkanyi/jenga/component/icon/JengaIconTileDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/icon/JengaIconTileDefaults;
+	public final fun iconSize-u2uoSUM (Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;)F
+	public final fun tileSize-u2uoSUM (Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;)F
+}
+
+public final class io/github/joelkanyi/jenga/component/icon/JengaIconTileKt {
+	public static final fun JengaIconTile (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/icon/JengaIconTileSize : java/lang/Enum {
+	public static final field Large Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;
+	public static final field Medium Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;
+	public static final field Small Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/icon/JengaIconTileSize;
 }
 
 public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
