@@ -424,16 +424,20 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Bottom sheet",
         group = "Feedback",
-        description = "A panel that slides up from the bottom edge.",
-        keywords = "sheet modal drawer",
+        description = "A panel that slides up from the bottom edge, with an optional header and pinned footer.",
+        keywords = "sheet modal drawer footer",
         code = """
             var open by remember { mutableStateOf(false) }
             JengaButton("Bottom sheet", { open = true }, variant = JengaButtonVariant.Outline)
             if (open) {
-                JengaBottomSheet(onDismissRequest = { open = false }) {
-                    JengaStack(modifier = Modifier.padding(JengaTheme.spacing.xl)) {
-                        JengaText("Select a gate", style = JengaTheme.typography.titleLarge)
-                    }
+                JengaBottomSheet(
+                    onDismissRequest = { open = false },
+                    title = "Select a gate",
+                    subtitle = "Choose which gate you're scanning at.",
+                    footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
+                ) {
+                    JengaListItem(headline = "Gate A", onClick = { open = false })
+                    JengaListItem(headline = "Gate B", onClick = { open = false })
                 }
             }
         """.trimIndent(),
@@ -441,11 +445,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         var open by remember { mutableStateOf(false) }
         JengaButton("Bottom sheet", { open = true }, variant = JengaButtonVariant.Outline)
         if (open) {
-            JengaBottomSheet(onDismissRequest = { open = false }) {
-                JengaStack(modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.xl)) {
-                    JengaText("Select a gate", style = JengaTheme.typography.titleLarge)
-                    JengaText("Choose which gate you're scanning at.", color = JengaTheme.colors.textMuted)
-                }
+            JengaBottomSheet(
+                onDismissRequest = { open = false },
+                title = "Select a gate",
+                subtitle = "Choose which gate you're scanning at.",
+                footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
+            ) {
+                JengaListItem(headline = "Gate A", onClick = { open = false })
+                JengaListItem(headline = "Gate B", onClick = { open = false })
             }
         }
     },

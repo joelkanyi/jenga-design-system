@@ -227,8 +227,14 @@ internal fun JengaDialogSample() {
 internal fun JengaBottomSheetSample() {
     var open by remember { mutableStateOf(true) }
     if (open) {
-        JengaBottomSheet(onDismissRequest = { open = false }) {
-            JengaText(text = "Select a gate")
+        JengaBottomSheet(
+            onDismissRequest = { open = false },
+            title = "Select a gate",
+            subtitle = "Choose which gate you're scanning at.",
+            footer = { JengaButton(text = "Done", onClick = { open = false }, modifier = Modifier.weight(1f)) },
+        ) {
+            JengaListItem(headline = "Gate A", onClick = { open = false })
+            JengaListItem(headline = "Gate B", onClick = { open = false })
         }
     }
 }

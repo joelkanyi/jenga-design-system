@@ -1,10 +1,18 @@
 package io.github.joelkanyi.jenga.component.feedback
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -16,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.divider.JengaDivider
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
@@ -67,10 +77,19 @@ public fun rememberJengaSheetState(skipPartiallyExpanded: Boolean = true): Jenga
  * ViewModel effect before navigating), use the overload that takes a
  * [JengaSheetState] from [rememberJengaSheetState].
  *
+ * Pass a [title], [subtitle] or [footer] to get the structured layout: the header
+ * sits at the top, [content] scrolls in between, and the footer (typically the
+ * sheet's actions) stays pinned at the bottom, above the keyboard. In that layout
+ * [content] is already vertically scrollable, so do not put a lazy list inside it.
+ * With all three null, [content] fills the sheet exactly as given.
+ *
  * @sample io.github.joelkanyi.jenga.samples.JengaBottomSheetSample
  *
  * @param onDismissRequest called when the sheet is dismissed (drag down or scrim).
  * @param modifier the [Modifier] for the sheet.
+ * @param title optional heading shown at the top of the sheet.
+ * @param subtitle optional supporting line under the [title].
+ * @param footer optional row pinned to the bottom of the sheet, for actions.
  * @param content the sheet body, laid out in a [ColumnScope].
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,12 +97,18 @@ public fun rememberJengaSheetState(skipPartiallyExpanded: Boolean = true): Jenga
 public fun JengaBottomSheet(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    title: String? = null,
+    subtitle: String? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     JengaBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = rememberJengaSheetState(),
         modifier = modifier,
+        title = title,
+        subtitle = subtitle,
+        footer = footer,
         content = content,
     )
 }
@@ -93,9 +118,14 @@ public fun JengaBottomSheet(
  * it can be shown/hidden imperatively (the MVI pattern: a ViewModel effect calls
  * `sheetState.hide()`, then composition removes the sheet).
  *
+ * The [title], [subtitle] and [footer] behave as in the other overload.
+ *
  * @param onDismissRequest called when the sheet is dismissed (drag down or scrim).
  * @param sheetState the externally-owned state from [rememberJengaSheetState].
  * @param modifier the [Modifier] for the sheet.
+ * @param title optional heading shown at the top of the sheet.
+ * @param subtitle optional supporting line under the [title].
+ * @param footer optional row pinned to the bottom of the sheet, for actions.
  * @param content the sheet body, laid out in a [ColumnScope].
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,6 +134,9 @@ public fun JengaBottomSheet(
     onDismissRequest: () -> Unit,
     sheetState: JengaSheetState,
     modifier: Modifier = Modifier,
+    title: String? = null,
+    subtitle: String? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     ModalBottomSheet(
@@ -114,8 +147,63 @@ public fun JengaBottomSheet(
         contentColor = JengaTheme.colors.textPrimary,
         scrimColor = JengaTheme.colors.scrim,
         dragHandle = { JengaDragHandle() },
-        content = content,
-    )
+    ) {
+        if (title == null && subtitle == null && footer == null) {
+            content()
+        } else {
+            JengaSheetLayout(title = title, subtitle = subtitle, footer = footer, content = content)
+        }
+    }
+}
+
+@Composable
+internal fun JengaSheetLayout(
+    title: String?,
+    subtitle: String?,
+    footer: (@Composable RowScope.() -> Unit)?,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        if (title != null || subtitle != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = JengaTheme.spacing.xl)
+                    .padding(bottom = JengaTheme.spacing.md),
+                verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xxs),
+            ) {
+                if (title != null) {
+                    JengaText(text = title, style = JengaTheme.typography.titleLarge)
+                }
+                if (subtitle != null) {
+                    JengaText(
+                        text = subtitle,
+                        style = JengaTheme.typography.bodySmall,
+                        color = JengaTheme.colors.textMuted,
+                    )
+                }
+            }
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, fill = false)
+                .verticalScroll(rememberScrollState()),
+            content = content,
+        )
+        if (footer != null) {
+            JengaDivider()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .imePadding()
+                    .padding(horizontal = JengaTheme.spacing.xl, vertical = JengaTheme.spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+                verticalAlignment = Alignment.CenterVertically,
+                content = footer,
+            )
+        }
+    }
 }
 
 @Composable
