@@ -55,6 +55,7 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_mail
 import io.github.joelkanyi.jenga.resources.jenga_ic_map_pin
 import io.github.joelkanyi.jenga.resources.jenga_ic_message_circle
 import io.github.joelkanyi.jenga.resources.jenga_ic_more_horizontal
+import io.github.joelkanyi.jenga.resources.jenga_ic_more_vertical
 import io.github.joelkanyi.jenga.resources.jenga_ic_package
 import io.github.joelkanyi.jenga.resources.jenga_ic_pencil
 import io.github.joelkanyi.jenga.resources.jenga_ic_phone
@@ -275,6 +276,8 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_truck)
     public val MoreHorizontal: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_more_horizontal)
+    public val MoreVertical: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_more_vertical)
     public val XCircle: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_x_circle)
     public val AlertCircle: ImageVector

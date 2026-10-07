@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,8 +26,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -33,11 +38,88 @@ import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 /** Validation status of a [JengaTextField], driving border and supporting-text color. */
 public enum class JengaTextFieldStatus { Default, Error, Success }
 
+/** Resolved colors for a [JengaTextField]. Override via [JengaTextFieldDefaults.colors]. */
+@Poko
+@Immutable
+public class JengaTextFieldColors(
+    public val container: Color,
+    public val focusedContainer: Color,
+    public val disabledContainer: Color,
+    public val border: Color,
+    public val focusedBorder: Color,
+    public val disabledBorder: Color,
+    public val focusRing: Color,
+    public val text: Color,
+    public val disabledText: Color,
+    public val placeholder: Color,
+    public val icon: Color,
+) {
+    public fun copy(
+        container: Color = this.container,
+        focusedContainer: Color = this.focusedContainer,
+        disabledContainer: Color = this.disabledContainer,
+        border: Color = this.border,
+        focusedBorder: Color = this.focusedBorder,
+        disabledBorder: Color = this.disabledBorder,
+        focusRing: Color = this.focusRing,
+        text: Color = this.text,
+        disabledText: Color = this.disabledText,
+        placeholder: Color = this.placeholder,
+        icon: Color = this.icon,
+    ): JengaTextFieldColors = JengaTextFieldColors(
+        container,
+        focusedContainer,
+        disabledContainer,
+        border,
+        focusedBorder,
+        disabledBorder,
+        focusRing,
+        text,
+        disabledText,
+        placeholder,
+        icon,
+    )
+}
+
 /** Defaults and token mappings for [JengaTextField]. */
 public object JengaTextFieldDefaults {
     /** Default field shape. */
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.control
+
+    /** Width of the soft focus halo around the field; reserved even when unfocused. */
+    public val FocusRingWidth: Dp = 3.dp
+
+    /** Minimum height of the input box. */
+    public val minHeight: Dp
+        @Composable get() = JengaTheme.sizing.fieldHeight
+
+    /** Padding inside the input box. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+
+    /** Input and placeholder text style. */
+    public val textStyle: TextStyle
+        @Composable get() = JengaTheme.typography.bodyMedium
+
+    /** Themed colors. */
+    @Composable
+    public fun colors(): JengaTextFieldColors {
+        val c = JengaTheme.colors
+        return JengaTextFieldColors(
+            container = c.surface,
+            focusedContainer = c.surface,
+            disabledContainer = c.surfaceDisabled,
+            border = c.borderStrong,
+            focusedBorder = c.brand,
+            disabledBorder = c.borderDisabled,
+            focusRing = c.focusRing,
+            text = c.textPrimary,
+            disabledText = c.contentDisabled,
+            placeholder = c.textFaint,
+            icon = c.textMuted,
+        )
+    }
 }
 
 /**
@@ -65,6 +147,11 @@ public object JengaTextFieldDefaults {
  * @param keyboardOptions software-keyboard configuration.
  * @param keyboardActions IME action handlers.
  * @param shape the field shape; defaults to [JengaTextFieldDefaults.shape].
+ * @param colors the color set; defaults to [JengaTextFieldDefaults.colors].
+ * @param textStyle the input and placeholder text style.
+ * @param minHeight the minimum height of the input box.
+ * @param contentPadding padding inside the input box.
+ * @param focusRingWidth width of the soft focus halo; `0.dp` removes it.
  */
 @Composable
 public fun JengaTextField(
@@ -84,21 +171,30 @@ public fun JengaTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     shape: Shape = JengaTextFieldDefaults.shape,
+    colors: JengaTextFieldColors = JengaTextFieldDefaults.colors(),
+    textStyle: TextStyle = JengaTextFieldDefaults.textStyle,
+    minHeight: Dp = JengaTextFieldDefaults.minHeight,
+    contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding,
+    focusRingWidth: Dp = JengaTextFieldDefaults.FocusRingWidth,
 ) {
     val c = JengaTheme.colors
     val interactionSource = remember { MutableInteractionSource() }
     val focused by interactionSource.collectIsFocusedAsState()
 
     val borderColor = when {
-        !enabled -> c.borderDisabled
+        !enabled -> colors.disabledBorder
         status == JengaTextFieldStatus.Error -> c.error
         status == JengaTextFieldStatus.Success -> c.success
-        focused -> c.brand
-        else -> c.borderStrong
+        focused -> colors.focusedBorder
+        else -> colors.border
     }
     val borderWidth = if (focused || status != JengaTextFieldStatus.Default) 2.dp else 1.dp
-    val container = if (enabled) c.surface else c.surfaceDisabled
-    val contentColor = if (enabled) c.textPrimary else c.contentDisabled
+    val container = when {
+        !enabled -> colors.disabledContainer
+        focused -> colors.focusedContainer
+        else -> colors.container
+    }
+    val contentColor = if (enabled) colors.text else colors.disabledText
 
     Column(
         modifier = modifier,
@@ -118,7 +214,7 @@ public fun JengaTextField(
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             readOnly = readOnly,
-            textStyle = JengaTheme.typography.bodyMedium.copy(color = contentColor),
+            textStyle = textStyle.copy(color = contentColor),
             cursorBrush = SolidColor(c.brand),
             singleLine = singleLine,
             visualTransformation = visualTransformation,
@@ -132,31 +228,31 @@ public fun JengaTextField(
                         // not a second hard stroke. 3dp is reserved always so focus
                         // doesn't shift layout.
                         .clip(shape)
-                        .background(if (focused) c.focusRing else Color.Transparent)
-                        .padding(3.dp)
+                        .background(if (focused) colors.focusRing else Color.Transparent)
+                        .padding(focusRingWidth)
                         .clip(shape)
                         .background(container)
                         .border(borderWidth, borderColor, shape)
-                        .defaultMinSize(minHeight = JengaTheme.sizing.fieldHeight)
-                        .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md),
+                        .defaultMinSize(minHeight = minHeight)
+                        .padding(contentPadding),
                     horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    CompositionLocalProvider(LocalJengaContentColor provides c.textMuted) {
+                    CompositionLocalProvider(LocalJengaContentColor provides colors.icon) {
                         leadingIcon?.invoke()
                     }
                     Box(modifier = Modifier.weight(1f)) {
                         if (value.isEmpty() && placeholder != null) {
                             JengaText(
                                 text = placeholder,
-                                style = JengaTheme.typography.bodyMedium,
-                                color = c.textFaint,
+                                style = textStyle,
+                                color = colors.placeholder,
                                 maxLines = 1,
                             )
                         }
                         innerTextField()
                     }
-                    CompositionLocalProvider(LocalJengaContentColor provides c.textMuted) {
+                    CompositionLocalProvider(LocalJengaContentColor provides colors.icon) {
                         trailingIcon?.invoke()
                     }
                 }

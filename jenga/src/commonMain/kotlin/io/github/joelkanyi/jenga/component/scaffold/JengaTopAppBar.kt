@@ -2,7 +2,9 @@ package io.github.joelkanyi.jenga.component.scaffold
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -47,6 +49,10 @@ public object JengaTopAppBarDefaults {
     /** Minimum bar height (excluding the status-bar inset). */
     public val Height: Dp = 56.dp
 
+    /** Padding inside the bar. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+
     /** Themed colors. */
     @Composable
     public fun colors(): JengaTopAppBarColors {
@@ -72,6 +78,9 @@ public object JengaTopAppBarDefaults {
  * @param subtitle optional secondary line under the title (e.g. context/details).
  * @param navigationIcon optional leading icon (e.g. back); inherits content color.
  * @param actions trailing actions laid out in a [RowScope]; inherit content color.
+ * @param showDivider whether the bottom divider is drawn (e.g. only once content scrolls under it).
+ * @param height the minimum bar height, excluding the status-bar inset.
+ * @param contentPadding padding inside the bar.
  * @param colors the color set; defaults to [JengaTopAppBarDefaults.colors].
  */
 @Composable
@@ -81,29 +90,14 @@ public fun JengaTopAppBar(
     subtitle: String? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
+    showDivider: Boolean = true,
+    height: Dp = JengaTopAppBarDefaults.Height,
+    contentPadding: PaddingValues = JengaTopAppBarDefaults.contentPadding,
     colors: JengaTopAppBarColors = JengaTopAppBarDefaults.colors(),
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(colors.container)
-            .drawBehind {
-                val stroke = 1.dp.toPx()
-                drawRect(
-                    color = colors.divider,
-                    topLeft = Offset(0f, size.height - stroke),
-                    size = Size(size.width, stroke),
-                )
-            }
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .heightIn(min = JengaTopAppBarDefaults.Height)
-            .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
-    ) {
-        CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
-            navigationIcon?.invoke()
-            Column(modifier = Modifier.weight(1f)) {
+    JengaTopAppBar(
+        title = {
+            Column {
                 JengaText(
                     text = title,
                     style = JengaTheme.typography.titleLarge,
@@ -118,6 +112,66 @@ public fun JengaTopAppBar(
                         maxLines = 1,
                     )
                 }
+            }
+        },
+        modifier = modifier,
+        navigationIcon = navigationIcon,
+        actions = actions,
+        showDivider = showDivider,
+        height = height,
+        contentPadding = contentPadding,
+        colors = colors,
+    )
+}
+
+/**
+ * A top app bar whose [title] is a slot, for titles that are more than one
+ * string (e.g. a monospaced id with a subtitle, or a tappable switcher line).
+ *
+ * @param title the title content; inherits content color.
+ * @param modifier the [Modifier] for this bar.
+ * @param navigationIcon optional leading icon (e.g. back); inherits content color.
+ * @param actions trailing actions laid out in a [RowScope]; inherit content color.
+ * @param showDivider whether the bottom divider is drawn (e.g. only once content scrolls under it).
+ * @param height the minimum bar height, excluding the status-bar inset.
+ * @param contentPadding padding inside the bar.
+ * @param colors the color set; defaults to [JengaTopAppBarDefaults.colors].
+ */
+@Composable
+public fun JengaTopAppBar(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    navigationIcon: (@Composable () -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+    showDivider: Boolean = true,
+    height: Dp = JengaTopAppBarDefaults.Height,
+    contentPadding: PaddingValues = JengaTopAppBarDefaults.contentPadding,
+    colors: JengaTopAppBarColors = JengaTopAppBarDefaults.colors(),
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(colors.container)
+            .drawBehind {
+                if (showDivider) {
+                    val stroke = 1.dp.toPx()
+                    drawRect(
+                        color = colors.divider,
+                        topLeft = Offset(0f, size.height - stroke),
+                        size = Size(size.width, stroke),
+                    )
+                }
+            }
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .heightIn(min = height)
+            .padding(contentPadding),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+    ) {
+        CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
+            navigationIcon?.invoke()
+            Box(modifier = Modifier.weight(1f)) {
+                title()
             }
             actions()
         }

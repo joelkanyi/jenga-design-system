@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.5.1-SNAPSHOT"
+version = "0.6.0"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -62,6 +62,9 @@ kotlin {
             api(compose.ui)
             @Suppress("DEPRECATION")
             api(compose.uiUtil)
+            // LocalDate, YearMonth, DayOfWeek and Month appear in the calendar and
+            // date-picker signatures.
+            api(libs.kotlinx.datetime)
             // Material 3 is an internal implementation detail (the bridge for ripple,
             // text selection and reused M3 primitives). Not part of Jenga's API.
             @Suppress("DEPRECATION")

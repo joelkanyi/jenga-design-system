@@ -36,3 +36,25 @@ private fun StepperShowcase() {
         JengaStepper(value = 8, onValueChange = {}, min = 1, max = 8) // increment disabled
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaStepperVariantsPreview() {
+    JengaTheme {
+        Column(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+        ) {
+            JengaStepper(value = 12, onValueChange = {}, editable = true, max = 99)
+            JengaStepper(
+                value = 1,
+                onValueChange = {},
+                min = 1,
+                onRemove = {},
+                removeContentDescription = "Remove",
+                shape = JengaTheme.shapes.md,
+                buttonShape = JengaTheme.shapes.control,
+            )
+        }
+    }
+}

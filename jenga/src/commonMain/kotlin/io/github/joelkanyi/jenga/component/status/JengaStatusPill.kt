@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -14,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -41,6 +44,17 @@ public class JengaStatusPillColors(
 public object JengaStatusPillDefaults {
     /** Diameter of the leading status dot / spinner. */
     public val IndicatorSize: Dp = 8.dp
+
+    /** Minimum pill height. */
+    public val MinHeight: Dp = 0.dp
+
+    /** Padding inside the pill. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.md, vertical = JengaTheme.spacing.xs)
+
+    /** Label text style. */
+    public val textStyle: TextStyle
+        @Composable get() = JengaTheme.typography.label
 
     /** Themed colors for the given [tone]. */
     @Composable
@@ -71,6 +85,11 @@ public object JengaStatusPillDefaults {
  * @param loading when true, the leading dot becomes a small spinner.
  * @param onClick optional tap handler (e.g. open a details sheet).
  * @param colors the color set; defaults to [JengaStatusPillDefaults.colors] for [tone].
+ * @param showDot whether the leading dot is shown; the spinner still shows while [loading].
+ * @param indicatorSize diameter of the leading dot or spinner.
+ * @param minHeight the minimum pill height.
+ * @param contentPadding padding inside the pill.
+ * @param textStyle the label text style.
  */
 @Composable
 public fun JengaStatusPill(
@@ -80,31 +99,37 @@ public fun JengaStatusPill(
     loading: Boolean = false,
     onClick: (() -> Unit)? = null,
     colors: JengaStatusPillColors = JengaStatusPillDefaults.colors(tone),
+    showDot: Boolean = true,
+    indicatorSize: Dp = JengaStatusPillDefaults.IndicatorSize,
+    minHeight: Dp = JengaStatusPillDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaStatusPillDefaults.contentPadding,
+    textStyle: TextStyle = JengaStatusPillDefaults.textStyle,
 ) {
     Row(
         modifier = modifier
             .clip(JengaTheme.shapes.pill)
             .background(colors.container)
             .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
-            .padding(horizontal = JengaTheme.spacing.md, vertical = JengaTheme.spacing.xs),
+            .defaultMinSize(minHeight = minHeight)
+            .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
     ) {
         if (loading) {
             JengaCircularProgressIndeterminate(
-                size = JengaStatusPillDefaults.IndicatorSize,
+                size = indicatorSize,
                 strokeWidth = 2.dp,
                 color = colors.accent,
                 trackColor = colors.accent.copy(alpha = 0.25f),
             )
-        } else {
+        } else if (showDot) {
             Box(
                 Modifier
-                    .size(JengaStatusPillDefaults.IndicatorSize)
+                    .size(indicatorSize)
                     .clip(JengaTheme.shapes.pill)
                     .background(colors.accent),
             )
         }
-        JengaText(text = label, style = JengaTheme.typography.label, color = colors.content)
+        JengaText(text = label, style = textStyle, color = colors.content)
     }
 }

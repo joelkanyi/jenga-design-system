@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.button
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -36,6 +37,9 @@ public enum class JengaIconButtonVariant {
      *  video. Uses the always-dark media-overlay tokens so it stays legible on any
      *  backdrop, in light or dark theme. */
     Overlay,
+
+    /** Surface fill with a strong border, for a secondary action beside a primary button. */
+    Outlined,
 }
 
 /** Resolved colors for a [JengaIconButton]. Override via [JengaIconButtonDefaults.colors]. */
@@ -46,13 +50,15 @@ public class JengaIconButtonColors(
     public val content: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
+    public val border: Color = Color.Transparent,
 ) {
     public fun copy(
         container: Color = this.container,
         content: Color = this.content,
         disabledContainer: Color = this.disabledContainer,
         disabledContent: Color = this.disabledContent,
-    ): JengaIconButtonColors = JengaIconButtonColors(container, content, disabledContainer, disabledContent)
+        border: Color = this.border,
+    ): JengaIconButtonColors = JengaIconButtonColors(container, content, disabledContainer, disabledContent, border)
 }
 
 /** Defaults and token mappings for [JengaIconButton]. */
@@ -74,24 +80,35 @@ public object JengaIconButtonDefaults {
                 content = c.textSecondary,
                 disabledContainer = Color.Transparent,
                 disabledContent = c.contentDisabled,
+                border = Color.Transparent,
             )
             JengaIconButtonVariant.Filled -> JengaIconButtonColors(
                 container = c.brand,
                 content = c.onBrand,
                 disabledContainer = c.surfaceDisabled,
                 disabledContent = c.contentDisabled,
+                border = Color.Transparent,
             )
             JengaIconButtonVariant.Tonal -> JengaIconButtonColors(
                 container = c.brandSubtle,
                 content = c.onBrandSubtle,
                 disabledContainer = c.surfaceDisabled,
                 disabledContent = c.contentDisabled,
+                border = Color.Transparent,
             )
             JengaIconButtonVariant.Overlay -> JengaIconButtonColors(
                 container = c.overlaySurface,
                 content = c.onOverlay,
                 disabledContainer = c.overlaySurface,
                 disabledContent = c.onOverlayMuted,
+                border = Color.Transparent,
+            )
+            JengaIconButtonVariant.Outlined -> JengaIconButtonColors(
+                container = c.surface,
+                content = c.textPrimary,
+                disabledContainer = c.surfaceDisabled,
+                disabledContent = c.contentDisabled,
+                border = c.borderStrong,
             )
         }
     }
@@ -101,7 +118,7 @@ public object JengaIconButtonDefaults {
  * A compact, icon-only button, for app-bar actions, toolbars, and inline
  * controls where a labelled [JengaButton] would be too heavy.
  *
- * The visible surface is [JengaIconButtonDefaults.Size], but the touch target is
+ * The visible surface is [size], but the touch target is
  * always expanded to the 48dp accessibility minimum. The icon inherits the
  * resolved content color via [LocalJengaContentColor].
  *
@@ -113,6 +130,7 @@ public object JengaIconButtonDefaults {
  * @param enabled whether the button is interactive.
  * @param shape the button shape; defaults to [JengaIconButtonDefaults.shape].
  * @param colors the color set; defaults to [JengaIconButtonDefaults.colors] for [variant].
+ * @param size the visible button size; the touch target is never smaller than 48dp.
  * @param content the icon (typically a single [JengaIcon]); inherits content color.
  */
 @Composable
@@ -123,6 +141,7 @@ public fun JengaIconButton(
     enabled: Boolean = true,
     shape: Shape = JengaIconButtonDefaults.shape,
     colors: JengaIconButtonColors = JengaIconButtonDefaults.colors(variant),
+    size: Dp = JengaIconButtonDefaults.Size,
     content: @Composable () -> Unit,
 ) {
     val container = if (enabled) colors.container else colors.disabledContainer
@@ -132,8 +151,9 @@ public fun JengaIconButton(
             .minimumInteractiveComponentSize()
             .clip(shape)
             .background(container)
+            .border(1.dp, colors.border, shape)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
-            .size(JengaIconButtonDefaults.Size),
+            .size(size),
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(LocalJengaContentColor provides contentColor) {

@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -48,6 +49,10 @@ public object JengaIconTileDefaults {
         }
     }
 
+    /** Default tile shape. */
+    public val shape: Shape
+        @Composable get() = JengaTheme.shapes.control
+
     /** The tile's square edge length for a given [size]. */
     public fun tileSize(size: JengaIconTileSize): Dp = when (size) {
         JengaIconTileSize.Small -> 32.dp
@@ -78,6 +83,9 @@ public object JengaIconTileDefaults {
  * @param tone the semantic tone driving the tile and icon colors.
  * @param size the tile size; see [JengaIconTileSize].
  * @param colors the color set; defaults to [JengaIconTileDefaults.colors] for [tone].
+ * @param shape the tile shape.
+ * @param tileSize the tile's edge length; defaults to the one for [size].
+ * @param iconSize the icon's edge length; defaults to the one for [size].
  */
 @Composable
 public fun JengaIconTile(
@@ -87,11 +95,14 @@ public fun JengaIconTile(
     tone: JengaBadgeTone = JengaBadgeTone.Neutral,
     size: JengaIconTileSize = JengaIconTileSize.Medium,
     colors: JengaIconTileColors = JengaIconTileDefaults.colors(tone),
+    shape: Shape = JengaIconTileDefaults.shape,
+    tileSize: Dp = JengaIconTileDefaults.tileSize(size),
+    iconSize: Dp = JengaIconTileDefaults.iconSize(size),
 ) {
     Box(
         modifier = modifier
-            .size(JengaIconTileDefaults.tileSize(size))
-            .clip(JengaTheme.shapes.control)
+            .size(tileSize)
+            .clip(shape)
             .background(colors.container),
         contentAlignment = Alignment.Center,
     ) {
@@ -99,7 +110,7 @@ public fun JengaIconTile(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = colors.content,
-            size = JengaIconTileDefaults.iconSize(size),
+            size = iconSize,
         )
     }
 }

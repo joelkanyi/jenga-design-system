@@ -37,3 +37,24 @@ private fun SegmentedShowcase() {
         JengaSegmentedControl(selectedIndex = 2, segments = listOf("Day", "Week", "Month"), onSelect = {})
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSegmentedControlStatesPreview() {
+    JengaTheme {
+        Column(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+        ) {
+            JengaSegmentedControl(selectedIndex = null, segments = listOf("Yes", "No"), onSelect = {})
+            JengaSegmentedControl(
+                selectedIndex = 0,
+                segments = listOf("New", "Used good", "Faulty"),
+                onSelect = {},
+                isEnabled = { it != 2 },
+                shape = JengaTheme.shapes.md,
+                segmentShape = JengaTheme.shapes.control,
+            )
+        }
+    }
+}

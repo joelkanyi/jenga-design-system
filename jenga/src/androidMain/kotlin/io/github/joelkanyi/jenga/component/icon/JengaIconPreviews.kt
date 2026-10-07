@@ -84,6 +84,7 @@ private fun IconShowcase() {
         JengaIcon(JengaIcons.Banknote, contentDescription = null)
         JengaIcon(JengaIcons.Truck, contentDescription = null)
         JengaIcon(JengaIcons.MoreHorizontal, contentDescription = null)
+        JengaIcon(JengaIcons.MoreVertical, contentDescription = null)
         JengaIcon(JengaIcons.XCircle, contentDescription = null)
         JengaIcon(JengaIcons.AlertCircle, contentDescription = null)
         JengaIcon(JengaIcons.Cpu, contentDescription = null)

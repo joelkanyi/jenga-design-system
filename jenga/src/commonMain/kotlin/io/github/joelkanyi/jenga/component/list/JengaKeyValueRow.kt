@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.component.list
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,10 +14,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -49,6 +54,16 @@ public class JengaKeyValueRowColors(
 
 /** Defaults and token mappings for [JengaKeyValueRow]. */
 public object JengaKeyValueRowDefaults {
+    /** Minimum row height; a clickable row is never shorter than the touch target. */
+    public val MinHeight: Dp = 0.dp
+
+    /** Default share of the row width the value may take before it wraps or truncates. */
+    public const val ValueMaxWidthFraction: Float = 0.6f
+
+    /** Inner padding around the label and value. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(vertical = JengaTheme.spacing.sm)
+
     /**
      * Themed colors for [emphasis]; a non-null [valueTone] tints the value
      * (e.g. success for "Paid").
@@ -78,7 +93,8 @@ public object JengaKeyValueRowDefaults {
 
 /**
  * A label and its value on one row: the label at the start, the value aligned
- * to the end and wrapping onto more lines when long. Stack these for detail
+ * to the end, taking up to [valueMaxWidthFraction] of the row and wrapping up
+ * to [valueMaxLines] lines before it is truncated with an ellipsis. Stack these for detail
  * and summary sections (serial numbers, dates, amounts). Place a
  * [io.github.joelkanyi.jenga.component.divider.JengaDivider] above a total row
  * to set it apart.
@@ -93,6 +109,10 @@ public object JengaKeyValueRowDefaults {
  * @param emphasis the row's weight; see [JengaKeyValueEmphasis].
  * @param trailingContent optional end slot after the value (e.g. a copy button).
  * @param onClick optional click handler; makes the whole row clickable.
+ * @param valueMaxLines the maximum lines for [value] before it is truncated.
+ * @param valueMaxWidthFraction the largest share of the row width the value may take.
+ * @param minHeight the minimum row height.
+ * @param contentPadding inner padding around the label and value.
  * @param colors the color set; defaults to [JengaKeyValueRowDefaults.colors].
  */
 @Composable
@@ -105,24 +125,22 @@ public fun JengaKeyValueRow(
     emphasis: JengaKeyValueEmphasis = JengaKeyValueEmphasis.Default,
     trailingContent: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
+    valueMaxLines: Int = Int.MAX_VALUE,
+    valueMaxWidthFraction: Float = JengaKeyValueRowDefaults.ValueMaxWidthFraction,
+    minHeight: Dp = JengaKeyValueRowDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaKeyValueRowDefaults.contentPadding,
     colors: JengaKeyValueRowColors = JengaKeyValueRowDefaults.colors(emphasis, valueTone),
 ) {
     val isTotal = emphasis == JengaKeyValueEmphasis.Total
     val bold = TextStyle(fontWeight = FontWeight.Bold)
     val labelStyle = JengaTheme.typography.bodyMedium.let { if (isTotal) it.merge(bold) else it }
+    val rowMinHeight = if (onClick != null) maxOf(minHeight, JengaTheme.sizing.minTouchTarget) else minHeight
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .then(
-                if (onClick != null) {
-                    Modifier
-                        .clickable(role = Role.Button, onClick = onClick)
-                        .defaultMinSize(minHeight = JengaTheme.sizing.minTouchTarget)
-                } else {
-                    Modifier
-                },
-            )
-            .padding(vertical = JengaTheme.spacing.sm),
+            .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
+            .defaultMinSize(minHeight = rowMinHeight)
+            .padding(contentPadding),
         contentAlignment = Alignment.CenterStart,
     ) {
         Row(
@@ -132,16 +150,22 @@ public fun JengaKeyValueRow(
         ) {
             JengaText(
                 text = label,
-                modifier = Modifier.weight(2f),
+                modifier = Modifier.weight(1f),
                 style = labelStyle,
                 color = colors.label,
             )
             JengaText(
                 text = value,
-                modifier = Modifier.weight(3f),
+                modifier = Modifier.layout { measurable, constraints ->
+                    val cap = (constraints.maxWidth * valueMaxWidthFraction).toInt()
+                    val placeable = measurable.measure(constraints.copy(maxWidth = cap.coerceAtLeast(constraints.minWidth)))
+                    layout(placeable.width, placeable.height) { placeable.place(0, 0) }
+                },
                 style = if (isTotal) valueStyle.merge(bold) else valueStyle,
                 color = colors.value,
                 textAlign = TextAlign.End,
+                maxLines = valueMaxLines,
+                overflow = TextOverflow.Ellipsis,
             )
             if (trailingContent != null) {
                 CompositionLocalProvider(LocalJengaContentColor provides colors.trailing) {

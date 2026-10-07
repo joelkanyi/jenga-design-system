@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
@@ -25,11 +26,18 @@ import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
+import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
+import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
+import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
+import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
+import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.card.JengaCard
+import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
@@ -38,12 +46,14 @@ import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
+import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.layout.JengaBox
+import io.github.joelkanyi.jenga.component.layout.JengaFormLayout
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
@@ -53,14 +63,19 @@ import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
+import io.github.joelkanyi.jenga.component.media.JengaImageViewer
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
+import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
+import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
+import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
+import io.github.joelkanyi.jenga.component.progress.JengaLabelledProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.jengaShimmer
@@ -70,11 +85,13 @@ import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerViewfinder
 import io.github.joelkanyi.jenga.component.search.JengaSearchField
+import io.github.joelkanyi.jenga.component.search.JengaSearchTrigger
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaToggle
 import io.github.joelkanyi.jenga.component.shelf.JengaImageShelf
 import io.github.joelkanyi.jenga.component.shelf.JengaShelfCard
+import io.github.joelkanyi.jenga.component.shelf.JengaThumbnailStrip
 import io.github.joelkanyi.jenga.component.slider.JengaSlider
 import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
@@ -84,7 +101,11 @@ import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
 import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
@@ -93,6 +114,9 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
+import kotlinx.datetime.YearMonth
 
 /**
  * Every catalog entry, in display order. Each pairs a live demo with the exact
@@ -187,6 +211,61 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     ) {
         var query by remember { mutableStateOf("") }
         JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
+    },
+    CatalogEntry(
+        name = "Search trigger",
+        group = "Inputs",
+        description = "Looks like a search field and opens a search screen when tapped.",
+        keywords = "search entry button scan",
+        code = """
+            JengaSearchTrigger(
+                placeholder = "Search tickets",
+                onClick = { /* open search */ },
+                trailingContent = { JengaIcon(JengaIcons.QrCode, contentDescription = "Scan") },
+            )
+        """.trimIndent(),
+    ) {
+        JengaSearchTrigger(
+            placeholder = "Search tickets",
+            onClick = {},
+            trailingContent = { JengaIcon(JengaIcons.QrCode, contentDescription = "Scan") },
+        )
+    },
+    CatalogEntry(
+        name = "Select field",
+        group = "Inputs",
+        description = "Shows a chosen value and opens a picker when tapped.",
+        keywords = "select dropdown picker choose option",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            var fault by remember { mutableStateOf<String?>(null) }
+            JengaSelectField(fault, { open = true }, label = "Fault", placeholder = "Choose a fault")
+            if (open) {
+                JengaListSheet(onDismissRequest = { open = false }, title = "Fault") {
+                    items(listOf("Battery not charging", "Panel damaged")) { option ->
+                        JengaRadioListItem(option, selected = option == fault, onClick = { fault = option; open = false })
+                    }
+                }
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        var fault by remember { mutableStateOf<String?>(null) }
+        JengaSelectField(fault, { open = true }, label = "Fault", placeholder = "Choose a fault")
+        if (open) {
+            JengaListSheet(onDismissRequest = { open = false }, title = "Fault") {
+                items(listOf("Battery not charging", "Panel damaged")) { option ->
+                    JengaRadioListItem(
+                        option,
+                        selected = option == fault,
+                        onClick = {
+                            fault = option
+                            open = false
+                        },
+                    )
+                }
+            }
+        }
     },
     CatalogEntry(
         name = "Toggle",
@@ -936,5 +1015,281 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaScanFeedback(status = JengaScannerStatus.Success)
             }
         }
+    },
+    CatalogEntry(
+        name = "Labelled progress",
+        group = "Feedback",
+        description = "A progress bar with a label row above it.",
+        keywords = "progress step percent bar",
+        code = """
+            JengaLabelledProgress(progress = 0.6f, label = AnnotatedString("Repair · step 3 of 5"), valueLabel = "60%")
+        """.trimIndent(),
+    ) {
+        JengaLabelledProgress(progress = 0.6f, label = AnnotatedString("Repair · step 3 of 5"), valueLabel = "60%")
+    },
+    CatalogEntry(
+        name = "Info bar",
+        group = "Actions",
+        description = "A button-shaped bar that says why no action is available.",
+        keywords = "read only closed disabled view",
+        code = """
+            JengaInfoBar(text = "View only", leadingIcon = { JengaIcon(JengaIcons.Lock, contentDescription = null) })
+        """.trimIndent(),
+    ) {
+        JengaInfoBar(text = "View only", leadingIcon = { JengaIcon(JengaIcons.Lock, contentDescription = null) })
+    },
+    CatalogEntry(
+        name = "Card footer",
+        group = "Containers",
+        description = "A quiet strip at the bottom of a card.",
+        keywords = "card footer meta sub row",
+        code = """
+            JengaCard(variant = JengaCardVariant.Outlined, contentPadding = PaddingValues()) {
+                JengaText("Battery replacement", modifier = Modifier.padding(JengaTheme.spacing.lg))
+                JengaCardFooter(text = "Waiting for parts since Monday")
+            }
+        """.trimIndent(),
+    ) {
+        JengaCard(variant = JengaCardVariant.Outlined, contentPadding = PaddingValues()) {
+            JengaText("Battery replacement", modifier = Modifier.padding(JengaTheme.spacing.lg))
+            JengaCardFooter(text = "Waiting for parts since Monday")
+        }
+    },
+    CatalogEntry(
+        name = "Navigation rail item",
+        group = "Navigation",
+        description = "A destination row for a side navigation list.",
+        keywords = "rail side nav drawer landscape",
+        code = """
+            var selected by remember { mutableIntStateOf(0) }
+            JengaStack(space = JengaTheme.spacing.none) {
+                JengaNavigationRailItem("Tickets", selected == 0, { selected = 0 }, { JengaIcon(JengaIcons.Ticket, contentDescription = null) })
+                JengaNavigationRailItem("Work orders", selected == 1, { selected = 1 }, { JengaIcon(JengaIcons.Wrench, contentDescription = null) }, showDot = true)
+            }
+        """.trimIndent(),
+    ) {
+        var selected by remember { mutableIntStateOf(0) }
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaNavigationRailItem("Tickets", selected == 0, { selected = 0 }, { JengaIcon(JengaIcons.Ticket, contentDescription = null) })
+            JengaNavigationRailItem("Work orders", selected == 1, { selected = 1 }, { JengaIcon(JengaIcons.Wrench, contentDescription = null) }, showDot = true)
+        }
+    },
+    CatalogEntry(
+        name = "Thumbnail strip",
+        group = "Media",
+        description = "A row of square thumbnails with an add tile.",
+        keywords = "photos images attachments gallery add",
+        code = """
+            JengaThumbnailStrip(count = 3, onAdd = {}, addContentDescription = "Add photo") {
+                JengaIcon(JengaIcons.Image, contentDescription = null)
+            }
+        """.trimIndent(),
+    ) {
+        JengaThumbnailStrip(count = 3, onAdd = {}, addContentDescription = "Add photo") {
+            JengaIcon(JengaIcons.Image, contentDescription = null)
+        }
+    },
+    CatalogEntry(
+        name = "Timeline",
+        group = "Data display",
+        description = "Stages of a process, each marked done, current, stopped or to do.",
+        keywords = "timeline stages steps history progress",
+        code = """
+            JengaStack(space = JengaTheme.spacing.none) {
+                JengaTimelineItem(JengaTimelineState.Done, "Lead created", JengaTimelinePosition.First, subtitle = "12 Mar")
+                JengaTimelineItem(JengaTimelineState.Current, "Quotation", JengaTimelinePosition.Middle)
+                JengaTimelineItem(JengaTimelineState.ToDo, "Installation", JengaTimelinePosition.Last)
+            }
+        """.trimIndent(),
+    ) {
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaTimelineItem(JengaTimelineState.Done, "Lead created", JengaTimelinePosition.First, subtitle = "12 Mar")
+            JengaTimelineItem(JengaTimelineState.Current, "Quotation", JengaTimelinePosition.Middle)
+            JengaTimelineItem(JengaTimelineState.ToDo, "Installation", JengaTimelinePosition.Last)
+        }
+    },
+    CatalogEntry(
+        name = "Form layout",
+        group = "Layout",
+        description = "A form whose bottom bar stays above the keyboard.",
+        keywords = "form keyboard ime submit fields",
+        code = """
+            var name by remember { mutableStateOf("") }
+            JengaFormLayout(
+                modifier = Modifier.height(240.dp),
+                bottomBar = { JengaButton("Save", {}, modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.lg)) },
+            ) {
+                item { JengaTextField(name, { name = it }, label = "Customer name") }
+            }
+        """.trimIndent(),
+    ) {
+        var name by remember { mutableStateOf("") }
+        JengaFormLayout(
+            modifier = Modifier.height(240.dp),
+            bottomBar = { JengaButton("Save", {}, modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.lg)) },
+        ) {
+            item { JengaTextField(name, { name = it }, label = "Customer name") }
+        }
+    },
+    CatalogEntry(
+        name = "Side sheet",
+        group = "Feedback",
+        description = "A sheet that slides in from the end edge, for wide layouts.",
+        keywords = "sheet side drawer landscape tablet",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            JengaButton("Side sheet", { open = true }, variant = JengaButtonVariant.Outline)
+            if (open) {
+                JengaSideSheet(
+                    onDismissRequest = { open = false },
+                    title = "Filters",
+                    footer = { JengaButton("Apply", { open = false }, modifier = Modifier.weight(1f)) },
+                ) {
+                    item { JengaCheckboxListItem("Open only", checked = true, onCheckedChange = {}) }
+                }
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        JengaButton("Side sheet", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaSideSheet(
+                onDismissRequest = { open = false },
+                title = "Filters",
+                footer = { JengaButton("Apply", { open = false }, modifier = Modifier.weight(1f)) },
+            ) {
+                item { JengaCheckboxListItem("Open only", checked = true, onCheckedChange = {}) }
+            }
+        }
+    },
+    CatalogEntry(
+        name = "Image viewer",
+        group = "Media",
+        description = "A full-screen viewer with zoom, for photos.",
+        keywords = "photo image zoom fullscreen viewer",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            JengaButton("Image viewer", { open = true }, variant = JengaButtonVariant.Outline)
+            if (open) {
+                JengaImageViewer(onDismissRequest = { open = false }, title = "photo.jpg", closeContentDescription = "Close") {
+                    JengaIcon(JengaIcons.Image, contentDescription = null)
+                }
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        JengaButton("Image viewer", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaImageViewer(onDismissRequest = { open = false }, title = "photo.jpg", closeContentDescription = "Close") {
+                JengaIcon(JengaIcons.Image, contentDescription = null)
+            }
+        }
+    },
+    CatalogEntry(
+        name = "Date picker",
+        group = "Inputs",
+        description = "A month calendar for picking one date.",
+        keywords = "date calendar day picker",
+        code = """
+            var date by remember { mutableStateOf<LocalDate?>(LocalDate(2026, 3, 18)) }
+            JengaDatePicker(
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                monthTitle = { "${'$'}{it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${'$'}{it.year}" },
+                dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
+                previousMonthContentDescription = "Previous month",
+                nextMonthContentDescription = "Next month",
+            )
+        """.trimIndent(),
+    ) {
+        var date by remember { mutableStateOf<LocalDate?>(LocalDate(2026, 3, 18)) }
+        JengaDatePicker(
+            selectedDate = date,
+            onSelectedDateChange = { date = it },
+            monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
+            dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
+            previousMonthContentDescription = "Previous month",
+            nextMonthContentDescription = "Next month",
+        )
+    },
+    CatalogEntry(
+        name = "Date picker dialog",
+        group = "Inputs",
+        description = "A date picker in a dialog with confirm and dismiss.",
+        keywords = "date calendar dialog modal",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            JengaButton("Pick a date", { open = true }, variant = JengaButtonVariant.Outline)
+            if (open) {
+                JengaDatePickerDialog(
+                    onDismissRequest = { open = false },
+                    onConfirm = { open = false },
+                    confirmLabel = "OK",
+                    dismissLabel = "Cancel",
+                    monthTitle = { "${'$'}{it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${'$'}{it.year}" },
+                    dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
+                    previousMonthContentDescription = "Previous month",
+                    nextMonthContentDescription = "Next month",
+                )
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        JengaButton("Pick a date", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaDatePickerDialog(
+                onDismissRequest = { open = false },
+                onConfirm = { open = false },
+                confirmLabel = "OK",
+                dismissLabel = "Cancel",
+                monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
+                dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
+                previousMonthContentDescription = "Previous month",
+                nextMonthContentDescription = "Next month",
+            )
+        }
+    },
+    CatalogEntry(
+        name = "Calendar",
+        group = "Inputs",
+        description = "A paging month grid where every day cell is your own content.",
+        keywords = "calendar month grid range custom",
+        code = """
+            val state = rememberJengaCalendarState(startMonth = YearMonth(2026, Month.JANUARY), endMonth = YearMonth(2026, Month.DECEMBER))
+            JengaCalendar(state = state) { day ->
+                JengaCalendarDefaults.Day(day = day, selected = false, enabled = true, isToday = false, onClick = {})
+            }
+        """.trimIndent(),
+    ) {
+        val state = rememberJengaCalendarState(startMonth = YearMonth(2026, Month.JANUARY), endMonth = YearMonth(2026, Month.DECEMBER))
+        JengaCalendar(state = state) { day ->
+            JengaCalendarDefaults.Day(day = day, selected = false, enabled = true, isToday = false, onClick = {})
+        }
+    },
+    CatalogEntry(
+        name = "Wheel picker",
+        group = "Inputs",
+        description = "A scroll wheel for picking one option.",
+        keywords = "wheel picker scroll spinner",
+        code = """
+            var index by remember { mutableIntStateOf(1) }
+            JengaWheelPicker(listOf("Morning", "Afternoon", "Evening"), index, { index = it }, visibleItemCount = 3)
+        """.trimIndent(),
+    ) {
+        var index by remember { mutableIntStateOf(1) }
+        JengaWheelPicker(listOf("Morning", "Afternoon", "Evening"), index, { index = it }, visibleItemCount = 3)
+    },
+    CatalogEntry(
+        name = "Date of birth picker",
+        group = "Inputs",
+        description = "Day, month and year wheels for a date of birth.",
+        keywords = "birthday dob date wheels age",
+        code = """
+            var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
+            JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name.lowercase().replaceFirstChar(Char::uppercase) })
+        """.trimIndent(),
+    ) {
+        var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
+        JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name.lowercase().replaceFirstChar(Char::uppercase) })
     },
 )

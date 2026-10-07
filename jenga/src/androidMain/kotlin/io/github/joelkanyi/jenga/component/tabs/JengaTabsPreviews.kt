@@ -37,3 +37,18 @@ private fun TabsShowcase() {
         JengaTabs(selectedIndex = 1, tabs = listOf("Upcoming", "Live", "Past"), onSelect = {})
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaTabsStartPreview() {
+    JengaTheme {
+        JengaTabs(
+            selectedIndex = 0,
+            tabs = listOf("Details", "Parts", "History"),
+            onSelect = {},
+            modifier = Modifier.background(JengaTheme.colors.background),
+            arrangement = JengaTabsArrangement.Start,
+            dotted = setOf(1),
+        )
+    }
+}

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -31,11 +33,13 @@ public enum class JengaSnackbarTone { Neutral, Success, Error }
 public class JengaSnackbarColors(
     public val container: Color,
     public val content: Color,
+    public val action: Color = content,
 ) {
     public fun copy(
         container: Color = this.container,
         content: Color = this.content,
-    ): JengaSnackbarColors = JengaSnackbarColors(container, content)
+        action: Color = this.action,
+    ): JengaSnackbarColors = JengaSnackbarColors(container, content, action)
 }
 
 /** Defaults and token mappings for [JengaSnackbar]. */
@@ -47,11 +51,28 @@ public object JengaSnackbarDefaults {
     /** Diameter of the leading tone dot. */
     public val DotSize: Dp = 8.dp
 
+    /** Space around a snackbar inside a [JengaSnackbarHost]. */
+    public val hostPadding: PaddingValues
+        @Composable get() = PaddingValues(JengaTheme.spacing.lg)
+
+    /** Padding inside the snackbar. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+
+    /** Message text style. */
+    public val messageStyle: TextStyle
+        @Composable get() = JengaTheme.typography.bodySmall
+
+    /** Action label text style. */
+    public val actionStyle: TextStyle
+        @Composable get() = JengaTheme.typography.label
+
     /** Themed colors (high-contrast inverse surface). */
     @Composable
     public fun colors(): JengaSnackbarColors = JengaSnackbarColors(
         container = JengaTheme.colors.inverseSurface,
         content = JengaTheme.colors.inverseOnSurface,
+        action = JengaTheme.colors.inverseOnSurface,
     )
 
     /** Accent dot color for [tone], or `null` for [JengaSnackbarTone.Neutral]. */
@@ -79,6 +100,9 @@ public object JengaSnackbarDefaults {
  * @param onAction called when the action is tapped.
  * @param shape the snackbar shape; defaults to [JengaSnackbarDefaults.shape].
  * @param colors the color set; defaults to [JengaSnackbarDefaults.colors].
+ * @param contentPadding padding inside the snackbar.
+ * @param messageStyle the message text style.
+ * @param actionStyle the action label text style.
  */
 @Composable
 public fun JengaSnackbar(
@@ -89,6 +113,9 @@ public fun JengaSnackbar(
     onAction: (() -> Unit)? = null,
     shape: Shape = JengaSnackbarDefaults.shape,
     colors: JengaSnackbarColors = JengaSnackbarDefaults.colors(),
+    contentPadding: PaddingValues = JengaSnackbarDefaults.contentPadding,
+    messageStyle: TextStyle = JengaSnackbarDefaults.messageStyle,
+    actionStyle: TextStyle = JengaSnackbarDefaults.actionStyle,
 ) {
     val toneColor = JengaSnackbarDefaults.toneColor(tone)
 
@@ -97,7 +124,7 @@ public fun JengaSnackbar(
             .fillMaxWidth()
             .clip(shape)
             .background(colors.container)
-            .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md),
+            .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
@@ -111,15 +138,15 @@ public fun JengaSnackbar(
         }
         JengaText(
             text = message,
-            style = JengaTheme.typography.bodySmall,
+            style = messageStyle,
             color = colors.content,
             modifier = Modifier.weight(1f),
         )
         if (actionLabel != null && onAction != null) {
             JengaText(
-                text = actionLabel.uppercase(),
-                style = JengaTheme.typography.label,
-                color = colors.content,
+                text = actionLabel,
+                style = actionStyle,
+                color = colors.action,
                 modifier = Modifier
                     .clip(JengaTheme.shapes.sm)
                     .clickable(role = Role.Button, onClick = onAction)

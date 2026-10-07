@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.joelkanyi.jenga.component.layout.JengaInline
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -37,5 +39,31 @@ private fun ChipShowcase() {
         JengaChip(label = "Music", selected = false, onClick = {})
         JengaChip(label = "Sports", selected = false, onClick = {})
         JengaChip(label = "Off", selected = false, onClick = {}, enabled = false)
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaChipCountPreview() {
+    JengaTheme {
+        JengaInline(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            JengaChip(
+                label = "Open",
+                selected = true,
+                onClick = {},
+                trailingContent = { JengaText("12", style = JengaTheme.typography.caption) },
+                colors = JengaChipDefaults.colors().copy(
+                    selectedContainer = JengaTheme.colors.brandSubtle,
+                    selectedContent = JengaTheme.colors.onBrandSubtle,
+                    selectedBorder = JengaTheme.colors.brand,
+                ),
+            )
+            JengaChip(
+                label = "Waiting for parts",
+                selected = false,
+                onClick = {},
+                trailingContent = { JengaText("3", style = JengaTheme.typography.caption) },
+            )
+        }
     }
 }

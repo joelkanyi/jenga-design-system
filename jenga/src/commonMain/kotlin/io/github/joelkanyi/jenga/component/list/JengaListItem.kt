@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,6 +46,10 @@ public object JengaListItemDefaults {
     /** Minimum row height. */
     public val MinHeight: Dp = 56.dp
 
+    /** Inner padding around the row content. */
+    public val contentPadding: PaddingValues
+        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+
     /** Themed colors. */
     @Composable
     public fun colors(): JengaListItemColors {
@@ -76,6 +81,8 @@ public object JengaListItemDefaults {
  * @param enabled when false, the row is drawn in the disabled color and [onClick] is ignored.
  * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
  * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
+ * @param minHeight the minimum row height.
+ * @param contentPadding inner padding around the row content.
  * @param colors the color set; defaults to [JengaListItemDefaults.colors].
  */
 @Composable
@@ -90,6 +97,8 @@ public fun JengaListItem(
     enabled: Boolean = true,
     headlineMaxLines: Int = 1,
     supportingMaxLines: Int = 1,
+    minHeight: Dp = JengaListItemDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
     val disabled = JengaTheme.colors.contentDisabled
@@ -107,8 +116,8 @@ public fun JengaListItem(
                     Modifier
                 },
             )
-            .defaultMinSize(minHeight = JengaListItemDefaults.MinHeight)
-            .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md),
+            .defaultMinSize(minHeight = minHeight)
+            .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {

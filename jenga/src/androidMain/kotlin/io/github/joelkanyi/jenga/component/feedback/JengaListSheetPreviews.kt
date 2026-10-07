@@ -13,6 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
+import io.github.joelkanyi.jenga.component.button.JengaIconButton
+import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -53,6 +56,9 @@ private fun ListSheetSurfacePreview() {
             JengaListSheetLayout(
                 title = "Assign technician",
                 subtitle = "Ticket TKT-2041",
+                headerAction = {
+                    JengaIconButton(onClick = {}) { JengaIcon(JengaIcons.Close, contentDescription = "Close") }
+                },
                 footer = {
                     JengaButton("Cancel", {}, modifier = Modifier.weight(1f), variant = JengaButtonVariant.Outline)
                     JengaButton("Assign", {}, modifier = Modifier.weight(1f))
