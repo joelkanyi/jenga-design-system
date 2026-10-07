@@ -567,6 +567,18 @@ public final class io/github/joelkanyi/jenga/component/link/JengaLinkKt {
 	public static final fun JengaLink (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;ZZLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis : java/lang/Enum {
+	public static final field Default Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
+	public static final field Total Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;
+}
+
+public final class io/github/joelkanyi/jenga/component/list/JengaKeyValueRowKt {
+	public static final fun JengaKeyValueRow (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Lio/github/joelkanyi/jenga/component/list/JengaKeyValueEmphasis;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V

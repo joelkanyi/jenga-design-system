@@ -46,6 +46,8 @@ import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
@@ -525,6 +527,23 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaIconTile(JengaIcons.Package, contentDescription = null, tone = JengaBadgeTone.Brand)
             JengaIconTile(JengaIcons.CheckCircle, contentDescription = null, tone = JengaBadgeTone.Success)
             JengaIconTile(JengaIcons.XCircle, contentDescription = null, tone = JengaBadgeTone.Error)
+        }
+    },
+    CatalogEntry(
+        name = "Key value row",
+        group = "Data display",
+        description = "A label with an end-aligned value, for detail and summary sections.",
+        keywords = "detail summary total label value",
+        code = """
+            JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+            JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
+        """.trimIndent(),
+    ) {
+        JengaStack(space = JengaTheme.spacing.none) {
+            JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+            JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
         }
     },
     CatalogEntry(

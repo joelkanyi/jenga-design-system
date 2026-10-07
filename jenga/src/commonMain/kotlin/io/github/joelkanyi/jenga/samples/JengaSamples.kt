@@ -44,6 +44,8 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
@@ -302,6 +304,14 @@ internal fun JengaListItemSample() {
         trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
         onClick = { },
     )
+}
+
+@Composable
+internal fun JengaKeyValueRowSample() {
+    Column {
+        JengaKeyValueRow(label = "Serial number", value = "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+        JengaKeyValueRow(label = "Total", value = "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
+    }
 }
 
 @Composable
