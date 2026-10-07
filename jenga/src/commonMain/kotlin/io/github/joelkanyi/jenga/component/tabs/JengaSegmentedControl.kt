@@ -33,7 +33,7 @@ public class JengaSegmentedControlColors(
     public val selectedSegment: Color,
     public val selectedContent: Color,
     public val unselectedContent: Color,
-    public val disabledContent: Color,
+    public val disabledContent: Color = unselectedContent.copy(alpha = 0.38f),
 ) {
     public fun copy(
         track: Color = this.track,

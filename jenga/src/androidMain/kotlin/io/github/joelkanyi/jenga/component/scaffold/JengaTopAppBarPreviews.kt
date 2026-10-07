@@ -33,7 +33,7 @@ internal fun JengaTopAppBarSlotPreview() {
             title = {
                 Column {
                     JengaText("WO-2026-0142", style = JengaTheme.typography.mono)
-                    JengaText("Solar home system repair", style = JengaTheme.typography.caption, color = JengaTheme.colors.textMuted)
+                    JengaText("Device repair", style = JengaTheme.typography.caption, color = JengaTheme.colors.textMuted)
                 }
             },
             navigationIcon = {

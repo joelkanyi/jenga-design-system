@@ -37,7 +37,7 @@ public class JengaChipColors(
     public val unselectedBorder: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
-    public val selectedBorder: Color,
+    public val selectedBorder: Color = Color.Transparent,
 ) {
     public fun copy(
         selectedContainer: Color = this.selectedContainer,

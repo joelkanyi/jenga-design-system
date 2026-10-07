@@ -50,7 +50,7 @@ public class JengaIconButtonColors(
     public val content: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
-    public val border: Color,
+    public val border: Color = Color.Transparent,
 ) {
     public fun copy(
         container: Color = this.container,

@@ -48,7 +48,7 @@ public class JengaTabsColors(
     public val unselectedContent: Color,
     public val indicator: Color,
     public val divider: Color,
-    public val dot: Color,
+    public val dot: Color = indicator,
 ) {
     public fun copy(
         selectedContent: Color = this.selectedContent,
@@ -149,11 +149,20 @@ public fun JengaTabs(
         ) {
             tabs.forEachIndexed { index, title ->
                 val selected = index == selectedIndex
+                val indicator = when {
+                    selected -> colors.indicator
+                    fill -> colors.divider
+                    else -> Color.Transparent
+                }
                 Box(
                     modifier = Modifier
                         .then(if (fill) Modifier.weight(1f) else Modifier)
                         .selectable(selected = selected, role = Role.Tab, onClick = { onSelect(index) })
-                        .defaultMinSize(minHeight = minHeight),
+                        .defaultMinSize(minHeight = minHeight)
+                        .drawBehind {
+                            val thickness = JengaTabsDefaults.IndicatorThickness.toPx()
+                            drawRect(indicator, Offset(0f, size.height - thickness), Size(size.width, thickness))
+                        },
                     contentAlignment = Alignment.Center,
                 ) {
                     Row(
@@ -181,18 +190,6 @@ public fun JengaTabs(
                             )
                         }
                     }
-                    val indicator = when {
-                        selected -> colors.indicator
-                        fill -> colors.divider
-                        else -> Color.Transparent
-                    }
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .height(JengaTabsDefaults.IndicatorThickness)
-                            .background(indicator),
-                    )
                 }
             }
         }

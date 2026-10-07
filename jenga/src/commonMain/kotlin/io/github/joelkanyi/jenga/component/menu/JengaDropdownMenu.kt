@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.runtime.Composable
@@ -112,7 +111,6 @@ public object JengaDropdownMenuDefaults {
  * @param onDismissRequest called when the menu should close (outside tap / back).
  * @param modifier the [Modifier] for the menu surface.
  * @param offset offset from the anchor.
- * @param width fixed menu width; unspecified sizes the menu to its items.
  * @param shape the menu shape.
  * @param border optional outline around the menu.
  * @param shadowElevation the menu shadow elevation.
@@ -124,7 +122,6 @@ public fun JengaDropdownMenu(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
-    width: Dp = Dp.Unspecified,
     shape: Shape = JengaDropdownMenuDefaults.shape,
     border: BorderStroke? = null,
     shadowElevation: Dp = JengaDropdownMenuDefaults.ShadowElevation,
@@ -133,7 +130,7 @@ public fun JengaDropdownMenu(
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        modifier = if (width != Dp.Unspecified) modifier.width(width) else modifier,
+        modifier = modifier,
         offset = offset,
         shape = shape,
         containerColor = JengaTheme.colors.surface,

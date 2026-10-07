@@ -211,6 +211,7 @@ public final class io/github/joelkanyi/jenga/component/button/JengaButtonVariant
 
 public final class io/github/joelkanyi/jenga/component/button/JengaIconButtonColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;
 	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;
@@ -303,6 +304,7 @@ public final class io/github/joelkanyi/jenga/component/chip/ComposableSingletons
 
 public final class io/github/joelkanyi/jenga/component/chip/JengaChipColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun copy-FD3wquc (JJJJJJJJ)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
 	public static synthetic fun copy-FD3wquc$default (Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;JJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
@@ -1021,7 +1023,7 @@ public final class io/github/joelkanyi/jenga/component/menu/JengaDropdownMenuIte
 }
 
 public final class io/github/joelkanyi/jenga/component/menu/JengaDropdownMenuKt {
-	public static final fun JengaDropdownMenu--5aUqH8 (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;JFLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/BorderStroke;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaDropdownMenu-pGJDfrA (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/BorderStroke;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun JengaDropdownMenuDivider (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
 	public static final fun JengaDropdownMenuItem-Wu8B24Y (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLjava/lang/String;Lio/github/joelkanyi/jenga/component/menu/JengaDropdownMenuItemTone;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/menu/JengaDropdownMenuItemColors;Landroidx/compose/runtime/Composer;III)V
 }
@@ -1801,6 +1803,7 @@ public final class io/github/joelkanyi/jenga/component/tabs/ComposableSingletons
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
 	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
@@ -1839,6 +1842,7 @@ public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsArrangement
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
 	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
