@@ -132,6 +132,7 @@ internal fun JengaListSheetLayout(
     contentPadding: PaddingValues = JengaListSheetDefaults.contentPadding,
     footerPadding: PaddingValues = JengaListSheetDefaults.footerPadding,
     footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
+    fillHeight: Boolean = false,
     content: LazyListScope.() -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -157,7 +158,7 @@ internal fun JengaListSheetLayout(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f, fill = false),
+                .weight(1f, fill = fillHeight),
             contentPadding = contentPadding,
             content = content,
         )
