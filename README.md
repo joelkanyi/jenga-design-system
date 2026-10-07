@@ -92,13 +92,13 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 | Text | `JengaText` |
 | Buttons | `JengaButton`, `JengaIconButton`, `JengaFab` |
 | Inputs | `JengaTextField`, `JengaSearchField`, `JengaSlider`, `JengaStepper` |
-| Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl` |
-| Containers | `JengaCard`, `JengaListItem`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
+| Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
+| Containers | `JengaCard`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
 | Status and tags | `JengaBadge`, `JengaChip`, `JengaBanner`, `JengaVerdictBar` |
 | Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaNavigationBar`, `JengaTabs` |
-| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
+| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
 | Refresh | `JengaPullToRefresh` |
-| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaMediaHero`, `JengaImageShelf` |
+| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaMediaHero`, `JengaImageShelf` |
 | Progress | `JengaLinearProgress`, `JengaCircularProgress`, `JengaDotStrip`, shimmer |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection` |

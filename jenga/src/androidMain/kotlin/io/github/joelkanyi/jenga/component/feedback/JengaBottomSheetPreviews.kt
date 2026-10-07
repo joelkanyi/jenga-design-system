@@ -9,9 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.joelkanyi.jenga.component.button.JengaButton
-import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
-import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -31,47 +28,6 @@ internal fun JengaBottomSheetPreview() {
 @Composable
 internal fun JengaBottomSheetRtlPreview() {
     JengaTheme { RtlPreview { BottomSheetSurfacePreview() } }
-}
-
-@JengaBlockPreviews
-@Composable
-internal fun JengaBottomSheetStructuredPreview() {
-    JengaTheme { BottomSheetStructuredSurfacePreview() }
-}
-
-@Preview(name = "RTL", showBackground = true)
-@Composable
-internal fun JengaBottomSheetStructuredRtlPreview() {
-    JengaTheme { RtlPreview { BottomSheetStructuredSurfacePreview() } }
-}
-
-@Composable
-private fun BottomSheetStructuredSurfacePreview() {
-    Column(
-        modifier = Modifier
-            .background(JengaTheme.colors.background)
-            .padding(JengaTheme.spacing.lg),
-    ) {
-        Column(
-            modifier = Modifier
-                .clip(JengaTheme.shapes.card)
-                .background(JengaTheme.colors.surface),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            JengaDragHandle()
-            JengaSheetLayout(
-                title = "Assign technician",
-                subtitle = "Ticket TKT-2041",
-                footer = {
-                    JengaButton("Cancel", {}, modifier = Modifier.weight(1f), variant = JengaButtonVariant.Outline)
-                    JengaButton("Assign", {}, modifier = Modifier.weight(1f))
-                },
-            ) {
-                JengaRadioListItem(headline = "Amina Otieno", selected = true, onClick = {})
-                JengaRadioListItem(headline = "Brian Mwangi", selected = false, onClick = {})
-            }
-        }
-    }
 }
 
 @Composable

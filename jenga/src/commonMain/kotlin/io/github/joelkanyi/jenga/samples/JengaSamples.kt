@@ -5,6 +5,7 @@ package io.github.joelkanyi.jenga.samples
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,6 +31,7 @@ import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
@@ -227,14 +229,26 @@ internal fun JengaDialogSample() {
 internal fun JengaBottomSheetSample() {
     var open by remember { mutableStateOf(true) }
     if (open) {
-        JengaBottomSheet(
+        JengaBottomSheet(onDismissRequest = { open = false }) {
+            JengaText(text = "Select a gate")
+        }
+    }
+}
+
+@Composable
+internal fun JengaListSheetSample() {
+    var open by remember { mutableStateOf(true) }
+    var selected by remember { mutableStateOf("Gate A") }
+    if (open) {
+        JengaListSheet(
             onDismissRequest = { open = false },
             title = "Select a gate",
             subtitle = "Choose which gate you're scanning at.",
             footer = { JengaButton(text = "Done", onClick = { open = false }, modifier = Modifier.weight(1f)) },
         ) {
-            JengaListItem(headline = "Gate A", onClick = { open = false })
-            JengaListItem(headline = "Gate B", onClick = { open = false })
+            items(listOf("Gate A", "Gate B")) { gate ->
+                JengaRadioListItem(headline = gate, selected = gate == selected, onClick = { selected = gate })
+            }
         }
     }
 }
@@ -318,6 +332,7 @@ internal fun JengaListItemSample() {
 internal fun JengaKeyValueRowSample() {
     Column {
         JengaKeyValueRow(label = "Serial number", value = "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
+        JengaDivider()
         JengaKeyValueRow(label = "Total", value = "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
     }
 }

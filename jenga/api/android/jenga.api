@@ -387,7 +387,7 @@ public final class io/github/joelkanyi/jenga/component/fab/JengaFabKt {
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaBottomSheetKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaBottomSheetKt;
 	public fun <init> ()V
-	public final fun getLambda$377354729$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1482962231$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaBottomSheetPreviewsKt {
@@ -395,12 +395,7 @@ public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingle
 	public fun <init> ()V
 	public final fun getLambda$-1747509551$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1985565331$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$-1992582605$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-651845886$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$1147618717$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1554631424$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$165273310$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$1768828870$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaDialogPreviewsKt {
@@ -413,6 +408,21 @@ public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingle
 	public final fun getLambda$1693153785$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetKt;
+	public fun <init> ()V
+	public final fun getLambda$1870009064$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$164073806$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1895071842$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1987804237$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$237011831$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaSnackbarPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaSnackbarPreviewsKt;
 	public fun <init> ()V
@@ -422,13 +432,17 @@ public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingle
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaBottomSheetKt {
-	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun rememberJengaSheetState (ZLandroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogKt {
 	public static final fun JengaDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/feedback/JengaListSheetKt {
+	public static final fun JengaListSheet (Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaSheetState {
@@ -2128,6 +2142,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-1988505284$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2138543669$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-526265762$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-67187725$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-775096355$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-895332967$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-983531617$jenga_release ()Lkotlin/jvm/functions/Function3;

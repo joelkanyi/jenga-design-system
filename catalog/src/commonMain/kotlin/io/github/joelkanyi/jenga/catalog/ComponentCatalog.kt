@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -36,6 +37,7 @@ import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
@@ -424,20 +426,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Bottom sheet",
         group = "Feedback",
-        description = "A panel that slides up from the bottom edge, with an optional header and pinned footer.",
-        keywords = "sheet modal drawer footer",
+        description = "A panel that slides up from the bottom edge.",
+        keywords = "sheet modal drawer",
         code = """
             var open by remember { mutableStateOf(false) }
             JengaButton("Bottom sheet", { open = true }, variant = JengaButtonVariant.Outline)
             if (open) {
-                JengaBottomSheet(
-                    onDismissRequest = { open = false },
-                    title = "Select a gate",
-                    subtitle = "Choose which gate you're scanning at.",
-                    footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
-                ) {
-                    JengaListItem(headline = "Gate A", onClick = { open = false })
-                    JengaListItem(headline = "Gate B", onClick = { open = false })
+                JengaBottomSheet(onDismissRequest = { open = false }) {
+                    JengaStack(modifier = Modifier.padding(JengaTheme.spacing.xl)) {
+                        JengaText("Select a gate", style = JengaTheme.typography.titleLarge)
+                    }
                 }
             }
         """.trimIndent(),
@@ -445,14 +443,50 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         var open by remember { mutableStateOf(false) }
         JengaButton("Bottom sheet", { open = true }, variant = JengaButtonVariant.Outline)
         if (open) {
-            JengaBottomSheet(
+            JengaBottomSheet(onDismissRequest = { open = false }) {
+                JengaStack(modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.xl)) {
+                    JengaText("Select a gate", style = JengaTheme.typography.titleLarge)
+                    JengaText("Choose which gate you're scanning at.", color = JengaTheme.colors.textMuted)
+                }
+            }
+        }
+    },
+    CatalogEntry(
+        name = "List sheet",
+        group = "Feedback",
+        description = "A bottom sheet with a title, a lazy list body and a pinned footer, for pickers and short forms.",
+        keywords = "sheet modal picker select footer",
+        code = """
+            var open by remember { mutableStateOf(false) }
+            var selected by remember { mutableStateOf("Gate A") }
+            JengaButton("List sheet", { open = true }, variant = JengaButtonVariant.Outline)
+            if (open) {
+                JengaListSheet(
+                    onDismissRequest = { open = false },
+                    title = "Select a gate",
+                    subtitle = "Choose which gate you're scanning at.",
+                    footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
+                ) {
+                    items(listOf("Gate A", "Gate B", "Gate C")) { gate ->
+                        JengaRadioListItem(gate, selected = gate == selected, onClick = { selected = gate })
+                    }
+                }
+            }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        var selected by remember { mutableStateOf("Gate A") }
+        JengaButton("List sheet", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaListSheet(
                 onDismissRequest = { open = false },
                 title = "Select a gate",
                 subtitle = "Choose which gate you're scanning at.",
                 footer = { JengaButton("Done", { open = false }, modifier = Modifier.weight(1f)) },
             ) {
-                JengaListItem(headline = "Gate A", onClick = { open = false })
-                JengaListItem(headline = "Gate B", onClick = { open = false })
+                items(listOf("Gate A", "Gate B", "Gate C")) { gate ->
+                    JengaRadioListItem(gate, selected = gate == selected, onClick = { selected = gate })
+                }
             }
         }
     },
@@ -580,12 +614,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         code = """
             JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
             JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaDivider()
             JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
         """.trimIndent(),
     ) {
         JengaStack(space = JengaTheme.spacing.none) {
             JengaKeyValueRow("Serial number", "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
             JengaKeyValueRow("Status", "Paid", valueTone = JengaBadgeTone.Success)
+            JengaDivider()
             JengaKeyValueRow("Total", "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
         }
     },
