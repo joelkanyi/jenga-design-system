@@ -30,6 +30,7 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param controlPosition whether the radio sits at the start or the end of the row.
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
+ * @param contentSpacing the gap between the control and the text.
  */
 @Composable
 public fun JengaRadioListItem(
@@ -42,6 +43,7 @@ public fun JengaRadioListItem(
     controlPosition: JengaControlPosition = JengaControlPosition.Leading,
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
+    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
 ) {
     val control: @Composable () -> Unit = { JengaRadioButton(selected = selected, onClick = null, enabled = enabled) }
     JengaListItem(
@@ -58,6 +60,7 @@ public fun JengaRadioListItem(
         enabled = enabled,
         minHeight = minHeight,
         contentPadding = contentPadding,
+        contentSpacing = contentSpacing,
     )
 }
 
@@ -76,6 +79,7 @@ public fun JengaRadioListItem(
  * @param controlPosition whether the checkbox sits at the start or the end of the row.
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
+ * @param contentSpacing the gap between the control and the text.
  * @param checkboxShape the checkbox box shape.
  */
 @Composable
@@ -89,6 +93,7 @@ public fun JengaCheckboxListItem(
     controlPosition: JengaControlPosition = JengaControlPosition.Leading,
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
+    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
     checkboxShape: Shape = JengaCheckboxDefaults.shape,
 ) {
     val control: @Composable () -> Unit = {
@@ -108,5 +113,6 @@ public fun JengaCheckboxListItem(
         enabled = enabled,
         minHeight = minHeight,
         contentPadding = contentPadding,
+        contentSpacing = contentSpacing,
     )
 }

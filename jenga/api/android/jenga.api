@@ -1061,6 +1061,8 @@ public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons
 	public final fun getLambda$-375149184$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-471685803$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-686755782$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1224510908$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1401556385$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1523420024$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1807968431$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1938746841$jenga_release ()Lkotlin/jvm/functions/Function2;
@@ -1138,16 +1140,19 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemDefault
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/list/JengaListItemDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getContentSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getHeadlineStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getMinHeight-D9Ej5fM ()F
+	public final fun getSupportingStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
-	public static final fun JengaListItem-ajgufuY (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaListItem-1NIduh0 (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
-	public static final fun JengaCheckboxListItem-f8-ukHw (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaRadioListItem-gMrHQkA (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaCheckboxListItem-8E6TiBc (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaRadioListItem-2Ea8Huw (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaImageViewerKt {

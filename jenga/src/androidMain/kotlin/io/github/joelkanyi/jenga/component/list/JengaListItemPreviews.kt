@@ -4,10 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -57,5 +60,22 @@ private fun ListItemShowcase() {
             onClick = {},
             enabled = false,
         )
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemStylesPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = "Manage technicians",
+                supporting = "Add, remove and assign",
+                leadingContent = { JengaIconTile(JengaIcons.Users, contentDescription = null) },
+                headlineStyle = JengaTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                supportingStyle = JengaTheme.typography.caption,
+                contentSpacing = 14.dp,
+            )
+        }
     }
 }

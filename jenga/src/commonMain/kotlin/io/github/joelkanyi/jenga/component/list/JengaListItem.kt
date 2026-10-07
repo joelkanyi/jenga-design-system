@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -45,6 +46,18 @@ public class JengaListItemColors(
 public object JengaListItemDefaults {
     /** Minimum row height. */
     public val MinHeight: Dp = 56.dp
+
+    /** Gap between the leading content, the text and the trailing content. */
+    public val contentSpacing: Dp
+        @Composable get() = JengaTheme.spacing.md
+
+    /** Headline text style. */
+    public val headlineStyle: TextStyle
+        @Composable get() = JengaTheme.typography.titleSmall
+
+    /** Supporting text style. */
+    public val supportingStyle: TextStyle
+        @Composable get() = JengaTheme.typography.bodySmall
 
     /** Inner padding around the row content. */
     public val contentPadding: PaddingValues
@@ -83,6 +96,9 @@ public object JengaListItemDefaults {
  * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
+ * @param headlineStyle the [headline] text style.
+ * @param supportingStyle the [supporting] text style.
+ * @param contentSpacing the gap between the leading content, the text and the trailing content.
  * @param colors the color set; defaults to [JengaListItemDefaults.colors].
  */
 @Composable
@@ -99,6 +115,9 @@ public fun JengaListItem(
     supportingMaxLines: Int = 1,
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
+    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
+    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
     val disabled = JengaTheme.colors.contentDisabled
@@ -119,7 +138,7 @@ public fun JengaListItem(
             .defaultMinSize(minHeight = minHeight)
             .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(contentSpacing),
     ) {
         if (leadingContent != null) {
             CompositionLocalProvider(LocalJengaContentColor provides leadingTrailingColor) {
@@ -129,14 +148,14 @@ public fun JengaListItem(
         Column(modifier = Modifier.weight(1f)) {
             JengaText(
                 text = headline,
-                style = JengaTheme.typography.titleSmall,
+                style = headlineStyle,
                 color = headlineColor,
                 maxLines = headlineMaxLines,
             )
             if (supporting != null) {
                 JengaText(
                     text = supporting,
-                    style = JengaTheme.typography.bodySmall,
+                    style = supportingStyle,
                     color = supportingColor,
                     maxLines = supportingMaxLines,
                 )
