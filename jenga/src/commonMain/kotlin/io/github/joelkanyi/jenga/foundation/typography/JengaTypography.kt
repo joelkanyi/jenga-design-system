@@ -223,16 +223,15 @@ public fun jengaTypography(
 
 /**
  * Returns this style with tabular (fixed-width) figures, so digits line up in
- * columns of amounts, counts and timers. Keeps any feature settings already set.
+ * columns of amounts, counts and timers. Keeps any other feature settings and
+ * replaces an existing `tnum` setting, including one that turns it off.
  */
 public fun TextStyle.withTabularFigures(): TextStyle {
-    val existing = fontFeatureSettings
-    val settings = when {
-        existing.isNullOrBlank() -> "tnum"
-        existing.contains("tnum") -> existing
-        else -> "$existing, tnum"
-    }
-    return copy(fontFeatureSettings = settings)
+    val others = fontFeatureSettings.orEmpty()
+        .split(',')
+        .map { it.trim() }
+        .filter { it.isNotEmpty() && it.substringBefore(' ').trim('"', '\'') != "tnum" }
+    return copy(fontFeatureSettings = (others + "tnum").joinToString(", "))
 }
 
 /**
