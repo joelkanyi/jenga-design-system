@@ -2226,6 +2226,8 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1143789796$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1644438206$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1848930134$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2138543669$jenga ()Lkotlin/jvm/functions/Function3;
@@ -2233,15 +2235,20 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-526265762$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-626117203$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-73259007$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-75929975$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-775096355$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-895332967$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-983531617$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1056921111$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1375474695$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1557062852$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$183897136$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1912113536$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1967077901$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$205903528$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2082387659$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2127897924$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$277114736$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$380858747$jenga ()Lkotlin/jvm/functions/Function2;

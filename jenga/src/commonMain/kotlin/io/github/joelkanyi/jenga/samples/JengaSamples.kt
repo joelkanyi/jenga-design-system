@@ -4,6 +4,7 @@ package io.github.joelkanyi.jenga.samples
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
@@ -20,11 +22,18 @@ import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
+import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
+import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
+import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
+import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
+import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.card.JengaCard
+import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -32,6 +41,7 @@ import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
+import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
@@ -39,7 +49,10 @@ import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostSta
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
+import io.github.joelkanyi.jenga.component.image.JengaImage
+import io.github.joelkanyi.jenga.component.image.JengaImageFit
 import io.github.joelkanyi.jenga.component.layout.JengaBox
+import io.github.joelkanyi.jenga.component.layout.JengaFormLayout
 import io.github.joelkanyi.jenga.component.layout.JengaGrid
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaSection
@@ -51,13 +64,18 @@ import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
+import io.github.joelkanyi.jenga.component.media.JengaImageViewer
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
+import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
+import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
+import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
+import io.github.joelkanyi.jenga.component.progress.JengaLabelledProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
 import io.github.joelkanyi.jenga.component.refresh.JengaPullToRefresh
@@ -74,6 +92,7 @@ import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaToggle
 import io.github.joelkanyi.jenga.component.shelf.JengaImageShelf
 import io.github.joelkanyi.jenga.component.shelf.JengaShelfCard
+import io.github.joelkanyi.jenga.component.shelf.JengaThumbnailStrip
 import io.github.joelkanyi.jenga.component.slider.JengaSlider
 import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
@@ -87,6 +106,9 @@ import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
@@ -95,6 +117,9 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
+import kotlinx.datetime.YearMonth
 
 /**
  * Compiled usage samples surfaced in API docs via `@sample`. They are kept
@@ -604,4 +629,164 @@ internal fun JengaSwipeToDismissSample() {
     JengaSwipeToDismiss(onDismiss = { }) {
         JengaListItem(headline = "Swipe me away", supporting = "End to start to dismiss")
     }
+}
+
+@Composable
+internal fun JengaLabelledProgressSample() {
+    JengaLabelledProgress(progress = 0.6f, label = AnnotatedString("Repair · step 3 of 5"), valueLabel = "60%")
+}
+
+@Composable
+internal fun JengaInfoBarSample() {
+    JengaInfoBar(text = "View only", leadingIcon = { JengaIcon(JengaIcons.Lock, contentDescription = null) })
+}
+
+@Composable
+internal fun JengaCardFooterSample() {
+    JengaCard(contentPadding = PaddingValues()) {
+        JengaText("Battery replacement", modifier = Modifier.padding(JengaTheme.spacing.lg))
+        JengaCardFooter(text = "Waiting for parts since Monday")
+    }
+}
+
+@Composable
+internal fun JengaNavigationRailItemSample() {
+    var selected by remember { mutableIntStateOf(0) }
+    Column {
+        JengaNavigationRailItem(
+            label = "Tickets",
+            selected = selected == 0,
+            onClick = { selected = 0 },
+            icon = { JengaIcon(JengaIcons.Ticket, contentDescription = null) },
+        )
+        JengaNavigationRailItem(
+            label = "Work orders",
+            selected = selected == 1,
+            onClick = { selected = 1 },
+            icon = { JengaIcon(JengaIcons.Wrench, contentDescription = null) },
+            showDot = true,
+        )
+    }
+}
+
+@Composable
+internal fun JengaThumbnailStripSample() {
+    val photos = listOf("https://example.com/1.jpg", "https://example.com/2.jpg")
+    JengaThumbnailStrip(count = photos.size, onAdd = {}, addContentDescription = "Add photo") { index ->
+        JengaImage(url = photos[index], contentDescription = null)
+    }
+}
+
+@Composable
+internal fun JengaTimelineSample() {
+    Column {
+        JengaTimelineItem(JengaTimelineState.Done, "Lead created", JengaTimelinePosition.First, subtitle = "12 Mar")
+        JengaTimelineItem(JengaTimelineState.Current, "Quotation", JengaTimelinePosition.Middle)
+        JengaTimelineItem(JengaTimelineState.ToDo, "Installation", JengaTimelinePosition.Last)
+    }
+}
+
+@Composable
+internal fun JengaFormLayoutSample() {
+    var name by remember { mutableStateOf("") }
+    JengaFormLayout(
+        bottomBar = {
+            JengaButton(text = "Save", onClick = {}, modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.lg))
+        },
+    ) {
+        item { JengaTextField(value = name, onValueChange = { name = it }, label = "Customer name") }
+    }
+}
+
+@Composable
+internal fun JengaSideSheetSample() {
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaSideSheet(
+            onDismissRequest = { open = false },
+            title = "Filters",
+            footer = { JengaButton(text = "Apply", onClick = { open = false }, modifier = Modifier.weight(1f)) },
+        ) {
+            item { JengaCheckboxListItem(headline = "Open only", checked = true, onCheckedChange = {}) }
+        }
+    }
+}
+
+@Composable
+internal fun JengaImageViewerSample() {
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaImageViewer(onDismissRequest = { open = false }, title = "photo.jpg", closeContentDescription = "Close") {
+            JengaImage(url = "https://example.com/photo.jpg", contentDescription = null, fit = JengaImageFit.Contain)
+        }
+    }
+}
+
+@Composable
+internal fun JengaDatePickerSample() {
+    var date by remember { mutableStateOf<LocalDate?>(null) }
+    JengaDatePicker(
+        selectedDate = date,
+        onSelectedDateChange = { date = it },
+        monthTitle = { "${it.month.name} ${it.year}" },
+        dayOfWeekLabel = { it.name.take(2) },
+        previousMonthContentDescription = "Previous month",
+        nextMonthContentDescription = "Next month",
+    )
+}
+
+@Composable
+internal fun JengaDatePickerDialogSample() {
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaDatePickerDialog(
+            onDismissRequest = { open = false },
+            onConfirm = { open = false },
+            confirmLabel = "OK",
+            dismissLabel = "Cancel",
+            monthTitle = { "${it.month.name} ${it.year}" },
+            dayOfWeekLabel = { it.name.take(2) },
+            previousMonthContentDescription = "Previous month",
+            nextMonthContentDescription = "Next month",
+        )
+    }
+}
+
+@Composable
+internal fun JengaCalendarRangeSample() {
+    val month = YearMonth(2026, Month.MARCH)
+    val state = rememberJengaCalendarState(startMonth = month, endMonth = month)
+    var start by remember { mutableStateOf<LocalDate?>(null) }
+    var end by remember { mutableStateOf<LocalDate?>(null) }
+    JengaCalendar(state = state) { day ->
+        val from = start
+        val to = end
+        val inRange = from != null && to != null && day.date in from..to
+        JengaCalendarDefaults.Day(
+            day = day,
+            selected = inRange || day.date == from,
+            enabled = true,
+            isToday = false,
+            onClick = {
+                if (from == null || to != null || day.date < from) {
+                    start = day.date
+                    end = null
+                } else {
+                    end = day.date
+                }
+            },
+        )
+    }
+}
+
+@Composable
+internal fun JengaWheelPickerSample() {
+    var index by remember { mutableIntStateOf(0) }
+    JengaWheelPicker(items = listOf("Morning", "Afternoon", "Evening"), selectedIndex = index, onSelectedIndexChange = { index = it })
+}
+
+@Composable
+internal fun JengaDateOfBirthPickerSample() {
+    var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
+    JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name })
 }
