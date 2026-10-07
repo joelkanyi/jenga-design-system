@@ -33,7 +33,7 @@ JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
 
 | Android | iOS | Desktop (JVM) |
 |---------|-----|---------------|
-| `minSdk 24` | `iosArm64`, `iosSimulatorArm64` | yes |
+| `minSdk 23` | `iosArm64`, `iosSimulatorArm64` | yes |
 
 The whole public API lives in `commonMain`, so every platform shares the same components and
 tokens. The Intel iOS simulator slice (`iosX64`) is not shipped, because Compose Multiplatform
