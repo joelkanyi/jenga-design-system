@@ -3,12 +3,19 @@ package io.github.joelkanyi.jenga.component.expandable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.joelkanyi.jenga.component.card.JengaCard
+import io.github.joelkanyi.jenga.component.card.JengaCardVariant
+import io.github.joelkanyi.jenga.component.divider.JengaDivider
+import io.github.joelkanyi.jenga.component.link.JengaLink
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
@@ -62,5 +69,34 @@ private fun ExpandableShowcase() {
                 }
             },
         ) {}
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaExpandableRowInCardPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            JengaCard(variant = JengaCardVariant.Outlined, contentPadding = PaddingValues()) {
+                val plain = JengaExpandableRowDefaults.colors().copy(container = Color.Transparent, border = Color.Transparent)
+                JengaExpandableRow(
+                    expanded = true,
+                    onExpandedChange = {},
+                    header = { JengaText("WO-2026-0118 · Fuse replaced", modifier = Modifier.weight(1f)) },
+                    shape = RectangleShape,
+                    colors = plain,
+                ) {
+                    JengaLink(text = "Open work order", onClick = {})
+                }
+                JengaDivider()
+                JengaExpandableRow(
+                    expanded = false,
+                    onExpandedChange = {},
+                    header = { JengaText("WO-2026-0094 · Panel cleaned", modifier = Modifier.weight(1f)) },
+                    shape = RectangleShape,
+                    colors = plain,
+                ) {}
+            }
+        }
     }
 }

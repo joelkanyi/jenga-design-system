@@ -464,8 +464,30 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 	public static final fun JengaDivider-9IZ8Weo (Landroidx/compose/ui/Modifier;FJLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors;
+	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorder-0d7_KjU ()J
+	public final fun getChevron-0d7_KjU ()J
+	public final fun getContainer-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getHeaderPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+}
+
 public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowKt {
-	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/foundation/layout/PaddingValues;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/fab/JengaFabColors {
@@ -844,10 +866,11 @@ public final class io/github/joelkanyi/jenga/component/link/JengaLinkDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/link/JengaLinkDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 }
 
 public final class io/github/joelkanyi/jenga/component/link/JengaLinkKt {
-	public static final fun JengaLink (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;ZZLandroidx/compose/runtime/Composer;II)V
+	public static final fun JengaLink (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;ZZLkotlin/jvm/functions/Function2;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaControlPosition : java/lang/Enum {
@@ -2298,7 +2321,6 @@ public final class io/github/joelkanyi/jenga/pattern/JengaTicketRowKt {
 public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
-	public final fun getLambda$-1143789796$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1848930134$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
@@ -2327,6 +2349,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$561998281$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$718816094$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$878903685$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$927163277$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$935433820$jenga ()Lkotlin/jvm/functions/Function2;
 }
 
