@@ -922,8 +922,8 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
-	public static final fun JengaCheckboxListItem-LBhLsqs (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
-	public static final fun JengaRadioListItem-8E6TiBc (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaCheckboxListItem-10nC_uM (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaRadioListItem-hWUzXOk (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaImageViewerKt {
@@ -1456,7 +1456,7 @@ public final class io/github/joelkanyi/jenga/component/selection/JengaRadioButto
 }
 
 public final class io/github/joelkanyi/jenga/component/selection/JengaRadioButtonKt {
-	public static final fun JengaRadioButton (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLio/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaRadioButton-HYR8e34 (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLio/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors;FLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/selection/JengaToggleColors {

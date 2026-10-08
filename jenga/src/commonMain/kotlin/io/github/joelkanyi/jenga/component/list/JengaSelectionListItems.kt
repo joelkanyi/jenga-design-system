@@ -10,10 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaCheckboxDefaults
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
+import io.github.joelkanyi.jenga.component.selection.JengaRadioButtonDefaults
 
 /** Where a selection list item draws its control. */
 public enum class JengaControlPosition { Leading, Trailing }
@@ -34,6 +36,9 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
  * @param contentSpacing the gap between the control and the text.
+ * @param headlineStyle the [headline] text style.
+ * @param supportingStyle the [supporting] text style.
+ * @param radioSize the diameter of the radio.
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it selects the row.
  */
 @Composable
@@ -48,9 +53,14 @@ public fun JengaRadioListItem(
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
+    radioSize: Dp = JengaRadioButtonDefaults.Size,
     trailingContent: (@Composable () -> Unit)? = null,
 ) {
-    val control: @Composable () -> Unit = { JengaRadioButton(selected = selected, onClick = null, enabled = enabled) }
+    val control: @Composable () -> Unit = {
+        JengaRadioButton(selected = selected, onClick = null, enabled = enabled, size = radioSize)
+    }
     JengaListItem(
         headline = headline,
         modifier = modifier.selectable(
@@ -66,6 +76,8 @@ public fun JengaRadioListItem(
         minHeight = minHeight,
         contentPadding = contentPadding,
         contentSpacing = contentSpacing,
+        headlineStyle = headlineStyle,
+        supportingStyle = supportingStyle,
     )
 }
 
@@ -85,6 +97,8 @@ public fun JengaRadioListItem(
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
  * @param contentSpacing the gap between the control and the text.
+ * @param headlineStyle the [headline] text style.
+ * @param supportingStyle the [supporting] text style.
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it toggles the row.
  * @param checkboxShape the checkbox box shape.
  */
@@ -100,6 +114,8 @@ public fun JengaCheckboxListItem(
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
     trailingContent: (@Composable () -> Unit)? = null,
     checkboxShape: Shape = JengaCheckboxDefaults.shape,
 ) {
@@ -121,6 +137,8 @@ public fun JengaCheckboxListItem(
         minHeight = minHeight,
         contentPadding = contentPadding,
         contentSpacing = contentSpacing,
+        headlineStyle = headlineStyle,
+        supportingStyle = supportingStyle,
     )
 }
 
