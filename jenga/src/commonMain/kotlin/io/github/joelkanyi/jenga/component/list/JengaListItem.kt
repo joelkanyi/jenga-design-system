@@ -117,6 +117,7 @@ public object JengaListItemDefaults {
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
  * @param contentSpacing the gap between the leading content, the text and the trailing content.
+ * @param verticalAlignment how the leading content, the text and the trailing content align in a tall row.
  * @param colors the color set; defaults to [JengaListItemDefaults.colors].
  */
 @Composable
@@ -136,6 +137,7 @@ public fun JengaListItem(
     headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
     JengaListItem(
@@ -154,6 +156,7 @@ public fun JengaListItem(
         headlineStyle = headlineStyle,
         supportingStyle = supportingStyle,
         contentSpacing = contentSpacing,
+        verticalAlignment = verticalAlignment,
         colors = colors,
     )
 }
@@ -178,6 +181,7 @@ public fun JengaListItem(
  * @param headlineStyle the [headline] text style; spans in [headline] override it.
  * @param supportingStyle the [supporting] text style.
  * @param contentSpacing the gap between the leading content, the text and the trailing content.
+ * @param verticalAlignment how the leading content, the text and the trailing content align in a tall row.
  * @param colors the color set; defaults to [JengaListItemDefaults.colors].
  */
 @Composable
@@ -197,6 +201,7 @@ public fun JengaListItem(
     headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
     val headlineColor = if (enabled) colors.headline else colors.disabledHeadline
@@ -215,7 +220,7 @@ public fun JengaListItem(
             )
             .defaultMinSize(minHeight = minHeight)
             .padding(contentPadding),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = verticalAlignment,
         horizontalArrangement = Arrangement.spacedBy(contentSpacing),
     ) {
         if (leadingContent != null) {

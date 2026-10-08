@@ -14,11 +14,12 @@ public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarDefault
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarDefaults;
 	public final fun diameter-u2uoSUM (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;)F
+	public final fun textStyle (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarKt {
-	public static final fun JengaAvatar (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaAvatar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaAvatar-942rkJo (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaAvatar-hGBTI10 (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarSize : java/lang/Enum {
@@ -948,8 +949,8 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemDefault
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
-	public static final fun JengaListItem-1NIduh0 (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
-	public static final fun JengaListItem-1NIduh0 (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaListItem-Db3JDNM (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/ui/Alignment$Vertical;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaListItem-Db3JDNM (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ZIIFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLandroidx/compose/ui/Alignment$Vertical;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemDefaults {

@@ -1,8 +1,10 @@
 package io.github.joelkanyi.jenga.component.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -97,6 +99,27 @@ internal fun JengaListItemAnnotatedHeadlinePreview() {
                     }
                 },
                 supporting = "Battery not charging",
+            )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemTopAlignedPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = "Why a new ticket?",
+                leadingContent = { JengaIconTile(JengaIcons.Users, contentDescription = null) },
+                supportingContent = {
+                    Column(verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs)) {
+                        JengaBadge(text = "Customer reported a new fault", tone = JengaBadgeTone.Neutral)
+                        JengaBadge(text = "Previous ticket is closed", tone = JengaBadgeTone.Neutral)
+                        JengaBadge(text = "Different product", tone = JengaBadgeTone.Neutral)
+                    }
+                },
+                verticalAlignment = Alignment.Top,
             )
         }
     }
