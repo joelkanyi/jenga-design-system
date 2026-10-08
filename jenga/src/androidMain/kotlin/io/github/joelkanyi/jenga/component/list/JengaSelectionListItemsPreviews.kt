@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.selection.JengaCheckboxDefaults
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -110,6 +111,33 @@ internal fun JengaSelectionListItemsCompactPreview() {
                 headlineStyle = JengaTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal),
                 radioSize = 20.dp,
             )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSelectionListItemsStatesPreview() {
+    JengaTheme {
+        val c = JengaTheme.colors
+        val locked = JengaListItemDefaults.colors().copy(disabledHeadline = c.textPrimary, disabledSupporting = c.textMuted)
+        Column(modifier = Modifier.background(c.surface)) {
+            JengaRadioListItem(
+                headline = "Charge controller",
+                selected = false,
+                onClick = {},
+                supporting = "Out of stock",
+                colors = JengaListItemDefaults.colors().copy(supporting = c.onWarningContainer),
+            )
+            JengaCheckboxListItem(
+                headline = "Replace the fuse",
+                checked = true,
+                onCheckedChange = {},
+                enabled = false,
+                colors = locked,
+                checkboxColors = JengaCheckboxDefaults.colors().copy(disabledFill = c.brand.copy(alpha = 0.4f)),
+            )
+            JengaCheckboxListItem(headline = "Clean the panel", checked = false, onCheckedChange = {}, loading = true)
         }
     }
 }

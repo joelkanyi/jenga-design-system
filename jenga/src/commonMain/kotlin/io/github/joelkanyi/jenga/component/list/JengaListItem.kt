@@ -33,13 +33,27 @@ public class JengaListItemColors(
     public val headline: Color,
     public val supporting: Color,
     public val leadingTrailing: Color,
+    public val disabledHeadline: Color = headline.copy(alpha = 0.38f),
+    public val disabledSupporting: Color = supporting.copy(alpha = 0.38f),
+    public val disabledLeadingTrailing: Color = leadingTrailing.copy(alpha = 0.38f),
 ) {
     public fun copy(
         container: Color = this.container,
         headline: Color = this.headline,
         supporting: Color = this.supporting,
         leadingTrailing: Color = this.leadingTrailing,
-    ): JengaListItemColors = JengaListItemColors(container, headline, supporting, leadingTrailing)
+        disabledHeadline: Color = this.disabledHeadline,
+        disabledSupporting: Color = this.disabledSupporting,
+        disabledLeadingTrailing: Color = this.disabledLeadingTrailing,
+    ): JengaListItemColors = JengaListItemColors(
+        container,
+        headline,
+        supporting,
+        leadingTrailing,
+        disabledHeadline,
+        disabledSupporting,
+        disabledLeadingTrailing,
+    )
 }
 
 /** Defaults and token mappings for [JengaListItem]. */
@@ -72,6 +86,9 @@ public object JengaListItemDefaults {
             headline = c.textPrimary,
             supporting = c.textMuted,
             leadingTrailing = c.textMuted,
+            disabledHeadline = c.contentDisabled,
+            disabledSupporting = c.contentDisabled,
+            disabledLeadingTrailing = c.contentDisabled,
         )
     }
 }
@@ -91,7 +108,7 @@ public object JengaListItemDefaults {
  * @param leadingContent optional start slot (inherits the leading/trailing color).
  * @param trailingContent optional end slot (inherits the leading/trailing color).
  * @param onClick optional click handler; makes the row focusable with a ripple.
- * @param enabled when false, the row is drawn in the disabled color and [onClick] is ignored.
+ * @param enabled when false, the row uses the disabled colors from [colors] and [onClick] is ignored.
  * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
  * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
  * @param minHeight the minimum row height.
@@ -120,10 +137,9 @@ public fun JengaListItem(
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
     colors: JengaListItemColors = JengaListItemDefaults.colors(),
 ) {
-    val disabled = JengaTheme.colors.contentDisabled
-    val headlineColor = if (enabled) colors.headline else disabled
-    val supportingColor = if (enabled) colors.supporting else disabled
-    val leadingTrailingColor = if (enabled) colors.leadingTrailing else disabled
+    val headlineColor = if (enabled) colors.headline else colors.disabledHeadline
+    val supportingColor = if (enabled) colors.supporting else colors.disabledSupporting
+    val leadingTrailingColor = if (enabled) colors.leadingTrailing else colors.disabledLeadingTrailing
     Row(
         modifier = modifier
             .fillMaxWidth()

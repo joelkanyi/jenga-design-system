@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -40,7 +41,7 @@ private fun JengaSideSheetShowcase() {
     ) {
         JengaListSheetLayout(
             title = "Assign technician",
-            subtitle = "Ticket TKT-2041",
+            subtitle = AnnotatedString("Ticket TKT-2041"),
             footer = { JengaButton("Assign", {}, modifier = Modifier.weight(1f)) },
             modifier = Modifier
                 .width(360.dp)

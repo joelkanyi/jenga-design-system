@@ -1,8 +1,10 @@
 package io.github.joelkanyi.jenga.component.list
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
@@ -12,10 +14,19 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
+import io.github.joelkanyi.jenga.component.selection.JengaCheckboxColors
 import io.github.joelkanyi.jenga.component.selection.JengaCheckboxDefaults
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButtonDefaults
+
+/** Defaults for [JengaRadioListItem] and [JengaCheckboxListItem]. */
+public object JengaSelectionListItemDefaults {
+    /** Diameter of the spinner shown in place of the checkbox while loading. */
+    public val LoadingIndicatorSize: Dp = 18.dp
+}
 
 /** Where a selection list item draws its control. */
 public enum class JengaControlPosition { Leading, Trailing }
@@ -39,6 +50,7 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
  * @param radioSize the diameter of the radio.
+ * @param colors the row color set (e.g. a warning-colored supporting line); defaults to [JengaListItemDefaults.colors].
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it selects the row.
  */
 @Composable
@@ -56,6 +68,7 @@ public fun JengaRadioListItem(
     headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
     radioSize: Dp = JengaRadioButtonDefaults.Size,
+    colors: JengaListItemColors = JengaListItemDefaults.colors(),
     trailingContent: (@Composable () -> Unit)? = null,
 ) {
     val control: @Composable () -> Unit = {
@@ -78,6 +91,7 @@ public fun JengaRadioListItem(
         contentSpacing = contentSpacing,
         headlineStyle = headlineStyle,
         supportingStyle = supportingStyle,
+        colors = colors,
     )
 }
 
@@ -101,6 +115,10 @@ public fun JengaRadioListItem(
  * @param supportingStyle the [supporting] text style.
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it toggles the row.
  * @param checkboxShape the checkbox box shape.
+ * @param colors the row color set; its disabled colors apply when [enabled] is false, so a locked row
+ *   can keep its label in the normal text color while only the box fades.
+ * @param checkboxColors the checkbox color set (e.g. a faded checked fill when disabled).
+ * @param loading whether a spinner replaces the checkbox (e.g. while the change saves); taps are ignored.
  */
 @Composable
 public fun JengaCheckboxListItem(
@@ -118,15 +136,30 @@ public fun JengaCheckboxListItem(
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
     trailingContent: (@Composable () -> Unit)? = null,
     checkboxShape: Shape = JengaCheckboxDefaults.shape,
+    colors: JengaListItemColors = JengaListItemDefaults.colors(),
+    checkboxColors: JengaCheckboxColors = JengaCheckboxDefaults.colors(),
+    loading: Boolean = false,
 ) {
     val control: @Composable () -> Unit = {
-        JengaCheckbox(checked = checked, onCheckedChange = null, enabled = enabled, shape = checkboxShape)
+        if (loading) {
+            Box(modifier = Modifier.size(JengaCheckboxDefaults.Size), contentAlignment = Alignment.Center) {
+                JengaCircularProgressIndeterminate(size = JengaSelectionListItemDefaults.LoadingIndicatorSize)
+            }
+        } else {
+            JengaCheckbox(
+                checked = checked,
+                onCheckedChange = null,
+                enabled = enabled,
+                shape = checkboxShape,
+                colors = checkboxColors,
+            )
+        }
     }
     JengaListItem(
         headline = headline,
         modifier = modifier.toggleable(
             value = checked,
-            enabled = enabled,
+            enabled = enabled && !loading,
             role = Role.Checkbox,
             onValueChange = onCheckedChange,
         ),
@@ -139,6 +172,7 @@ public fun JengaCheckboxListItem(
         contentSpacing = contentSpacing,
         headlineStyle = headlineStyle,
         supportingStyle = supportingStyle,
+        colors = colors,
     )
 }
 

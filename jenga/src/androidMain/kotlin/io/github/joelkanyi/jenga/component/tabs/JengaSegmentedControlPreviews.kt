@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -56,5 +57,20 @@ internal fun JengaSegmentedControlStatesPreview() {
                 segmentShape = JengaTheme.shapes.control,
             )
         }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSegmentedControlSelectedStylePreview() {
+    JengaTheme {
+        JengaSegmentedControl(
+            selectedIndex = 1,
+            segments = listOf("Diagnosis", "Repair", "Parts"),
+            onSelect = {},
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            textStyle = JengaTheme.typography.bodySmall.copy(fontWeight = FontWeight.Normal),
+            selectedTextStyle = JengaTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
+        )
     }
 }
