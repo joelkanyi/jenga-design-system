@@ -62,8 +62,9 @@ One-time: add the four credentials from the setup section as **GitHub repository
 
 Then, to release:
 
-1. Bump `version` in `jenga/build.gradle.kts` to the release version (no `-SNAPSHOT`), commit
-   and push to `main`. Let CI go green.
+1. Add a `## Version x.y.z` section to `CHANGELOG.md`, bump `version` in
+   `jenga/build.gradle.kts` to the release version (no `-SNAPSHOT`), commit and push to `main`.
+   Let CI go green.
 2. Tag and push:
 
    ```bash
@@ -72,7 +73,8 @@ Then, to release:
    ```
 
    The push of a `v*` tag triggers the Publish workflow, which runs
-   `publishAndReleaseToMavenCentral`.
+   `publishAndReleaseToMavenCentral` and then creates the GitHub release with that version's
+   `CHANGELOG.md` section as its notes.
 3. After it succeeds, bump `version` to the next `-SNAPSHOT` on `main`.
 
 You can also run the workflow manually from the Actions tab (`workflow_dispatch`), with a

@@ -9,6 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -17,6 +21,7 @@ import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -55,7 +60,7 @@ private fun ListSheetSurfacePreview() {
             JengaDragHandle()
             JengaListSheetLayout(
                 title = "Assign technician",
-                subtitle = "Ticket TKT-2041",
+                subtitle = AnnotatedString("Ticket TKT-2041"),
                 headerAction = {
                     JengaIconButton(onClick = {}) { JengaIcon(JengaIcons.Close, contentDescription = "Close") }
                 },
@@ -66,6 +71,33 @@ private fun ListSheetSurfacePreview() {
             ) {
                 items(technicians) { name ->
                     JengaRadioListItem(headline = name, selected = name == technicians.first(), onClick = {})
+                }
+            }
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListSheetStyledSubtitlePreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
+            Column(
+                modifier = Modifier
+                    .clip(JengaTheme.shapes.card)
+                    .background(JengaTheme.colors.surface)
+                    .heightIn(max = 240.dp),
+            ) {
+                JengaDragHandle()
+                JengaListSheetLayout(
+                    title = "Part",
+                    subtitle = buildAnnotatedString {
+                        withStyle(SpanStyle(fontFamily = JengaTheme.typography.mono.fontFamily)) { append("SN-0042-7781") }
+                        append(" · Module · New")
+                    },
+                    footer = null,
+                ) {
+                    item { JengaText("Part details", modifier = Modifier.padding(JengaTheme.spacing.xl)) }
                 }
             }
         }

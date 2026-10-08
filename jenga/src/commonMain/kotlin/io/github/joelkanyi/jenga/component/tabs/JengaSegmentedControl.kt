@@ -102,6 +102,7 @@ public object JengaSegmentedControlDefaults {
  * @param trackPadding padding inside the track, around the segments.
  * @param selectedElevation shadow under the selected segment.
  * @param textStyle the segment label text style.
+ * @param selectedTextStyle the label text style of the selected segment; defaults to [textStyle].
  */
 @Composable
 public fun JengaSegmentedControl(
@@ -117,6 +118,7 @@ public fun JengaSegmentedControl(
     trackPadding: Dp = JengaSegmentedControlDefaults.TrackPadding,
     selectedElevation: Dp = JengaSegmentedControlDefaults.SelectedElevation,
     textStyle: TextStyle = JengaSegmentedControlDefaults.textStyle,
+    selectedTextStyle: TextStyle = textStyle,
 ) {
     Row(
         modifier = modifier
@@ -148,7 +150,7 @@ public fun JengaSegmentedControl(
             ) {
                 JengaText(
                     text = segment,
-                    style = textStyle,
+                    style = if (selected) selectedTextStyle else textStyle,
                     color = when {
                         !enabled -> colors.disabledContent
                         selected -> colors.selectedContent

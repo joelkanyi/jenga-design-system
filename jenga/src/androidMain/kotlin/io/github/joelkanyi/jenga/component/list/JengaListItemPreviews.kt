@@ -1,13 +1,21 @@
 package io.github.joelkanyi.jenga.component.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -57,5 +65,62 @@ private fun ListItemShowcase() {
             onClick = {},
             enabled = false,
         )
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemStylesPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = "Manage technicians",
+                supporting = "Add, remove and assign",
+                leadingContent = { JengaIconTile(JengaIcons.Users, contentDescription = null) },
+                headlineStyle = JengaTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                supportingStyle = JengaTheme.typography.caption,
+                contentSpacing = 14.dp,
+            )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemAnnotatedHeadlinePreview() {
+    JengaTheme {
+        val mono = JengaTheme.typography.mono
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = buildAnnotatedString {
+                    append("Peter Kamau · ")
+                    withStyle(SpanStyle(fontFamily = mono.fontFamily, fontWeight = FontWeight.Normal)) {
+                        append("TKT-084401")
+                    }
+                },
+                supporting = "Battery not charging",
+            )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemTopAlignedPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = "Why a new ticket?",
+                leadingContent = { JengaIconTile(JengaIcons.Users, contentDescription = null) },
+                supportingContent = {
+                    Column(verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs)) {
+                        JengaBadge(text = "Customer reported a new fault", tone = JengaBadgeTone.Neutral)
+                        JengaBadge(text = "Previous ticket is closed", tone = JengaBadgeTone.Neutral)
+                        JengaBadge(text = "Different product", tone = JengaBadgeTone.Neutral)
+                    }
+                },
+                verticalAlignment = Alignment.Top,
+            )
+        }
     }
 }

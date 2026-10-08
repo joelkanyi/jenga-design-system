@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
@@ -84,6 +85,99 @@ public fun JengaSideSheet(
     title: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
+    headerAction: (@Composable () -> Unit)? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
+    width: Dp = JengaSideSheetDefaults.Width,
+    shape: Shape = JengaSideSheetDefaults.shape,
+    titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
+    subtitleStyle: TextStyle = JengaListSheetDefaults.subtitleStyle,
+    headerPadding: PaddingValues = JengaSideSheetDefaults.headerPadding,
+    contentPadding: PaddingValues = JengaListSheetDefaults.contentPadding,
+    footerPadding: PaddingValues = JengaListSheetDefaults.footerPadding,
+    footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
+    content: LazyListScope.() -> Unit,
+) {
+    JengaSideSheetImpl(
+        onDismissRequest = onDismissRequest,
+        title = title,
+        modifier = modifier,
+        subtitle = subtitle?.let(::AnnotatedString),
+        headerAction = headerAction,
+        footer = footer,
+        width = width,
+        shape = shape,
+        titleStyle = titleStyle,
+        subtitleStyle = subtitleStyle,
+        headerPadding = headerPadding,
+        contentPadding = contentPadding,
+        footerPadding = footerPadding,
+        footerSpacing = footerSpacing,
+        content = content,
+    )
+}
+
+/**
+ * A [JengaSideSheet] whose subtitle is styled text (e.g. a monospaced id beside plain words).
+ *
+ * @param onDismissRequest called when the sheet should close.
+ * @param title the heading shown at the top of the sheet.
+ * @param subtitle the supporting line under the [title], with styled spans.
+ * @param modifier the [Modifier] for the full-window container holding the scrim and sheet.
+ * @param headerAction optional slot at the end of the title row (e.g. a close button).
+ * @param footer optional row pinned to the bottom of the sheet, for actions.
+ * @param width the sheet width.
+ * @param shape the sheet shape.
+ * @param titleStyle the [title] text style.
+ * @param subtitleStyle the [subtitle] text style.
+ * @param headerPadding padding around the header.
+ * @param contentPadding padding around the lazy body.
+ * @param footerPadding padding around the footer row.
+ * @param footerSpacing gap between footer children.
+ * @param content the sheet body, laid out lazily in a [LazyListScope].
+ */
+@Composable
+public fun JengaSideSheet(
+    onDismissRequest: () -> Unit,
+    title: String,
+    subtitle: AnnotatedString,
+    modifier: Modifier = Modifier,
+    headerAction: (@Composable () -> Unit)? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
+    width: Dp = JengaSideSheetDefaults.Width,
+    shape: Shape = JengaSideSheetDefaults.shape,
+    titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
+    subtitleStyle: TextStyle = JengaListSheetDefaults.subtitleStyle,
+    headerPadding: PaddingValues = JengaSideSheetDefaults.headerPadding,
+    contentPadding: PaddingValues = JengaListSheetDefaults.contentPadding,
+    footerPadding: PaddingValues = JengaListSheetDefaults.footerPadding,
+    footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
+    content: LazyListScope.() -> Unit,
+) {
+    JengaSideSheetImpl(
+        onDismissRequest = onDismissRequest,
+        title = title,
+        modifier = modifier,
+        subtitle = subtitle,
+        headerAction = headerAction,
+        footer = footer,
+        width = width,
+        shape = shape,
+        titleStyle = titleStyle,
+        subtitleStyle = subtitleStyle,
+        headerPadding = headerPadding,
+        contentPadding = contentPadding,
+        footerPadding = footerPadding,
+        footerSpacing = footerSpacing,
+        content = content,
+    )
+}
+
+@Composable
+private fun JengaSideSheetImpl(
+    onDismissRequest: () -> Unit,
+    title: String,
+    subtitle: AnnotatedString?,
+    modifier: Modifier = Modifier,
     headerAction: (@Composable () -> Unit)? = null,
     footer: (@Composable RowScope.() -> Unit)? = null,
     width: Dp = JengaSideSheetDefaults.Width,

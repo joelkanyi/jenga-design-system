@@ -87,7 +87,8 @@ public object JengaCheckboxDefaults {
  *
  * @param checked whether the box is checked.
  * @param onCheckedChange called with the new state; pass `null` for a read-only,
- *   externally-driven checkbox.
+ *   externally-driven checkbox (e.g. inside a selectable row), which also drops the
+ *   control's own 48dp touch area.
  * @param modifier the [Modifier] for this checkbox.
  * @param enabled whether the checkbox is interactive.
  * @param shape the box shape; defaults to [JengaCheckboxDefaults.shape].
@@ -127,7 +128,7 @@ public fun JengaCheckbox(
 
     Canvas(
         modifier = modifier
-            .minimumInteractiveComponentSize()
+            .then(if (onCheckedChange != null) Modifier.minimumInteractiveComponentSize() else Modifier)
             .then(toggleModifier)
             .size(JengaCheckboxDefaults.Size)
             .clip(shape)

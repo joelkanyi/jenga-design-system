@@ -14,6 +14,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
@@ -94,6 +95,97 @@ public fun JengaListSheet(
     footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
     content: LazyListScope.() -> Unit,
 ) {
+    JengaListSheetImpl(
+        onDismissRequest = onDismissRequest,
+        title = title,
+        modifier = modifier,
+        sheetState = sheetState,
+        subtitle = subtitle?.let(::AnnotatedString),
+        headerAction = headerAction,
+        footer = footer,
+        titleStyle = titleStyle,
+        subtitleStyle = subtitleStyle,
+        headerPadding = headerPadding,
+        contentPadding = contentPadding,
+        footerPadding = footerPadding,
+        footerSpacing = footerSpacing,
+        content = content,
+    )
+}
+
+/**
+ * A [JengaListSheet] whose subtitle is styled text (e.g. a monospaced id beside plain words).
+ *
+ * @param onDismissRequest called when the sheet is dismissed (drag down or scrim).
+ * @param title the heading shown at the top of the sheet.
+ * @param subtitle the supporting line under the [title], with styled spans.
+ * @param modifier the [Modifier] for the sheet.
+ * @param sheetState the sheet state; pass one from [rememberJengaSheetState] to
+ *   show or hide the sheet imperatively.
+ * @param headerAction optional slot at the end of the title row (e.g. a close button).
+ * @param footer optional row pinned to the bottom of the sheet, for actions.
+ * @param titleStyle the [title] text style.
+ * @param subtitleStyle the [subtitle] text style.
+ * @param headerPadding padding around the header.
+ * @param contentPadding padding around the lazy body.
+ * @param footerPadding padding around the footer row.
+ * @param footerSpacing gap between footer children.
+ * @param content the sheet body, laid out lazily in a [LazyListScope].
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+public fun JengaListSheet(
+    onDismissRequest: () -> Unit,
+    title: String,
+    subtitle: AnnotatedString,
+    modifier: Modifier = Modifier,
+    sheetState: JengaSheetState = rememberJengaSheetState(),
+    headerAction: (@Composable () -> Unit)? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
+    titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
+    subtitleStyle: TextStyle = JengaListSheetDefaults.subtitleStyle,
+    headerPadding: PaddingValues = JengaListSheetDefaults.headerPadding,
+    contentPadding: PaddingValues = JengaListSheetDefaults.contentPadding,
+    footerPadding: PaddingValues = JengaListSheetDefaults.footerPadding,
+    footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
+    content: LazyListScope.() -> Unit,
+) {
+    JengaListSheetImpl(
+        onDismissRequest = onDismissRequest,
+        title = title,
+        modifier = modifier,
+        sheetState = sheetState,
+        subtitle = subtitle,
+        headerAction = headerAction,
+        footer = footer,
+        titleStyle = titleStyle,
+        subtitleStyle = subtitleStyle,
+        headerPadding = headerPadding,
+        contentPadding = contentPadding,
+        footerPadding = footerPadding,
+        footerSpacing = footerSpacing,
+        content = content,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun JengaListSheetImpl(
+    onDismissRequest: () -> Unit,
+    title: String,
+    subtitle: AnnotatedString?,
+    modifier: Modifier = Modifier,
+    sheetState: JengaSheetState = rememberJengaSheetState(),
+    headerAction: (@Composable () -> Unit)? = null,
+    footer: (@Composable RowScope.() -> Unit)? = null,
+    titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
+    subtitleStyle: TextStyle = JengaListSheetDefaults.subtitleStyle,
+    headerPadding: PaddingValues = JengaListSheetDefaults.headerPadding,
+    contentPadding: PaddingValues = JengaListSheetDefaults.contentPadding,
+    footerPadding: PaddingValues = JengaListSheetDefaults.footerPadding,
+    footerSpacing: Dp = JengaListSheetDefaults.footerSpacing,
+    content: LazyListScope.() -> Unit,
+) {
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
@@ -122,7 +214,7 @@ public fun JengaListSheet(
 @Composable
 internal fun JengaListSheetLayout(
     title: String,
-    subtitle: String?,
+    subtitle: AnnotatedString?,
     footer: (@Composable RowScope.() -> Unit)?,
     modifier: Modifier = Modifier,
     headerAction: (@Composable () -> Unit)? = null,

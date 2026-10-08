@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -51,6 +54,12 @@ public object JengaCardDefaults {
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.card
 
+    /** Width of the border drawn inside the card edge when [JengaCardColors.border] is set. */
+    public val BorderWidth: Dp = 1.dp
+
+    /** Opacity of the whole card when it is not enabled. */
+    public const val DisabledAlpha: Float = 0.38f
+
     /** Default inner padding. */
     public val contentPadding: PaddingValues = PaddingValues(16.dp)
 
@@ -83,10 +92,14 @@ public object JengaCardDefaults {
  * @param variant the visual style; see [JengaCardVariant].
  * @param onClick optional click handler; when set, the card becomes focusable
  *   and clickable with a ripple.
+ * @param enabled when false, the card is drawn at [disabledAlpha], [onClick] is ignored and
+ *   the card is reported as disabled to accessibility services.
  * @param shape the card shape; defaults to [JengaCardDefaults.shape].
  * @param colors the color set; defaults to [JengaCardDefaults.colors] for [variant].
  * @param elevation resting shadow depth; defaults to [JengaCardDefaults.elevation].
  * @param contentPadding inner padding around [content].
+ * @param borderWidth width of the border, drawn inside the card edge (e.g. 2dp for a selected card).
+ * @param disabledAlpha opacity of the whole card when [enabled] is false.
  * @param content the card body, laid out in a [ColumnScope].
  */
 @Composable
@@ -94,27 +107,37 @@ public fun JengaCard(
     modifier: Modifier = Modifier,
     variant: JengaCardVariant = JengaCardVariant.Elevated,
     onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
     shape: Shape = JengaCardDefaults.shape,
     colors: JengaCardColors = JengaCardDefaults.colors(variant),
     elevation: Dp = JengaCardDefaults.elevation(variant),
     contentPadding: PaddingValues = JengaCardDefaults.contentPadding,
+    borderWidth: Dp = JengaCardDefaults.BorderWidth,
+    disabledAlpha: Float = JengaCardDefaults.DisabledAlpha,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = modifier
+            .then(
+                if (enabled) {
+                    Modifier
+                } else {
+                    Modifier.alpha(disabledAlpha).semantics { disabled() }
+                },
+            )
             .shadow(elevation, shape)
             .clip(shape)
             .background(colors.container)
             .then(
                 if (colors.border != Color.Transparent) {
-                    Modifier.border(1.dp, colors.border, shape)
+                    Modifier.border(borderWidth, colors.border, shape)
                 } else {
                     Modifier
                 },
             )
             .then(
                 if (onClick != null) {
-                    Modifier.clickable(role = Role.Button, onClick = onClick)
+                    Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)
                 } else {
                     Modifier
                 },

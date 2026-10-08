@@ -90,16 +90,18 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 | Need | Blocks |
 |------|--------|
 | Text | `JengaText` |
-| Buttons | `JengaButton`, `JengaIconButton`, `JengaFab` |
+| Buttons and links | `JengaButton`, `JengaIconButton`, `JengaFab`, `JengaExtendedFab`, `JengaLink` |
 | Inputs | `JengaTextField`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker` |
 | Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
 | Containers | `JengaCard`, `JengaCardFooter`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
-| Status and tags | `JengaBadge`, `JengaChip`, `JengaBanner`, `JengaInfoBar`, `JengaVerdictBar` |
-| Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaNavigationBar`, `JengaNavigationRailItem`, `JengaTabs` |
-| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
+| Status and tags | `JengaBadge`, `JengaChip`, `JengaStatusPill`, `JengaBanner`, `JengaInfoBar`, `JengaVerdictBar` |
+| Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaBottomBar`, `JengaNavigationBar` + `JengaNavigationBarItem`, `JengaNavigationRailItem`, `JengaTabs` |
+| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar` + `JengaSnackbarHost`, `JengaTooltip`, `JengaDropdownMenu` + `JengaDropdownMenuItem` |
 | Refresh | `JengaPullToRefresh` |
-| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaMediaHero`, `JengaImageShelf`, `JengaThumbnailStrip`, `JengaImageViewer` |
-| Progress | `JengaLinearProgress`, `JengaLabelledProgress`, `JengaTimelineItem`, `JengaCircularProgress`, `JengaDotStrip`, shimmer |
+| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaImage`, `JengaMediaHero`, `JengaImageShelf` + `JengaShelfCard`, `JengaThumbnailStrip`, `JengaImageViewer` |
+| Charts | `JengaBarChart` |
+| Progress | `JengaLinearProgress`, `JengaLinearProgressIndeterminate`, `JengaLabelledProgress`, `JengaTimelineItem`, `JengaCircularProgress`, `JengaCircularProgressIndeterminate`, `JengaDotStrip`, shimmer |
+| Scanner | `JengaScannerViewfinder`, `JengaScanFeedback` |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection`, `JengaFormLayout` |
 | Patterns | `JengaSectionHeader`, `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |

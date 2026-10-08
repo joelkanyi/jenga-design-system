@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,17 @@ public object JengaAvatarDefaults {
         JengaAvatarSize.Medium -> 40.dp
         JengaAvatarSize.Large -> 56.dp
     }
+
+    /** Initials text style per [size]. */
+    @Composable
+    public fun textStyle(size: JengaAvatarSize): TextStyle = JengaTheme.typography.titleSmall.copy(
+        fontSize = when (size) {
+            JengaAvatarSize.Small -> 11.sp
+            JengaAvatarSize.Medium -> 15.sp
+            JengaAvatarSize.Large -> 20.sp
+        },
+        fontWeight = FontWeight.Bold,
+    )
 }
 
 /**
@@ -36,20 +48,18 @@ public object JengaAvatarDefaults {
  *
  * @param name the full name; initials are derived from its first two words.
  * @param modifier the [Modifier] for this avatar.
- * @param size the avatar size; see [JengaAvatarSize].
+ * @param size the avatar size preset; see [JengaAvatarSize].
+ * @param diameter the avatar diameter; defaults to the [size] preset.
+ * @param textStyle the initials text style; defaults to the [size] preset.
  */
 @Composable
 public fun JengaAvatar(
     name: String,
     modifier: Modifier = Modifier,
     size: JengaAvatarSize = JengaAvatarSize.Medium,
+    diameter: Dp = JengaAvatarDefaults.diameter(size),
+    textStyle: TextStyle = JengaAvatarDefaults.textStyle(size),
 ) {
-    val diameter = JengaAvatarDefaults.diameter(size)
-    val fontSize = when (size) {
-        JengaAvatarSize.Small -> 11.sp
-        JengaAvatarSize.Medium -> 15.sp
-        JengaAvatarSize.Large -> 20.sp
-    }
     Box(
         modifier = modifier
             .size(diameter)
@@ -59,10 +69,7 @@ public fun JengaAvatar(
     ) {
         JengaText(
             text = initialsOf(name),
-            style = JengaTheme.typography.titleSmall.copy(
-                fontSize = fontSize,
-                fontWeight = FontWeight.Bold,
-            ),
+            style = textStyle,
             color = JengaTheme.colors.onBrandSubtle,
         )
     }
@@ -72,18 +79,20 @@ public fun JengaAvatar(
  * A circular avatar with custom [content] (e.g. an image), clipped to a circle.
  *
  * @param modifier the [Modifier] for this avatar.
- * @param size the avatar size; see [JengaAvatarSize].
+ * @param size the avatar size preset; see [JengaAvatarSize].
+ * @param diameter the avatar diameter; defaults to the [size] preset.
  * @param content the avatar content, clipped to the circle (e.g. an `Image`).
  */
 @Composable
 public fun JengaAvatar(
     modifier: Modifier = Modifier,
     size: JengaAvatarSize = JengaAvatarSize.Medium,
+    diameter: Dp = JengaAvatarDefaults.diameter(size),
     content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier
-            .size(JengaAvatarDefaults.diameter(size))
+            .size(diameter)
             .clip(JengaTheme.shapes.pill)
             .background(JengaTheme.colors.surfaceSunk),
         contentAlignment = Alignment.Center,
