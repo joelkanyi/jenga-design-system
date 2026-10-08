@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -121,6 +122,67 @@ public object JengaListItemDefaults {
 @Composable
 public fun JengaListItem(
     headline: String,
+    modifier: Modifier = Modifier,
+    supporting: String? = null,
+    supportingContent: (@Composable () -> Unit)? = null,
+    leadingContent: (@Composable () -> Unit)? = null,
+    trailingContent: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
+    headlineMaxLines: Int = 1,
+    supportingMaxLines: Int = 1,
+    minHeight: Dp = JengaListItemDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
+    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
+    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    colors: JengaListItemColors = JengaListItemDefaults.colors(),
+) {
+    JengaListItem(
+        headline = AnnotatedString(headline),
+        modifier = modifier,
+        supporting = supporting,
+        supportingContent = supportingContent,
+        leadingContent = leadingContent,
+        trailingContent = trailingContent,
+        onClick = onClick,
+        enabled = enabled,
+        headlineMaxLines = headlineMaxLines,
+        supportingMaxLines = supportingMaxLines,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        headlineStyle = headlineStyle,
+        supportingStyle = supportingStyle,
+        contentSpacing = contentSpacing,
+        colors = colors,
+    )
+}
+
+/**
+ * A [JengaListItem] whose headline is styled text (e.g. a monospaced id beside plain words).
+ *
+ * @param headline the primary text, with styled spans.
+ * @param modifier the [Modifier] for this row.
+ * @param supporting optional secondary text below the headline.
+ * @param supportingContent optional slot below the headline (and below [supporting]
+ *   when both are given), for rich supporting content such as badges or a status line.
+ *   Inherits the supporting color.
+ * @param leadingContent optional start slot (inherits the leading/trailing color).
+ * @param trailingContent optional end slot (inherits the leading/trailing color).
+ * @param onClick optional click handler; makes the row focusable with a ripple.
+ * @param enabled when false, the row uses the disabled colors from [colors] and [onClick] is ignored.
+ * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
+ * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
+ * @param minHeight the minimum row height.
+ * @param contentPadding inner padding around the row content.
+ * @param headlineStyle the [headline] text style; spans in [headline] override it.
+ * @param supportingStyle the [supporting] text style.
+ * @param contentSpacing the gap between the leading content, the text and the trailing content.
+ * @param colors the color set; defaults to [JengaListItemDefaults.colors].
+ */
+@Composable
+public fun JengaListItem(
+    headline: AnnotatedString,
     modifier: Modifier = Modifier,
     supporting: String? = null,
     supportingContent: (@Composable () -> Unit)? = null,

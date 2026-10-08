@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
@@ -75,6 +78,25 @@ internal fun JengaListItemStylesPreview() {
                 headlineStyle = JengaTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                 supportingStyle = JengaTheme.typography.caption,
                 contentSpacing = 14.dp,
+            )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaListItemAnnotatedHeadlinePreview() {
+    JengaTheme {
+        val mono = JengaTheme.typography.mono
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaListItem(
+                headline = buildAnnotatedString {
+                    append("Peter Kamau · ")
+                    withStyle(SpanStyle(fontFamily = mono.fontFamily, fontWeight = FontWeight.Normal)) {
+                        append("TKT-084401")
+                    }
+                },
+                supporting = "Battery not charging",
             )
         }
     }

@@ -66,3 +66,21 @@ internal fun JengaCardSelectedBorderPreview() {
         }
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaCardDisabledPreview() {
+    JengaTheme {
+        Column(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+        ) {
+            JengaCard(variant = JengaCardVariant.Outlined, onClick = {}) {
+                JengaText("Solar home system · available")
+            }
+            JengaCard(variant = JengaCardVariant.Outlined, onClick = {}, enabled = false) {
+                JengaText("Solar home system · already has a work order")
+            }
+        }
+    }
+}
