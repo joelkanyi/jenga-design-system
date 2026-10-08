@@ -313,6 +313,7 @@ public final class io/github/joelkanyi/jenga/component/card/JengaCardDefaults {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/card/JengaCardDefaults;
 	public final fun colors (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
 	public final fun elevation-ccRj1GA (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Landroidx/compose/runtime/Composer;I)F
+	public final fun getBorderWidth-D9Ej5fM ()F
 	public final fun getContentPadding ()Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 }
@@ -342,7 +343,7 @@ public final class io/github/joelkanyi/jenga/component/card/JengaCardFooterKt {
 }
 
 public final class io/github/joelkanyi/jenga/component/card/JengaCardKt {
-	public static final fun JengaCard-eHTjO5g (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/card/JengaCardColors;FLandroidx/compose/foundation/layout/PaddingValues;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaCard-eg1C-Tg (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/card/JengaCardColors;FLandroidx/compose/foundation/layout/PaddingValues;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/card/JengaCardVariant : java/lang/Enum {
@@ -921,8 +922,8 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
-	public static final fun JengaCheckboxListItem-8E6TiBc (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
-	public static final fun JengaRadioListItem-2Ea8Huw (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/runtime/Composer;II)V
+	public static final fun JengaCheckboxListItem-LBhLsqs (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaRadioListItem-8E6TiBc (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaImageViewerKt {
@@ -2298,18 +2299,17 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1143789796$jenga ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1644438206$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1848930134$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2138543669$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2146798839$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-526265762$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-567884797$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-626117203$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-73259007$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-75929975$jenga ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$-775096355$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-895332967$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-983531617$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1056921111$jenga ()Lkotlin/jvm/functions/Function2;
@@ -2325,6 +2325,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$277114736$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$380858747$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$561998281$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$718816094$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$878903685$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$935433820$jenga ()Lkotlin/jvm/functions/Function2;
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -47,6 +48,21 @@ private fun CardShowcase() {
                     color = JengaTheme.colors.textMuted,
                 )
             }
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaCardSelectedBorderPreview() {
+    JengaTheme {
+        JengaCard(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            variant = JengaCardVariant.Outlined,
+            colors = JengaCardDefaults.colors(JengaCardVariant.Outlined).copy(border = JengaTheme.colors.brand),
+            borderWidth = 2.dp,
+        ) {
+            JengaText("TKT-2041 · Battery not charging")
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -52,6 +53,28 @@ internal fun JengaSelectionListItemsTrailingPreview() {
                 selected = false,
                 onClick = {},
                 controlPosition = JengaControlPosition.Trailing,
+            )
+        }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSelectionListItemsCountPreview() {
+    JengaTheme {
+        Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+            JengaRadioListItem(
+                headline = "Open",
+                selected = true,
+                onClick = {},
+                trailingContent = { JengaText("6", style = JengaTheme.typography.bodySmall) },
+            )
+            JengaCheckboxListItem(
+                headline = "Waiting for parts",
+                checked = false,
+                onCheckedChange = {},
+                controlPosition = JengaControlPosition.Trailing,
+                trailingContent = { JengaText("3", style = JengaTheme.typography.bodySmall) },
             )
         }
     }

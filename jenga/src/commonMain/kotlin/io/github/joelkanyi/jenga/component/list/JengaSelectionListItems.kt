@@ -1,9 +1,12 @@
 package io.github.joelkanyi.jenga.component.list
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
@@ -31,6 +34,7 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
  * @param contentSpacing the gap between the control and the text.
+ * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it selects the row.
  */
 @Composable
 public fun JengaRadioListItem(
@@ -44,6 +48,7 @@ public fun JengaRadioListItem(
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    trailingContent: (@Composable () -> Unit)? = null,
 ) {
     val control: @Composable () -> Unit = { JengaRadioButton(selected = selected, onClick = null, enabled = enabled) }
     JengaListItem(
@@ -56,7 +61,7 @@ public fun JengaRadioListItem(
         ),
         supporting = supporting,
         leadingContent = control.takeIf { controlPosition == JengaControlPosition.Leading },
-        trailingContent = control.takeIf { controlPosition == JengaControlPosition.Trailing },
+        trailingContent = trailingSlot(trailingContent, control.takeIf { controlPosition == JengaControlPosition.Trailing }, contentSpacing),
         enabled = enabled,
         minHeight = minHeight,
         contentPadding = contentPadding,
@@ -80,6 +85,7 @@ public fun JengaRadioListItem(
  * @param minHeight the minimum row height.
  * @param contentPadding inner padding around the row content.
  * @param contentSpacing the gap between the control and the text.
+ * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it toggles the row.
  * @param checkboxShape the checkbox box shape.
  */
 @Composable
@@ -94,6 +100,7 @@ public fun JengaCheckboxListItem(
     minHeight: Dp = JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
+    trailingContent: (@Composable () -> Unit)? = null,
     checkboxShape: Shape = JengaCheckboxDefaults.shape,
 ) {
     val control: @Composable () -> Unit = {
@@ -109,10 +116,27 @@ public fun JengaCheckboxListItem(
         ),
         supporting = supporting,
         leadingContent = control.takeIf { controlPosition == JengaControlPosition.Leading },
-        trailingContent = control.takeIf { controlPosition == JengaControlPosition.Trailing },
+        trailingContent = trailingSlot(trailingContent, control.takeIf { controlPosition == JengaControlPosition.Trailing }, contentSpacing),
         enabled = enabled,
         minHeight = minHeight,
         contentPadding = contentPadding,
         contentSpacing = contentSpacing,
     )
+}
+
+private fun trailingSlot(
+    content: (@Composable () -> Unit)?,
+    control: (@Composable () -> Unit)?,
+    spacing: Dp,
+): (@Composable () -> Unit)? = when {
+    content == null -> control
+    control == null -> content
+    else -> {
+        {
+            Row(horizontalArrangement = Arrangement.spacedBy(spacing), verticalAlignment = Alignment.CenterVertically) {
+                content()
+                control()
+            }
+        }
+    }
 }

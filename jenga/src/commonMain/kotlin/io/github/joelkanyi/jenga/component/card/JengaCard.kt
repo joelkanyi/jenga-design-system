@@ -51,6 +51,9 @@ public object JengaCardDefaults {
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.card
 
+    /** Width of the border drawn inside the card edge when [JengaCardColors.border] is set. */
+    public val BorderWidth: Dp = 1.dp
+
     /** Default inner padding. */
     public val contentPadding: PaddingValues = PaddingValues(16.dp)
 
@@ -87,6 +90,7 @@ public object JengaCardDefaults {
  * @param colors the color set; defaults to [JengaCardDefaults.colors] for [variant].
  * @param elevation resting shadow depth; defaults to [JengaCardDefaults.elevation].
  * @param contentPadding inner padding around [content].
+ * @param borderWidth width of the border, drawn inside the card edge (e.g. 2dp for a selected card).
  * @param content the card body, laid out in a [ColumnScope].
  */
 @Composable
@@ -98,6 +102,7 @@ public fun JengaCard(
     colors: JengaCardColors = JengaCardDefaults.colors(variant),
     elevation: Dp = JengaCardDefaults.elevation(variant),
     contentPadding: PaddingValues = JengaCardDefaults.contentPadding,
+    borderWidth: Dp = JengaCardDefaults.BorderWidth,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
@@ -107,7 +112,7 @@ public fun JengaCard(
             .background(colors.container)
             .then(
                 if (colors.border != Color.Transparent) {
-                    Modifier.border(1.dp, colors.border, shape)
+                    Modifier.border(borderWidth, colors.border, shape)
                 } else {
                     Modifier
                 },
