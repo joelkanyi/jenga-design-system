@@ -118,10 +118,10 @@ public fun JengaListSheet(
  *
  * @param onDismissRequest called when the sheet is dismissed (drag down or scrim).
  * @param title the heading shown at the top of the sheet.
+ * @param subtitle the supporting line under the [title], with styled spans.
  * @param modifier the [Modifier] for the sheet.
  * @param sheetState the sheet state; pass one from [rememberJengaSheetState] to
  *   show or hide the sheet imperatively.
- * @param subtitle the supporting line under the [title], with styled spans.
  * @param headerAction optional slot at the end of the title row (e.g. a close button).
  * @param footer optional row pinned to the bottom of the sheet, for actions.
  * @param titleStyle the [title] text style.
@@ -137,9 +137,9 @@ public fun JengaListSheet(
 public fun JengaListSheet(
     onDismissRequest: () -> Unit,
     title: String,
+    subtitle: AnnotatedString,
     modifier: Modifier = Modifier,
     sheetState: JengaSheetState = rememberJengaSheetState(),
-    subtitle: AnnotatedString,
     headerAction: (@Composable () -> Unit)? = null,
     footer: (@Composable RowScope.() -> Unit)? = null,
     titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
@@ -173,9 +173,9 @@ public fun JengaListSheet(
 private fun JengaListSheetImpl(
     onDismissRequest: () -> Unit,
     title: String,
+    subtitle: AnnotatedString?,
     modifier: Modifier = Modifier,
     sheetState: JengaSheetState = rememberJengaSheetState(),
-    subtitle: AnnotatedString?,
     headerAction: (@Composable () -> Unit)? = null,
     footer: (@Composable RowScope.() -> Unit)? = null,
     titleStyle: TextStyle = JengaListSheetDefaults.titleStyle,
@@ -210,7 +210,6 @@ private fun JengaListSheetImpl(
         )
     }
 }
-
 
 @Composable
 internal fun JengaListSheetLayout(

@@ -121,8 +121,8 @@ public fun JengaSideSheet(
  *
  * @param onDismissRequest called when the sheet should close.
  * @param title the heading shown at the top of the sheet.
- * @param modifier the [Modifier] for the full-window container holding the scrim and sheet.
  * @param subtitle the supporting line under the [title], with styled spans.
+ * @param modifier the [Modifier] for the full-window container holding the scrim and sheet.
  * @param headerAction optional slot at the end of the title row (e.g. a close button).
  * @param footer optional row pinned to the bottom of the sheet, for actions.
  * @param width the sheet width.
@@ -139,8 +139,8 @@ public fun JengaSideSheet(
 public fun JengaSideSheet(
     onDismissRequest: () -> Unit,
     title: String,
-    modifier: Modifier = Modifier,
     subtitle: AnnotatedString,
+    modifier: Modifier = Modifier,
     headerAction: (@Composable () -> Unit)? = null,
     footer: (@Composable RowScope.() -> Unit)? = null,
     width: Dp = JengaSideSheetDefaults.Width,
@@ -176,8 +176,8 @@ public fun JengaSideSheet(
 private fun JengaSideSheetImpl(
     onDismissRequest: () -> Unit,
     title: String,
-    modifier: Modifier = Modifier,
     subtitle: AnnotatedString?,
+    modifier: Modifier = Modifier,
     headerAction: (@Composable () -> Unit)? = null,
     footer: (@Composable RowScope.() -> Unit)? = null,
     width: Dp = JengaSideSheetDefaults.Width,
@@ -239,4 +239,3 @@ private fun JengaSideSheetImpl(
         }
     }
 }
-
