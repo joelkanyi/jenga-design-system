@@ -48,11 +48,57 @@ public class JengaCardColors(
     ): JengaCardColors = JengaCardColors(container, border)
 }
 
-/** Defaults and token mappings for [JengaCard]. */
+/**
+ * Theme-wide style for every [JengaCard], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.card]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaCard] call still win.
+ *
+ * @property shape the card shape.
+ * @property contentPadding inner padding.
+ * @property borderWidth width of the border.
+ * @property disabledAlpha opacity of a disabled card.
+ * @property elevated colors for [JengaCardVariant.Elevated].
+ * @property outlined colors for [JengaCardVariant.Outlined].
+ * @property filled colors for [JengaCardVariant.Filled].
+ */
+@Poko
+@Immutable
+public class JengaCardStyle(
+    public val shape: Shape? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val borderWidth: Dp? = null,
+    public val disabledAlpha: Float? = null,
+    public val elevated: JengaCardColors? = null,
+    public val outlined: JengaCardColors? = null,
+    public val filled: JengaCardColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        contentPadding: PaddingValues? = this.contentPadding,
+        borderWidth: Dp? = this.borderWidth,
+        disabledAlpha: Float? = this.disabledAlpha,
+        elevated: JengaCardColors? = this.elevated,
+        outlined: JengaCardColors? = this.outlined,
+        filled: JengaCardColors? = this.filled,
+    ): JengaCardStyle = JengaCardStyle(shape, contentPadding, borderWidth, disabledAlpha, elevated, outlined, filled)
+
+    internal fun colors(variant: JengaCardVariant): JengaCardColors? = when (variant) {
+        JengaCardVariant.Elevated -> elevated
+        JengaCardVariant.Outlined -> outlined
+        JengaCardVariant.Filled -> filled
+    }
+}
+
+/**
+ * Defaults and token mappings for [JengaCard].
+ *
+ * The composable members follow the theme's [JengaCardStyle]; the constants are Jenga's built-in
+ * values.
+ */
 public object JengaCardDefaults {
     /** Default card shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.card
+        @Composable get() = JengaTheme.components.card?.shape ?: JengaTheme.shapes.card
 
     /** Width of the border drawn inside the card edge when [JengaCardColors.border] is set. */
     public val BorderWidth: Dp = 1.dp
@@ -74,6 +120,7 @@ public object JengaCardDefaults {
     /** Themed colors per [variant]. */
     @Composable
     public fun colors(variant: JengaCardVariant): JengaCardColors {
+        JengaTheme.components.card?.colors(variant)?.let { return it }
         val c = JengaTheme.colors
         return when (variant) {
             JengaCardVariant.Elevated -> JengaCardColors(c.surface, Color.Transparent)
@@ -97,9 +144,12 @@ public object JengaCardDefaults {
  * @param shape the card shape; defaults to [JengaCardDefaults.shape].
  * @param colors the color set; defaults to [JengaCardDefaults.colors] for [variant].
  * @param elevation resting shadow depth; defaults to [JengaCardDefaults.elevation].
- * @param contentPadding inner padding around [content].
- * @param borderWidth width of the border, drawn inside the card edge (e.g. 2dp for a selected card).
- * @param disabledAlpha opacity of the whole card when [enabled] is false.
+ * @param contentPadding inner padding around [content]; defaults to the theme's [JengaCardStyle], else
+ *   [JengaCardDefaults.contentPadding].
+ * @param borderWidth width of the border, drawn inside the card edge (e.g. 2dp for a selected card);
+ *   defaults to the theme's [JengaCardStyle], else [JengaCardDefaults.BorderWidth].
+ * @param disabledAlpha opacity of the whole card when [enabled] is false; defaults to the theme's
+ *   [JengaCardStyle], else [JengaCardDefaults.DisabledAlpha].
  * @param content the card body, laid out in a [ColumnScope].
  */
 @Composable
@@ -111,9 +161,9 @@ public fun JengaCard(
     shape: Shape = JengaCardDefaults.shape,
     colors: JengaCardColors = JengaCardDefaults.colors(variant),
     elevation: Dp = JengaCardDefaults.elevation(variant),
-    contentPadding: PaddingValues = JengaCardDefaults.contentPadding,
-    borderWidth: Dp = JengaCardDefaults.BorderWidth,
-    disabledAlpha: Float = JengaCardDefaults.DisabledAlpha,
+    contentPadding: PaddingValues = JengaTheme.components.card?.contentPadding ?: JengaCardDefaults.contentPadding,
+    borderWidth: Dp = JengaTheme.components.card?.borderWidth ?: JengaCardDefaults.BorderWidth,
+    disabledAlpha: Float = JengaTheme.components.card?.disabledAlpha ?: JengaCardDefaults.DisabledAlpha,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(

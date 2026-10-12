@@ -81,30 +81,84 @@ public class JengaTextFieldColors(
     )
 }
 
-/** Defaults and token mappings for [JengaTextField]. */
+/**
+ * Theme-wide style for every [JengaTextField], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.textField]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaTextField] call still win.
+ *
+ * @property shape the field shape.
+ * @property minHeight the minimum height of a single-line input box.
+ * @property contentPadding padding inside a single-line input box.
+ * @property multilineMinHeight the minimum height when `singleLine` is false; falls back to [minHeight].
+ * @property multilineContentPadding padding when `singleLine` is false; falls back to [contentPadding].
+ * @property focusRingWidth width of the soft focus halo; `0.dp` removes it.
+ * @property textStyle the input and placeholder text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaTextFieldStyle(
+    public val shape: Shape? = null,
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val multilineMinHeight: Dp? = null,
+    public val multilineContentPadding: PaddingValues? = null,
+    public val focusRingWidth: Dp? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaTextFieldColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        multilineMinHeight: Dp? = this.multilineMinHeight,
+        multilineContentPadding: PaddingValues? = this.multilineContentPadding,
+        focusRingWidth: Dp? = this.focusRingWidth,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaTextFieldColors? = this.colors,
+    ): JengaTextFieldStyle = JengaTextFieldStyle(
+        shape,
+        minHeight,
+        contentPadding,
+        multilineMinHeight,
+        multilineContentPadding,
+        focusRingWidth,
+        textStyle,
+        colors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaTextField].
+ *
+ * The composable members follow the theme's [JengaTextFieldStyle]; [FocusRingWidth] is Jenga's
+ * built-in value.
+ */
 public object JengaTextFieldDefaults {
     /** Default field shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.control
+        @Composable get() = JengaTheme.components.textField?.shape ?: JengaTheme.shapes.control
 
     /** Width of the soft focus halo around the field; reserved even when unfocused. */
     public val FocusRingWidth: Dp = 3.dp
 
     /** Minimum height of the input box. */
     public val minHeight: Dp
-        @Composable get() = JengaTheme.sizing.fieldHeight
+        @Composable get() = JengaTheme.components.textField?.minHeight ?: JengaTheme.sizing.fieldHeight
 
     /** Padding inside the input box. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+        @Composable get() = JengaTheme.components.textField?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
 
     /** Input and placeholder text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodyMedium
+        @Composable get() = JengaTheme.components.textField?.textStyle ?: JengaTheme.typography.bodyMedium
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaTextFieldColors {
+        JengaTheme.components.textField?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaTextFieldColors(
             container = c.surface,
@@ -120,6 +174,12 @@ public object JengaTextFieldDefaults {
             icon = c.textMuted,
         )
     }
+
+    @Composable
+    internal fun minHeight(singleLine: Boolean): Dp = if (singleLine) minHeight else JengaTheme.components.textField?.multilineMinHeight ?: minHeight
+
+    @Composable
+    internal fun contentPadding(singleLine: Boolean): PaddingValues = if (singleLine) contentPadding else JengaTheme.components.textField?.multilineContentPadding ?: contentPadding
 }
 
 /**
@@ -151,7 +211,8 @@ public object JengaTextFieldDefaults {
  * @param textStyle the input and placeholder text style.
  * @param minHeight the minimum height of the input box.
  * @param contentPadding padding inside the input box.
- * @param focusRingWidth width of the soft focus halo; `0.dp` removes it.
+ * @param focusRingWidth width of the soft focus halo; `0.dp` removes it. Defaults to the theme's
+ *   [JengaTextFieldStyle.focusRingWidth], else [JengaTextFieldDefaults.FocusRingWidth].
  */
 @Composable
 public fun JengaTextField(
@@ -173,9 +234,9 @@ public fun JengaTextField(
     shape: Shape = JengaTextFieldDefaults.shape,
     colors: JengaTextFieldColors = JengaTextFieldDefaults.colors(),
     textStyle: TextStyle = JengaTextFieldDefaults.textStyle,
-    minHeight: Dp = JengaTextFieldDefaults.minHeight,
-    contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding,
-    focusRingWidth: Dp = JengaTextFieldDefaults.FocusRingWidth,
+    minHeight: Dp = JengaTextFieldDefaults.minHeight(singleLine),
+    contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding(singleLine),
+    focusRingWidth: Dp = JengaTheme.components.textField?.focusRingWidth ?: JengaTextFieldDefaults.FocusRingWidth,
 ) {
     val c = JengaTheme.colors
     val interactionSource = remember { MutableInteractionSource() }

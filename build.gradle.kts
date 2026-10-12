@@ -43,6 +43,7 @@ spotless {
             "LocalJengaMotion",
             "LocalJengaIcons",
             "LocalJengaContentColor",
+            "LocalJengaComponentStyles",
         ).joinToString(","),
     )
     val composeRules = libs.compose.rules.ktlint.get().toString()

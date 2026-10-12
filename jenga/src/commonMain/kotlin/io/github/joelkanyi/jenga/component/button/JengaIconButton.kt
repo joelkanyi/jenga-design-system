@@ -61,7 +61,71 @@ public class JengaIconButtonColors(
     ): JengaIconButtonColors = JengaIconButtonColors(container, content, disabledContainer, disabledContent, border)
 }
 
-/** Defaults and token mappings for [JengaIconButton]. */
+/**
+ * Theme-wide look for one [JengaIconButtonVariant], part of a [JengaIconButtonStyle]. A `null`
+ * value keeps Jenga's default.
+ *
+ * @property size the visible button size.
+ * @property shape the button shape.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaIconButtonVariantStyle(
+    public val size: Dp? = null,
+    public val shape: Shape? = null,
+    public val colors: JengaIconButtonColors? = null,
+) {
+    public fun copy(
+        size: Dp? = this.size,
+        shape: Shape? = this.shape,
+        colors: JengaIconButtonColors? = this.colors,
+    ): JengaIconButtonVariantStyle = JengaIconButtonVariantStyle(size, shape, colors)
+}
+
+/**
+ * Theme-wide style for every [JengaIconButton], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.iconButton]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaIconButton] call still win.
+ *
+ * @property standard the look of [JengaIconButtonVariant.Standard].
+ * @property filled the look of [JengaIconButtonVariant.Filled].
+ * @property tonal the look of [JengaIconButtonVariant.Tonal].
+ * @property overlay the look of [JengaIconButtonVariant.Overlay].
+ * @property outlined the look of [JengaIconButtonVariant.Outlined].
+ */
+@Poko
+@Immutable
+public class JengaIconButtonStyle(
+    public val standard: JengaIconButtonVariantStyle? = null,
+    public val filled: JengaIconButtonVariantStyle? = null,
+    public val tonal: JengaIconButtonVariantStyle? = null,
+    public val overlay: JengaIconButtonVariantStyle? = null,
+    public val outlined: JengaIconButtonVariantStyle? = null,
+) {
+    public fun copy(
+        standard: JengaIconButtonVariantStyle? = this.standard,
+        filled: JengaIconButtonVariantStyle? = this.filled,
+        tonal: JengaIconButtonVariantStyle? = this.tonal,
+        overlay: JengaIconButtonVariantStyle? = this.overlay,
+        outlined: JengaIconButtonVariantStyle? = this.outlined,
+    ): JengaIconButtonStyle = JengaIconButtonStyle(standard, filled, tonal, overlay, outlined)
+
+    internal fun variant(variant: JengaIconButtonVariant): JengaIconButtonVariantStyle? = when (variant) {
+        JengaIconButtonVariant.Standard -> standard
+        JengaIconButtonVariant.Filled -> filled
+        JengaIconButtonVariant.Tonal -> tonal
+        JengaIconButtonVariant.Overlay -> overlay
+        JengaIconButtonVariant.Outlined -> outlined
+    }
+}
+
+/**
+ * Defaults and token mappings for [JengaIconButton].
+ *
+ * [colors] follows the theme's [JengaIconButtonStyle]; [Size] and [shape] are Jenga's built-in
+ * values.
+ */
 public object JengaIconButtonDefaults {
     /** Diameter of the button surface (the touch target is expanded to 48dp). */
     public val Size: Dp = 40.dp
@@ -73,6 +137,7 @@ public object JengaIconButtonDefaults {
     /** Themed colors for the given [variant]. */
     @Composable
     public fun colors(variant: JengaIconButtonVariant): JengaIconButtonColors {
+        JengaTheme.components.iconButton?.variant(variant)?.colors?.let { return it }
         val c = JengaTheme.colors
         return when (variant) {
             JengaIconButtonVariant.Standard -> JengaIconButtonColors(
@@ -128,9 +193,11 @@ public object JengaIconButtonDefaults {
  * @param modifier the [Modifier] for this button.
  * @param variant the visual style; see [JengaIconButtonVariant].
  * @param enabled whether the button is interactive.
- * @param shape the button shape; defaults to [JengaIconButtonDefaults.shape].
+ * @param shape the button shape; defaults to the theme's [JengaIconButtonVariantStyle.shape] for
+ *   [variant], else [JengaIconButtonDefaults.shape].
  * @param colors the color set; defaults to [JengaIconButtonDefaults.colors] for [variant].
- * @param size the visible button size; the touch target is never smaller than 48dp.
+ * @param size the visible button size; the touch target is never smaller than 48dp. Defaults to the
+ *   theme's [JengaIconButtonVariantStyle.size] for [variant], else [JengaIconButtonDefaults.Size].
  * @param content the icon (typically a single [JengaIcon]); inherits content color.
  */
 @Composable
@@ -139,9 +206,9 @@ public fun JengaIconButton(
     modifier: Modifier = Modifier,
     variant: JengaIconButtonVariant = JengaIconButtonVariant.Standard,
     enabled: Boolean = true,
-    shape: Shape = JengaIconButtonDefaults.shape,
+    shape: Shape = JengaTheme.components.iconButton?.variant(variant)?.shape ?: JengaIconButtonDefaults.shape,
     colors: JengaIconButtonColors = JengaIconButtonDefaults.colors(variant),
-    size: Dp = JengaIconButtonDefaults.Size,
+    size: Dp = JengaTheme.components.iconButton?.variant(variant)?.size ?: JengaIconButtonDefaults.Size,
     content: @Composable () -> Unit,
 ) {
     val container = if (enabled) colors.container else colors.disabledContainer

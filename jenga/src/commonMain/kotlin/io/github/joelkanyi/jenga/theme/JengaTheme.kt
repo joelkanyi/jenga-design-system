@@ -99,6 +99,11 @@ public object JengaTheme {
         @Composable @ReadOnlyComposable
         get() = LocalJengaMotion.current
 
+    /** Theme-wide component styles; see [JengaComponentStyles]. */
+    public val components: JengaComponentStyles
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaComponentStyles.current
+
     // Not @ReadOnlyComposable: the fallback resolves vector resources, which needs
     // full composition. Within a JengaTheme the local is always set, so this is a
     // plain read; outside one it builds the default set.
@@ -131,6 +136,7 @@ public object JengaTheme {
  * @param elevation the elevation ladder.
  * @param motion the motion tokens.
  * @param icons the semantic icons components draw; defaults to Jenga's own set.
+ * @param components theme-wide component styles; see [JengaComponentStyles].
  * @param content the themed content.
  */
 @Composable
@@ -144,6 +150,7 @@ public fun JengaTheme(
     elevation: JengaElevation = jengaElevation(),
     motion: JengaMotion = jengaMotion(),
     icons: JengaIconSet? = null,
+    components: JengaComponentStyles = JengaComponentStyles(),
     content: @Composable () -> Unit,
 ) {
     // Resolve the default type scale inside composition so the Outfit brand font
@@ -162,6 +169,7 @@ public fun JengaTheme(
         LocalJengaElevation provides elevation,
         LocalJengaMotion provides motion,
         LocalJengaIcons provides resolvedIcons,
+        LocalJengaComponentStyles provides components,
         LocalJengaContentColor provides colors.textPrimary,
     ) {
         MaterialTheme(
@@ -195,6 +203,7 @@ public fun JengaTheme(
  * @param elevation the elevation ladder.
  * @param motion the motion tokens.
  * @param icons the semantic icon set; the brand's, or Jenga's own if unset.
+ * @param components theme-wide component styles; see [JengaComponentStyles].
  * @param content the themed content.
  */
 @Composable
@@ -209,6 +218,7 @@ public fun JengaTheme(
     elevation: JengaElevation = jengaElevation(),
     motion: JengaMotion = jengaMotion(),
     icons: JengaIconSet? = brand.icons,
+    components: JengaComponentStyles = JengaComponentStyles(),
     content: @Composable () -> Unit,
 ) {
     // Derive the type scale from the brand, injecting the bundled brand font for
@@ -230,6 +240,7 @@ public fun JengaTheme(
         elevation = elevation,
         motion = motion,
         icons = icons,
+        components = components,
         content = content,
     )
 }
@@ -252,6 +263,7 @@ public fun JengaTheme(
  * @param elevation the elevation ladder.
  * @param motion the motion tokens.
  * @param icons the semantic icon set; Jenga's own if unset.
+ * @param components theme-wide component styles; see [JengaComponentStyles].
  * @param content the themed content.
  */
 @Composable
@@ -265,6 +277,7 @@ public fun JengaTheme(
     elevation: JengaElevation = jengaElevation(),
     motion: JengaMotion = jengaMotion(),
     icons: JengaIconSet? = null,
+    components: JengaComponentStyles = JengaComponentStyles(),
     content: @Composable () -> Unit,
 ) {
     JengaTheme(
@@ -277,6 +290,7 @@ public fun JengaTheme(
         elevation = elevation,
         motion = motion,
         icons = icons,
+        components = components,
         content = content,
     )
 }

@@ -42,34 +42,71 @@ public class JengaSnackbarColors(
     ): JengaSnackbarColors = JengaSnackbarColors(container, content, action)
 }
 
-/** Defaults and token mappings for [JengaSnackbar]. */
+/**
+ * Theme-wide style for every [JengaSnackbar], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.snackbar]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property shape the snackbar shape.
+ * @property contentPadding padding inside the snackbar.
+ * @property hostPadding space around the snackbar inside a [JengaSnackbarHost].
+ * @property messageStyle the message text style.
+ * @property actionStyle the action label text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaSnackbarStyle(
+    public val shape: Shape? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val hostPadding: PaddingValues? = null,
+    public val messageStyle: TextStyle? = null,
+    public val actionStyle: TextStyle? = null,
+    public val colors: JengaSnackbarColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        contentPadding: PaddingValues? = this.contentPadding,
+        hostPadding: PaddingValues? = this.hostPadding,
+        messageStyle: TextStyle? = this.messageStyle,
+        actionStyle: TextStyle? = this.actionStyle,
+        colors: JengaSnackbarColors? = this.colors,
+    ): JengaSnackbarStyle = JengaSnackbarStyle(shape, contentPadding, hostPadding, messageStyle, actionStyle, colors)
+}
+
+/**
+ * Defaults and token mappings for [JengaSnackbar].
+ *
+ * The composable members follow the theme's [JengaSnackbarStyle]; [DotSize] is Jenga's built-in value.
+ */
 public object JengaSnackbarDefaults {
     /** Default snackbar shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.control
+        @Composable get() = JengaTheme.components.snackbar?.shape ?: JengaTheme.shapes.control
 
     /** Diameter of the leading tone dot. */
     public val DotSize: Dp = 8.dp
 
     /** Space around a snackbar inside a [JengaSnackbarHost]. */
     public val hostPadding: PaddingValues
-        @Composable get() = PaddingValues(JengaTheme.spacing.lg)
+        @Composable get() = JengaTheme.components.snackbar?.hostPadding ?: PaddingValues(JengaTheme.spacing.lg)
 
     /** Padding inside the snackbar. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+        @Composable get() = JengaTheme.components.snackbar?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
 
     /** Message text style. */
     public val messageStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodySmall
+        @Composable get() = JengaTheme.components.snackbar?.messageStyle ?: JengaTheme.typography.bodySmall
 
     /** Action label text style. */
     public val actionStyle: TextStyle
-        @Composable get() = JengaTheme.typography.label
+        @Composable get() = JengaTheme.components.snackbar?.actionStyle ?: JengaTheme.typography.label
 
     /** Themed colors (high-contrast inverse surface). */
     @Composable
-    public fun colors(): JengaSnackbarColors = JengaSnackbarColors(
+    public fun colors(): JengaSnackbarColors = JengaTheme.components.snackbar?.colors ?: JengaSnackbarColors(
         container = JengaTheme.colors.inverseSurface,
         content = JengaTheme.colors.inverseOnSurface,
         action = JengaTheme.colors.inverseOnSurface,

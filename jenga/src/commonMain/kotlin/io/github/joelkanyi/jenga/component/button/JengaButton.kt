@@ -78,7 +78,93 @@ public class JengaButtonColors(
     ): JengaButtonColors = JengaButtonColors(container, content, border, disabledContainer, disabledContent, disabledBorder)
 }
 
-/** Default values and token mappings for [JengaButton]. Override any of these per call. */
+/**
+ * Theme-wide metrics for one [JengaButtonSize], part of a [JengaButtonStyle]. A `null` value keeps
+ * Jenga's default.
+ *
+ * @property minHeight the minimum height.
+ * @property shape the button shape.
+ * @property contentPadding inner padding.
+ * @property textStyle the label text style.
+ */
+@Poko
+@androidx.compose.runtime.Immutable
+public class JengaButtonSizeStyle(
+    public val minHeight: Dp? = null,
+    public val shape: Shape? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        shape: Shape? = this.shape,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+    ): JengaButtonSizeStyle = JengaButtonSizeStyle(minHeight, shape, contentPadding, textStyle)
+}
+
+/**
+ * Theme-wide style for every [JengaButton], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.button]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaButton] call still win.
+ *
+ * @property small metrics for [JengaButtonSize.Small].
+ * @property medium metrics for [JengaButtonSize.Medium].
+ * @property large metrics for [JengaButtonSize.Large].
+ * @property primary colors for [JengaButtonVariant.Primary].
+ * @property ink colors for [JengaButtonVariant.Ink].
+ * @property ghost colors for [JengaButtonVariant.Ghost].
+ * @property neutral colors for [JengaButtonVariant.Neutral].
+ * @property outline colors for [JengaButtonVariant.Outline].
+ * @property danger colors for [JengaButtonVariant.Danger].
+ */
+@Poko
+@androidx.compose.runtime.Immutable
+public class JengaButtonStyle(
+    public val small: JengaButtonSizeStyle? = null,
+    public val medium: JengaButtonSizeStyle? = null,
+    public val large: JengaButtonSizeStyle? = null,
+    public val primary: JengaButtonColors? = null,
+    public val ink: JengaButtonColors? = null,
+    public val ghost: JengaButtonColors? = null,
+    public val neutral: JengaButtonColors? = null,
+    public val outline: JengaButtonColors? = null,
+    public val danger: JengaButtonColors? = null,
+) {
+    public fun copy(
+        small: JengaButtonSizeStyle? = this.small,
+        medium: JengaButtonSizeStyle? = this.medium,
+        large: JengaButtonSizeStyle? = this.large,
+        primary: JengaButtonColors? = this.primary,
+        ink: JengaButtonColors? = this.ink,
+        ghost: JengaButtonColors? = this.ghost,
+        neutral: JengaButtonColors? = this.neutral,
+        outline: JengaButtonColors? = this.outline,
+        danger: JengaButtonColors? = this.danger,
+    ): JengaButtonStyle = JengaButtonStyle(small, medium, large, primary, ink, ghost, neutral, outline, danger)
+
+    internal fun size(size: JengaButtonSize): JengaButtonSizeStyle? = when (size) {
+        JengaButtonSize.Small -> small
+        JengaButtonSize.Medium -> medium
+        JengaButtonSize.Large -> large
+    }
+
+    internal fun colors(variant: JengaButtonVariant): JengaButtonColors? = when (variant) {
+        JengaButtonVariant.Primary -> primary
+        JengaButtonVariant.Ink -> ink
+        JengaButtonVariant.Ghost -> ghost
+        JengaButtonVariant.Neutral -> neutral
+        JengaButtonVariant.Outline -> outline
+        JengaButtonVariant.Danger -> danger
+    }
+}
+
+/**
+ * Default values and token mappings for [JengaButton]. Override any of these per call.
+ *
+ * The composable members follow the theme's [JengaButtonStyle]; the plain functions and constants
+ * are Jenga's built-in values.
+ */
 public object JengaButtonDefaults {
 
     /** Border width used by bordered variants. */
@@ -87,7 +173,7 @@ public object JengaButtonDefaults {
     /** Diameter of the inline loading spinner. */
     public val SpinnerSize: Dp = 18.dp
 
-    /** The default button shape (control radius). */
+    /** The default button shape (control radius), before any per-size theme shape. */
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.control
 
@@ -108,6 +194,7 @@ public object JengaButtonDefaults {
     /** Label text style per [size]. */
     @Composable
     public fun textStyle(size: JengaButtonSize): TextStyle {
+        JengaTheme.components.button?.size(size)?.textStyle?.let { return it }
         val base = JengaTheme.typography.button
         return when (size) {
             JengaButtonSize.Small -> base.copy(fontSize = 14.sp, lineHeight = 18.sp)
@@ -119,6 +206,7 @@ public object JengaButtonDefaults {
     /** Themed colors for the given [variant]. */
     @Composable
     public fun colors(variant: JengaButtonVariant): JengaButtonColors {
+        JengaTheme.components.button?.colors(variant)?.let { return it }
         val c = JengaTheme.colors
         return when (variant) {
             JengaButtonVariant.Primary -> JengaButtonColors(
@@ -233,9 +321,11 @@ public fun JengaButton(
  * @param loading when true, shows a spinner and blocks clicks.
  * @param leadingIcon optional icon before the content.
  * @param trailingIcon optional icon after the content.
- * @param shape the button shape; defaults to [JengaButtonDefaults.shape].
+ * @param shape the button shape; defaults to the theme's [JengaButtonSizeStyle.shape] for [size],
+ *   else [JengaButtonDefaults.shape].
  * @param colors the color set; defaults to [JengaButtonDefaults.colors] for [variant].
- * @param contentPadding inner padding; defaults to [JengaButtonDefaults.contentPadding].
+ * @param contentPadding inner padding; defaults to the theme's [JengaButtonSizeStyle.contentPadding]
+ *   for [size], else [JengaButtonDefaults.contentPadding].
  * @param content the button content; rendered with the resolved content color.
  */
 @Composable
@@ -248,15 +338,17 @@ public fun JengaButton(
     loading: Boolean = false,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
-    shape: Shape = JengaButtonDefaults.shape,
+    shape: Shape = JengaTheme.components.button?.size(size)?.shape ?: JengaButtonDefaults.shape,
     colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
-    contentPadding: PaddingValues = JengaButtonDefaults.contentPadding(size),
+    contentPadding: PaddingValues = JengaTheme.components.button?.size(size)?.contentPadding
+        ?: JengaButtonDefaults.contentPadding(size),
     content: @Composable RowScope.() -> Unit,
 ) {
     val isEnabled = enabled && !loading
     val container = if (isEnabled) colors.container else colors.disabledContainer
     val contentColor = if (isEnabled) colors.content else colors.disabledContent
     val borderColor = if (isEnabled) colors.border else colors.disabledBorder
+    val minHeight = JengaTheme.components.button?.size(size)?.minHeight ?: JengaButtonDefaults.minHeight(size)
 
     Row(
         modifier = modifier
@@ -275,7 +367,7 @@ public fun JengaButton(
                 role = Role.Button,
                 onClick = onClick,
             )
-            .defaultMinSize(minHeight = JengaButtonDefaults.minHeight(size))
+            .defaultMinSize(minHeight = minHeight)
             .padding(contentPadding),
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

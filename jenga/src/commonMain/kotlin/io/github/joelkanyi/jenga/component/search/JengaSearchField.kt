@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +22,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
@@ -28,6 +30,37 @@ import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldColors
 import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldDefaults
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
+
+/**
+ * Theme-wide style for every [JengaSearchField] or every [JengaSearchTrigger], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.searchField] and
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.searchTrigger]. A `null` value falls back to
+ * the theme's text field style, then to Jenga's default; arguments passed to a call still win.
+ *
+ * @property shape the field shape; falls back to [JengaSearchFieldDefaults.shape], not the text
+ *   field shape.
+ * @property minHeight the minimum height.
+ * @property contentPadding padding inside the field.
+ * @property textStyle the query and placeholder text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaSearchFieldStyle(
+    public val shape: Shape? = null,
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaTextFieldColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaTextFieldColors? = this.colors,
+    ): JengaSearchFieldStyle = JengaSearchFieldStyle(shape, minHeight, contentPadding, textStyle, colors)
+}
 
 /** Defaults for [JengaSearchField] and [JengaSearchTrigger]. */
 public object JengaSearchFieldDefaults {
@@ -52,8 +85,10 @@ public object JengaSearchFieldDefaults {
  * @param onClear called when the clear button is tapped; defaults to clearing the text.
  * @param trailingContent optional end slot shown while the query is empty.
  * @param supportingContent optional slot below the field (e.g. a hint).
- * @param shape the field shape; defaults to [JengaSearchFieldDefaults.shape].
- * @param colors the color set; defaults to [JengaTextFieldDefaults.colors].
+ * @param shape the field shape; defaults to the theme's search field style, else
+ *   [JengaSearchFieldDefaults.shape].
+ * @param colors the color set; defaults to the theme's search field style, else
+ *   [JengaTextFieldDefaults.colors].
  * @param textStyle the query and placeholder text style.
  * @param minHeight the minimum height of the field.
  * @param contentPadding padding inside the field.
@@ -69,11 +104,11 @@ public fun JengaSearchField(
     onClear: (() -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     supportingContent: (@Composable () -> Unit)? = null,
-    shape: Shape = JengaSearchFieldDefaults.shape,
-    colors: JengaTextFieldColors = JengaTextFieldDefaults.colors(),
-    textStyle: TextStyle = JengaTextFieldDefaults.textStyle,
-    minHeight: Dp = JengaTextFieldDefaults.minHeight,
-    contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding,
+    shape: Shape = JengaTheme.components.searchField?.shape ?: JengaSearchFieldDefaults.shape,
+    colors: JengaTextFieldColors = JengaTheme.components.searchField?.colors ?: JengaTextFieldDefaults.colors(),
+    textStyle: TextStyle = JengaTheme.components.searchField?.textStyle ?: JengaTextFieldDefaults.textStyle,
+    minHeight: Dp = JengaTheme.components.searchField?.minHeight ?: JengaTextFieldDefaults.minHeight,
+    contentPadding: PaddingValues = JengaTheme.components.searchField?.contentPadding ?: JengaTextFieldDefaults.contentPadding,
 ) {
     val clear: @Composable () -> Unit = {
         JengaIcon(
@@ -122,7 +157,8 @@ public fun JengaSearchField(
  * @param onClick called when the trigger is tapped.
  * @param modifier the [Modifier] for this trigger.
  * @param trailingContent optional end slot.
- * @param shape the trigger shape; defaults to [JengaSearchFieldDefaults.shape].
+ * @param shape the trigger shape; defaults to the theme's search trigger style, else
+ *   [JengaSearchFieldDefaults.shape].
  * @param colors the color set; reads the container, border, placeholder and icon colors.
  * @param textStyle the placeholder text style.
  * @param minHeight the minimum height of the trigger.
@@ -134,11 +170,11 @@ public fun JengaSearchTrigger(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     trailingContent: (@Composable () -> Unit)? = null,
-    shape: Shape = JengaSearchFieldDefaults.shape,
-    colors: JengaTextFieldColors = JengaTextFieldDefaults.colors(),
-    textStyle: TextStyle = JengaTextFieldDefaults.textStyle,
-    minHeight: Dp = JengaTextFieldDefaults.minHeight,
-    contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding,
+    shape: Shape = JengaTheme.components.searchTrigger?.shape ?: JengaSearchFieldDefaults.shape,
+    colors: JengaTextFieldColors = JengaTheme.components.searchTrigger?.colors ?: JengaTextFieldDefaults.colors(),
+    textStyle: TextStyle = JengaTheme.components.searchTrigger?.textStyle ?: JengaTextFieldDefaults.textStyle,
+    minHeight: Dp = JengaTheme.components.searchTrigger?.minHeight ?: JengaTextFieldDefaults.minHeight,
+    contentPadding: PaddingValues = JengaTheme.components.searchTrigger?.contentPadding ?: JengaTextFieldDefaults.contentPadding,
 ) {
     Row(
         modifier = modifier
