@@ -99,8 +99,9 @@ public object JengaOtpResendDefaults {
  *
  * @param remaining time left before a new code can be requested.
  * @param onResend called when the resend action is tapped.
- * @param countdownText the text shown while waiting, e.g.
- *   `{ "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" }`.
+ * @param countdownText the text shown while waiting. Build it from [remaining] on each recomposition,
+ *   e.g. `"Resend code in ${JengaOtpResendDefaults.formatRemaining(remaining)}"`, so string resources
+ *   work as usual.
  * @param resendText the resend action label.
  * @param modifier the [Modifier] for the row.
  * @param sending whether a resend is in progress; shows a spinner and blocks repeat taps.
@@ -113,7 +114,7 @@ public object JengaOtpResendDefaults {
 public fun JengaOtpResend(
     remaining: Duration,
     onResend: () -> Unit,
-    countdownText: (Duration) -> String,
+    countdownText: String,
     resendText: String,
     modifier: Modifier = Modifier,
     sending: Boolean = false,
@@ -139,7 +140,7 @@ public fun JengaOtpResend(
             label = "otpResend",
         ) { isWaiting ->
             if (isWaiting) {
-                JengaText(text = countdownText(remaining), style = textStyle, color = colors.countdown)
+                JengaText(text = countdownText, style = textStyle, color = colors.countdown)
             } else {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),

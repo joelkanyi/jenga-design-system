@@ -1399,7 +1399,7 @@ public final class io/github/joelkanyi/jenga/component/otp/JengaOtpResendDefault
 }
 
 public final class io/github/joelkanyi/jenga/component/otp/JengaOtpResendKt {
-	public static final fun JengaOtpResend-biEDYmE (JLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaOtpResend-biEDYmE (JLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
 	public static final fun rememberJengaCountdown-bz6L7rs (JLjava/lang/Object;Lkotlin/time/TimeSource;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/otp/JengaCountdownState;
 }
 

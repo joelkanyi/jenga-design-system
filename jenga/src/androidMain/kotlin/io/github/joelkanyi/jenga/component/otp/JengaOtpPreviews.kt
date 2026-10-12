@@ -164,7 +164,7 @@ private fun ResendSample(remaining: Duration, sending: Boolean = false) {
     JengaOtpResend(
         remaining = remaining,
         onResend = {},
-        countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+        countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(remaining)}",
         resendText = "Resend code",
         sending = sending,
     )

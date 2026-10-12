@@ -829,7 +829,7 @@ internal fun JengaOtpResendSample() {
     JengaOtpResend(
         remaining = countdown.remaining,
         onResend = { countdown.restart() },
-        countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+        countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
         resendText = "Resend code",
     )
 }
@@ -848,7 +848,7 @@ internal fun JengaOtpVerificationSample() {
             JengaOtpResend(
                 remaining = countdown.remaining,
                 onResend = { countdown.restart() },
-                countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+                countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
                 resendText = "Resend code",
             )
         },

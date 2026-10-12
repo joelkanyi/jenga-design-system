@@ -303,7 +303,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaOtpResend(
                 remaining = countdown.remaining,
                 onResend = { countdown.restart() },
-                countdownText = { "Resend code in ${'$'}{JengaOtpResendDefaults.formatRemaining(it)}" },
+                countdownText = "Resend code in ${'$'}{JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
                 resendText = "Resend code",
             )
         """.trimIndent(),
@@ -312,7 +312,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         JengaOtpResend(
             remaining = countdown.remaining,
             onResend = { countdown.restart() },
-            countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+            countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
             resendText = "Resend code",
         )
     },
@@ -328,7 +328,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 field = { JengaOtpField(code, { code = it }, contentDescription = "Verification code", onComplete = { verify(it) }) },
                 verifying = verifying,
                 verifyingText = "Verifying…",
-                resend = { JengaOtpResend(remaining, onResend = {}, countdownText = { ... }, resendText = "Resend code") },
+                resend = { JengaOtpResend(remaining, onResend = {}, countdownText = "…", resendText = "Resend code") },
             )
         """.trimIndent(),
     ) {
@@ -371,7 +371,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaOtpResend(
                     remaining = countdown.remaining,
                     onResend = { countdown.restart() },
-                    countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+                    countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
                     resendText = "Resend code",
                 )
             },
