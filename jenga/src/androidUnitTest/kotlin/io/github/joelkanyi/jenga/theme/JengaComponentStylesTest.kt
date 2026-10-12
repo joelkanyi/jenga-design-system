@@ -13,6 +13,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSizeStyle
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarStyle
+import io.github.joelkanyi.jenga.component.banner.JengaInfoBarDefaults
+import io.github.joelkanyi.jenga.component.banner.JengaInfoBarStyle
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonColors
 import io.github.joelkanyi.jenga.component.button.JengaButtonDefaults
@@ -25,9 +30,13 @@ import io.github.joelkanyi.jenga.component.button.JengaIconButtonStyle
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariantStyle
 import io.github.joelkanyi.jenga.component.card.JengaCardDefaults
+import io.github.joelkanyi.jenga.component.card.JengaCardFooterDefaults
+import io.github.joelkanyi.jenga.component.card.JengaCardFooterStyle
 import io.github.joelkanyi.jenga.component.card.JengaCardStyle
 import io.github.joelkanyi.jenga.component.chip.JengaChipDefaults
 import io.github.joelkanyi.jenga.component.chip.JengaChipStyle
+import io.github.joelkanyi.jenga.component.fab.JengaExtendedFab
+import io.github.joelkanyi.jenga.component.fab.JengaFabStyle
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogColors
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogDefaults
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogStyle
@@ -46,12 +55,18 @@ import io.github.joelkanyi.jenga.component.list.JengaListItemDefaults
 import io.github.joelkanyi.jenga.component.list.JengaListItemStyle
 import io.github.joelkanyi.jenga.component.list.JengaSelectionListItemDefaults
 import io.github.joelkanyi.jenga.component.list.JengaSelectionListItemStyle
+import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuStyle
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressStyle
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaProgressStyle
 import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarDefaults
 import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarStyle
+import io.github.joelkanyi.jenga.component.shelf.JengaThumbnailStripStyle
 import io.github.joelkanyi.jenga.component.state.JengaStateDefaults
 import io.github.joelkanyi.jenga.component.state.JengaStateStyle
+import io.github.joelkanyi.jenga.component.status.JengaStatusPillStyle
+import io.github.joelkanyi.jenga.component.stepper.JengaStepperStyle
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControlStyle
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
@@ -266,5 +281,43 @@ class JengaComponentStylesTest {
                 .first()
                 .isDigit(),
         )
+    }
+
+    private val phase2b = JengaComponentStyles(
+        button = JengaButtonStyle(medium = JengaButtonSizeStyle(minHeight = 50.dp)),
+        statusPill = JengaStatusPillStyle(indicatorSize = 6.dp),
+        avatar = JengaAvatarStyle(medium = JengaAvatarSizeStyle(diameter = 42.dp)),
+        circularProgress = JengaCircularProgressStyle(size = 18.dp, strokeWidth = 2.dp),
+        cardFooter = JengaCardFooterStyle(textStyle = chipText),
+        stepper = JengaStepperStyle(buttonSize = 46.dp),
+        dropdownMenu = JengaDropdownMenuStyle(itemMinHeight = 46.dp),
+        fab = JengaFabStyle(extendedHeight = 52.dp),
+        thumbnailStrip = JengaThumbnailStripStyle(thumbnailSize = 84.dp),
+    )
+
+    @Test
+    fun thirdBatchFollowsTheThemeStyle() {
+        compose.setContent {
+            JengaTheme(components = phase2b) {
+                assertEquals(50.dp, JengaInfoBarDefaults.minHeight)
+                assertEquals(chipText, JengaCardFooterDefaults.textStyle)
+                JengaAvatar(name = "Amina Otieno", modifier = Modifier.testTag("avatar"))
+                JengaCircularProgressIndeterminate(modifier = Modifier.testTag("spinner"))
+                JengaExtendedFab(label = "New", onClick = {}, modifier = Modifier.testTag("fab"))
+            }
+        }
+        compose.onNodeWithTag("avatar").assertWidthIsEqualTo(42.dp)
+        compose.onNodeWithTag("spinner").assertWidthIsEqualTo(18.dp)
+        compose.onNodeWithTag("fab").assertHeightIsEqualTo(52.dp)
+    }
+
+    @Test
+    fun infoBarStyleWinsOverTheButtonStyle() {
+        compose.setContent {
+            JengaTheme(components = phase2b.copy(infoBar = JengaInfoBarStyle(minHeight = 60.dp))) {
+                assertEquals(60.dp, JengaInfoBarDefaults.minHeight)
+            }
+        }
+        compose.waitForIdle()
     }
 }

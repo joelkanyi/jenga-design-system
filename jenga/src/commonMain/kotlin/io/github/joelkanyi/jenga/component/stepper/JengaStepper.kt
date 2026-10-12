@@ -59,11 +59,62 @@ public class JengaStepperColors(
     ): JengaStepperColors = JengaStepperColors(track, button, buttonContent, value, disabledButton, disabledContent)
 }
 
-/** Defaults and token mappings for [JengaStepper]. */
+/**
+ * Theme-wide style for every [JengaStepper], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.stepper]. A `null` value keeps Jenga's default;
+ * arguments passed to a call still win.
+ *
+ * @property shape the track shape.
+ * @property buttonShape the +/- button shape.
+ * @property buttonSize the +/- button size.
+ * @property buttonElevation shadow under an enabled +/- button.
+ * @property trackPadding padding inside the track, around the buttons.
+ * @property valueMinWidth minimum width of the value.
+ * @property textStyle the value text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaStepperStyle(
+    public val shape: Shape? = null,
+    public val buttonShape: Shape? = null,
+    public val buttonSize: Dp? = null,
+    public val buttonElevation: Dp? = null,
+    public val trackPadding: Dp? = null,
+    public val valueMinWidth: Dp? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaStepperColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        buttonShape: Shape? = this.buttonShape,
+        buttonSize: Dp? = this.buttonSize,
+        buttonElevation: Dp? = this.buttonElevation,
+        trackPadding: Dp? = this.trackPadding,
+        valueMinWidth: Dp? = this.valueMinWidth,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaStepperColors? = this.colors,
+    ): JengaStepperStyle = JengaStepperStyle(
+        shape,
+        buttonShape,
+        buttonSize,
+        buttonElevation,
+        trackPadding,
+        valueMinWidth,
+        textStyle,
+        colors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaStepper]. The composable members follow the theme's
+ * [JengaStepperStyle]; the constants are Jenga's built-in values, and [JengaStepper] resolves the
+ * theme's values over them.
+ */
 public object JengaStepperDefaults {
     /** The pill track shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.pill
+        @Composable get() = JengaTheme.components.stepper?.shape ?: JengaTheme.shapes.pill
 
     /** Diameter of each round +/- button (its touch target expands to 48dp). */
     public val ButtonSize: Dp = 38.dp
@@ -73,23 +124,24 @@ public object JengaStepperDefaults {
 
     /** Shape of the +/- buttons. */
     public val buttonShape: Shape
-        @Composable get() = JengaTheme.shapes.pill
+        @Composable get() = JengaTheme.components.stepper?.buttonShape ?: JengaTheme.shapes.pill
 
     /** Shadow under an enabled +/- button. */
     public val buttonElevation: Dp
-        @Composable get() = JengaTheme.elevation.sm
+        @Composable get() = JengaTheme.components.stepper?.buttonElevation ?: JengaTheme.elevation.sm
 
     /** Padding inside the track, around the buttons. */
     public val trackPadding: Dp
-        @Composable get() = JengaTheme.spacing.xs
+        @Composable get() = JengaTheme.components.stepper?.trackPadding ?: JengaTheme.spacing.xs
 
     /** Value text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleLarge
+        @Composable get() = JengaTheme.components.stepper?.textStyle ?: JengaTheme.typography.titleLarge
 
     /** Themed colors for the track, buttons and value. */
     @Composable
     public fun colors(): JengaStepperColors {
+        JengaTheme.components.stepper?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaStepperColors(
             track = c.surfaceVariant,
@@ -130,10 +182,11 @@ public object JengaStepperDefaults {
  * @param removeContentDescription accessibility label for the remove button.
  * @param shape the track shape.
  * @param buttonShape the +/- button shape.
- * @param buttonSize the +/- button size.
+ * @param buttonSize the +/- button size; defaults to the theme's value, else [JengaStepperDefaults.ButtonSize].
  * @param buttonElevation shadow under an enabled +/- button.
  * @param trackPadding padding inside the track, around the buttons.
- * @param valueMinWidth minimum width of the value.
+ * @param valueMinWidth minimum width of the value; defaults to the theme's value, else
+ *   [JengaStepperDefaults.ValueMinWidth].
  * @param textStyle the value text style.
  */
 @Composable
@@ -154,10 +207,10 @@ public fun JengaStepper(
     removeContentDescription: String? = null,
     shape: Shape = JengaStepperDefaults.shape,
     buttonShape: Shape = JengaStepperDefaults.buttonShape,
-    buttonSize: Dp = JengaStepperDefaults.ButtonSize,
+    buttonSize: Dp = JengaTheme.components.stepper?.buttonSize ?: JengaStepperDefaults.ButtonSize,
     buttonElevation: Dp = JengaStepperDefaults.buttonElevation,
     trackPadding: Dp = JengaStepperDefaults.trackPadding,
-    valueMinWidth: Dp = JengaStepperDefaults.ValueMinWidth,
+    valueMinWidth: Dp = JengaTheme.components.stepper?.valueMinWidth ?: JengaStepperDefaults.ValueMinWidth,
     textStyle: TextStyle = JengaStepperDefaults.textStyle,
 ) {
     val canDecrement = enabled && value - step >= min

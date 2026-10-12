@@ -280,6 +280,7 @@ public object JengaButtonDefaults {
  * @param loading when true, shows a spinner and blocks clicks.
  * @param leadingIcon optional icon before the label.
  * @param trailingIcon optional icon after the label.
+ * @param colors the color set; defaults to [JengaButtonDefaults.colors] for [variant].
  */
 @Composable
 public fun JengaButton(
@@ -292,6 +293,7 @@ public fun JengaButton(
     loading: Boolean = false,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
+    colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
 ) {
     JengaButton(
         onClick = onClick,
@@ -302,6 +304,7 @@ public fun JengaButton(
         loading = loading,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
+        colors = colors,
     ) {
         JengaText(
             text = text,

@@ -136,6 +136,8 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param contentSpacing the gap between the control and the text.
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
+ * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
+ * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
  * @param radioSize the diameter of the radio.
  * @param colors the row color set (e.g. a warning-colored supporting line); defaults to [JengaSelectionListItemDefaults.colors].
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it selects the row.
@@ -154,6 +156,8 @@ public fun JengaRadioListItem(
     contentSpacing: Dp = JengaSelectionListItemDefaults.contentSpacing,
     headlineStyle: TextStyle = JengaSelectionListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaSelectionListItemDefaults.supportingStyle,
+    headlineMaxLines: Int = 1,
+    supportingMaxLines: Int = 1,
     radioSize: Dp = JengaSelectionListItemDefaults.radioSize,
     colors: JengaListItemColors = JengaSelectionListItemDefaults.colors(),
     trailingContent: (@Composable () -> Unit)? = null,
@@ -178,6 +182,8 @@ public fun JengaRadioListItem(
         contentSpacing = contentSpacing,
         headlineStyle = headlineStyle,
         supportingStyle = supportingStyle,
+        headlineMaxLines = headlineMaxLines,
+        supportingMaxLines = supportingMaxLines,
         colors = colors,
     )
 }
@@ -200,6 +206,8 @@ public fun JengaRadioListItem(
  * @param contentSpacing the gap between the control and the text.
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
+ * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
+ * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it toggles the row.
  * @param checkboxShape the checkbox box shape.
  * @param colors the row color set; its disabled colors apply when [enabled] is false, so a locked row
@@ -221,6 +229,8 @@ public fun JengaCheckboxListItem(
     contentSpacing: Dp = JengaSelectionListItemDefaults.contentSpacing,
     headlineStyle: TextStyle = JengaSelectionListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaSelectionListItemDefaults.supportingStyle,
+    headlineMaxLines: Int = 1,
+    supportingMaxLines: Int = 1,
     trailingContent: (@Composable () -> Unit)? = null,
     checkboxShape: Shape = JengaSelectionListItemDefaults.checkboxShape,
     colors: JengaListItemColors = JengaSelectionListItemDefaults.colors(),
@@ -259,6 +269,8 @@ public fun JengaCheckboxListItem(
         contentSpacing = contentSpacing,
         headlineStyle = headlineStyle,
         supportingStyle = supportingStyle,
+        headlineMaxLines = headlineMaxLines,
+        supportingMaxLines = supportingMaxLines,
         colors = colors,
     )
 }

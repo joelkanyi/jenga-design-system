@@ -41,6 +41,36 @@ public class JengaStatusPillColors(
 }
 
 /** Defaults and token mappings for [JengaStatusPill]. */
+/**
+ * Theme-wide style for every [JengaStatusPill], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.statusPill]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property indicatorSize the diameter of the leading dot or spinner.
+ * @property minHeight the minimum pill height.
+ * @property contentPadding padding inside the pill.
+ * @property textStyle the label text style.
+ */
+@Poko
+@Immutable
+public class JengaStatusPillStyle(
+    public val indicatorSize: Dp? = null,
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+) {
+    public fun copy(
+        indicatorSize: Dp? = this.indicatorSize,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+    ): JengaStatusPillStyle = JengaStatusPillStyle(indicatorSize, minHeight, contentPadding, textStyle)
+}
+
+/**
+ * Defaults for [JengaStatusPill]. The composable members follow the theme's [JengaStatusPillStyle];
+ * the constants are Jenga's built-in values, and [JengaStatusPill] resolves the theme's values over them.
+ */
 public object JengaStatusPillDefaults {
     /** Diameter of the leading status dot / spinner. */
     public val IndicatorSize: Dp = 8.dp
@@ -50,11 +80,12 @@ public object JengaStatusPillDefaults {
 
     /** Padding inside the pill. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.md, vertical = JengaTheme.spacing.xs)
+        @Composable get() = JengaTheme.components.statusPill?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.md, vertical = JengaTheme.spacing.xs)
 
     /** Label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.label
+        @Composable get() = JengaTheme.components.statusPill?.textStyle ?: JengaTheme.typography.label
 
     /** Themed colors for the given [tone]. */
     @Composable
@@ -100,8 +131,8 @@ public fun JengaStatusPill(
     onClick: (() -> Unit)? = null,
     colors: JengaStatusPillColors = JengaStatusPillDefaults.colors(tone),
     showDot: Boolean = true,
-    indicatorSize: Dp = JengaStatusPillDefaults.IndicatorSize,
-    minHeight: Dp = JengaStatusPillDefaults.MinHeight,
+    indicatorSize: Dp = JengaTheme.components.statusPill?.indicatorSize ?: JengaStatusPillDefaults.IndicatorSize,
+    minHeight: Dp = JengaTheme.components.statusPill?.minHeight ?: JengaStatusPillDefaults.MinHeight,
     contentPadding: PaddingValues = JengaStatusPillDefaults.contentPadding,
     textStyle: TextStyle = JengaStatusPillDefaults.textStyle,
 ) {

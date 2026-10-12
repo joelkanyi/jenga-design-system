@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -63,11 +65,65 @@ public class JengaDropdownMenuItemColors(
     )
 }
 
-/** Defaults and token mappings for [JengaDropdownMenu] and [JengaDropdownMenuItem]. */
+/**
+ * Theme-wide style for every [JengaDropdownMenu] and [JengaDropdownMenuItem], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.dropdownMenu]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property shape the menu shape.
+ * @property width the menu width.
+ * @property border the outline around the menu.
+ * @property shadowElevation the menu shadow elevation.
+ * @property itemTextStyle the item label text style.
+ * @property itemMinHeight the minimum item height.
+ * @property itemContentPadding padding inside an item.
+ * @property itemColors the item color set.
+ */
+@Poko
+@Immutable
+public class JengaDropdownMenuStyle(
+    public val shape: Shape? = null,
+    public val width: Dp? = null,
+    public val border: BorderStroke? = null,
+    public val shadowElevation: Dp? = null,
+    public val itemTextStyle: TextStyle? = null,
+    public val itemMinHeight: Dp? = null,
+    public val itemContentPadding: PaddingValues? = null,
+    public val itemColors: JengaDropdownMenuItemColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        width: Dp? = this.width,
+        border: BorderStroke? = this.border,
+        shadowElevation: Dp? = this.shadowElevation,
+        itemTextStyle: TextStyle? = this.itemTextStyle,
+        itemMinHeight: Dp? = this.itemMinHeight,
+        itemContentPadding: PaddingValues? = this.itemContentPadding,
+        itemColors: JengaDropdownMenuItemColors? = this.itemColors,
+    ): JengaDropdownMenuStyle = JengaDropdownMenuStyle(
+        shape,
+        width,
+        border,
+        shadowElevation,
+        itemTextStyle,
+        itemMinHeight,
+        itemContentPadding,
+        itemColors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaDropdownMenu] and [JengaDropdownMenuItem]. The composable
+ * members follow the theme's [JengaDropdownMenuStyle]; the constants are Jenga's built-in values, and
+ * the components resolve the theme's values over them.
+ */
 public object JengaDropdownMenuDefaults {
     /** Default menu shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.md
+        @Composable get() = JengaTheme.components.dropdownMenu?.shape ?: JengaTheme.shapes.md
+
+    /** Default menu width; [Dp.Unspecified] sizes the menu to its items. */
+    public val Width: Dp = Dp.Unspecified
 
     /** Default menu shadow elevation. */
     public val ShadowElevation: Dp = MenuDefaults.ShadowElevation
@@ -77,11 +133,12 @@ public object JengaDropdownMenuDefaults {
 
     /** Padding inside an item. */
     public val itemContentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+        @Composable get() = JengaTheme.components.dropdownMenu?.itemContentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
 
     /** Item label text style. */
     public val itemTextStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodyMedium
+        @Composable get() = JengaTheme.components.dropdownMenu?.itemTextStyle ?: JengaTheme.typography.bodyMedium
 
     /** Padding around a [JengaDropdownMenuDivider]. */
     public val dividerPadding: PaddingValues
@@ -90,6 +147,7 @@ public object JengaDropdownMenuDefaults {
     /** Themed item colors. */
     @Composable
     public fun itemColors(): JengaDropdownMenuItemColors {
+        JengaTheme.components.dropdownMenu?.itemColors?.let { return it }
         val c = JengaTheme.colors
         return JengaDropdownMenuItemColors(
             content = c.textPrimary,
@@ -112,8 +170,10 @@ public object JengaDropdownMenuDefaults {
  * @param modifier the [Modifier] for the menu surface.
  * @param offset offset from the anchor.
  * @param shape the menu shape.
- * @param border optional outline around the menu.
- * @param shadowElevation the menu shadow elevation.
+ * @param border optional outline around the menu; defaults to the theme's border, else none.
+ * @param shadowElevation the menu shadow elevation; defaults to the theme's value, else
+ *   [JengaDropdownMenuDefaults.ShadowElevation].
+ * @param width the menu width; defaults to the theme's value, else [JengaDropdownMenuDefaults.Width].
  * @param content the menu items, in a [ColumnScope].
  */
 @Composable
@@ -123,14 +183,15 @@ public fun JengaDropdownMenu(
     modifier: Modifier = Modifier,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
     shape: Shape = JengaDropdownMenuDefaults.shape,
-    border: BorderStroke? = null,
-    shadowElevation: Dp = JengaDropdownMenuDefaults.ShadowElevation,
+    border: BorderStroke? = JengaTheme.components.dropdownMenu?.border,
+    shadowElevation: Dp = JengaTheme.components.dropdownMenu?.shadowElevation ?: JengaDropdownMenuDefaults.ShadowElevation,
+    width: Dp = JengaTheme.components.dropdownMenu?.width ?: JengaDropdownMenuDefaults.Width,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        modifier = modifier,
+        modifier = if (width.isSpecified) modifier.width(width) else modifier,
         offset = offset,
         shape = shape,
         containerColor = JengaTheme.colors.surface,
@@ -152,7 +213,8 @@ public fun JengaDropdownMenu(
  * @param supportingText optional line under the label.
  * @param tone the item tone; see [JengaDropdownMenuItemTone].
  * @param textStyle the label text style.
- * @param minHeight the minimum item height.
+ * @param minHeight the minimum item height; defaults to the theme's value, else
+ *   [JengaDropdownMenuDefaults.ItemMinHeight].
  * @param contentPadding padding inside the item.
  * @param colors the color set; defaults to [JengaDropdownMenuDefaults.itemColors].
  */
@@ -166,7 +228,7 @@ public fun JengaDropdownMenuItem(
     supportingText: String? = null,
     tone: JengaDropdownMenuItemTone = JengaDropdownMenuItemTone.Default,
     textStyle: TextStyle = JengaDropdownMenuDefaults.itemTextStyle,
-    minHeight: Dp = JengaDropdownMenuDefaults.ItemMinHeight,
+    minHeight: Dp = JengaTheme.components.dropdownMenu?.itemMinHeight ?: JengaDropdownMenuDefaults.ItemMinHeight,
     contentPadding: PaddingValues = JengaDropdownMenuDefaults.itemContentPadding,
     colors: JengaDropdownMenuItemColors = JengaDropdownMenuDefaults.itemColors(),
 ) {

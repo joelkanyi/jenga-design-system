@@ -52,7 +52,51 @@ public class JengaNavigationRailItemColors(
     )
 }
 
-/** Defaults and token mappings for [JengaNavigationRailItem]. */
+/**
+ * Theme-wide style for every [JengaNavigationRailItem], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.navigationRailItem]. A `null` value keeps
+ * Jenga's default; arguments passed to a call still win.
+ *
+ * @property minHeight the minimum item height.
+ * @property shape the item shape.
+ * @property contentPadding padding inside the item.
+ * @property textStyle the label text style.
+ * @property selectedTextStyle merged onto the label text style while selected, so set only what
+ *   changes, e.g. `TextStyle(fontWeight = FontWeight.SemiBold)`.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaNavigationRailItemStyle(
+    public val minHeight: Dp? = null,
+    public val shape: Shape? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+    public val selectedTextStyle: TextStyle? = null,
+    public val colors: JengaNavigationRailItemColors? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        shape: Shape? = this.shape,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        selectedTextStyle: TextStyle? = this.selectedTextStyle,
+        colors: JengaNavigationRailItemColors? = this.colors,
+    ): JengaNavigationRailItemStyle = JengaNavigationRailItemStyle(
+        minHeight,
+        shape,
+        contentPadding,
+        textStyle,
+        selectedTextStyle,
+        colors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaNavigationRailItem]. The composable members follow the theme's
+ * [JengaNavigationRailItemStyle]; the constants are Jenga's built-in values, and
+ * [JengaNavigationRailItem] resolves the theme's values over them.
+ */
 public object JengaNavigationRailItemDefaults {
     /** Minimum item height. */
     public val MinHeight: Dp = 48.dp
@@ -62,19 +106,20 @@ public object JengaNavigationRailItemDefaults {
 
     /** Default item shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.md
+        @Composable get() = JengaTheme.components.navigationRailItem?.shape ?: JengaTheme.shapes.md
 
     /** Padding inside the item. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.md)
+        @Composable get() = JengaTheme.components.navigationRailItem?.contentPadding ?: PaddingValues(horizontal = JengaTheme.spacing.md)
 
     /** Label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodyMedium
+        @Composable get() = JengaTheme.components.navigationRailItem?.textStyle ?: JengaTheme.typography.bodyMedium
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaNavigationRailItemColors {
+        JengaTheme.components.navigationRailItem?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaNavigationRailItemColors(
             selectedContainer = c.brandSubtle,
@@ -100,11 +145,13 @@ public object JengaNavigationRailItemDefaults {
  * @param modifier the [Modifier] for this item.
  * @param enabled whether the item is interactive.
  * @param showDot whether a small attention dot follows the label.
- * @param minHeight the minimum item height.
+ * @param minHeight the minimum item height; defaults to the theme's value, else
+ *   [JengaNavigationRailItemDefaults.MinHeight].
  * @param shape the item shape.
  * @param contentPadding padding inside the item.
  * @param textStyle the label text style.
- * @param selectedTextStyle the label text style while selected; defaults to [textStyle].
+ * @param selectedTextStyle the label text style while selected; defaults to [textStyle] with the
+ *   theme's [JengaNavigationRailItemStyle.selectedTextStyle] merged on top.
  * @param colors the color set; defaults to [JengaNavigationRailItemDefaults.colors].
  */
 @Composable
@@ -116,11 +163,11 @@ public fun JengaNavigationRailItem(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     showDot: Boolean = false,
-    minHeight: Dp = JengaNavigationRailItemDefaults.MinHeight,
+    minHeight: Dp = JengaTheme.components.navigationRailItem?.minHeight ?: JengaNavigationRailItemDefaults.MinHeight,
     shape: Shape = JengaNavigationRailItemDefaults.shape,
     contentPadding: PaddingValues = JengaNavigationRailItemDefaults.contentPadding,
     textStyle: TextStyle = JengaNavigationRailItemDefaults.textStyle,
-    selectedTextStyle: TextStyle = textStyle,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.navigationRailItem?.selectedTextStyle),
     colors: JengaNavigationRailItemColors = JengaNavigationRailItemDefaults.colors(),
 ) {
     val contentColor = when {
