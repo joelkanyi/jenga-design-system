@@ -98,6 +98,7 @@ kotlin {
                 implementation(libs.roborazzi.compose.preview.scanner.support)
                 implementation(libs.composable.preview.scanner)
                 implementation(libs.androidx.compose.ui.test.junit4)
+                implementation(libs.androidx.compose.ui.test.manifest)
                 implementation(libs.androidx.compose.ui.tooling)
             }
         }

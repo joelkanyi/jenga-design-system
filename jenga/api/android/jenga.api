@@ -1522,6 +1522,143 @@ public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigatio
 	public static final fun JengaNavigationRailItem-xKBSf-U (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZZFLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
+public final class io/github/joelkanyi/jenga/component/otp/ComposableSingletons$JengaOtpPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/otp/ComposableSingletons$JengaOtpPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-2020517600$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-221808540$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-635420107$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-700207234$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-84390016$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-845742646$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-960589665$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1492681192$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1935419949$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$373676165$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$431057323$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$697910630$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$75605604$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$885992503$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaCountdownState {
+	public static final field $stable I
+	public final fun getRemaining-UwyO8pc ()J
+	public final fun isRunning ()Z
+	public final fun restart ()V
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpCellState {
+	public static final field $stable I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChar ()Ljava/lang/Character;
+	public final fun getEnabled ()Z
+	public final fun getIndex ()I
+	public final fun getMasked ()Z
+	public final fun getStatus ()Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus;
+	public fun hashCode ()I
+	public final fun isActive ()Z
+	public final fun isFilled ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle : java/lang/Enum {
+	public static final field Filled Lio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;
+	public static final field Outlined Lio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;
+	public static final field Underline Lio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-dVHXu7A (JJJJJJJJJJJJJJ)Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors;
+	public static synthetic fun copy-dVHXu7A$default (Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors;JJJJJJJJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActiveBorder-0d7_KjU ()J
+	public final fun getBorder-0d7_KjU ()J
+	public final fun getContainer-0d7_KjU ()J
+	public final fun getCursor-0d7_KjU ()J
+	public final fun getDisabledBorder-0d7_KjU ()J
+	public final fun getDisabledContainer-0d7_KjU ()J
+	public final fun getDisabledText-0d7_KjU ()J
+	public final fun getErrorBorder-0d7_KjU ()J
+	public final fun getErrorSupportingText-0d7_KjU ()J
+	public final fun getFilledContainer-0d7_KjU ()J
+	public final fun getSuccessBorder-0d7_KjU ()J
+	public final fun getSuccessSupportingText-0d7_KjU ()J
+	public final fun getSupportingText-0d7_KjU ()J
+	public final fun getText-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpFieldDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldDefaults;
+	public static final field Length I
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors;
+	public final fun getCellSize-MYxV2XQ ()J
+	public final fun getCellSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpFieldKt {
+	public static final fun JengaOtpField-fdQk27o (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;ILkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/otp/JengaOtpInputType;Lio/github/joelkanyi/jenga/component/textfield/JengaTextFieldStatus;Ljava/lang/String;ZZZZLio/github/joelkanyi/jenga/component/otp/JengaOtpCellStyle;JFILandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/otp/JengaOtpFieldColors;Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;IIII)V
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpInputType : java/lang/Enum {
+	public static final field Alphanumeric Lio/github/joelkanyi/jenga/component/otp/JengaOtpInputType;
+	public static final field Numeric Lio/github/joelkanyi/jenga/component/otp/JengaOtpInputType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/otp/JengaOtpInputType;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/otp/JengaOtpInputType;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpResendColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;
+	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction-0d7_KjU ()J
+	public final fun getCountdown-0d7_KjU ()J
+	public final fun getDisabledAction-0d7_KjU ()J
+	public final fun getProgress-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpResendDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;
+	public final fun formatRemaining-LRDsOJo (J)Ljava/lang/String;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpResendKt {
+	public static final fun JengaOtpResend-biEDYmE (JLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/otp/JengaOtpResendColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)V
+	public static final fun rememberJengaCountdown-bz6L7rs (JLjava/lang/Object;Lkotlin/time/TimeSource;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/otp/JengaCountdownState;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpVerificationDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/otp/JengaOtpVerificationDefaults;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getDescriptionStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/otp/JengaOtpVerificationKt {
+	public static final fun JengaOtpVerification-ajgufuY (Ljava/lang/String;Landroidx/compose/ui/text/AnnotatedString;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;III)V
+}
+
 public final class io/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaWheelPickerPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaWheelPickerPreviewsKt;
 	public fun <init> ()V
