@@ -86,6 +86,12 @@ import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItemTone
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
+import io.github.joelkanyi.jenga.component.otp.JengaOtpCellStyle
+import io.github.joelkanyi.jenga.component.otp.JengaOtpField
+import io.github.joelkanyi.jenga.component.otp.JengaOtpResend
+import io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
+import io.github.joelkanyi.jenga.component.otp.JengaOtpVerification
+import io.github.joelkanyi.jenga.component.otp.rememberJengaCountdown
 import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
 import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
@@ -124,6 +130,7 @@ import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
+import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldStatus
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
@@ -139,6 +146,8 @@ import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Every catalog entry, in display order. Each pairs a live demo with the exact
@@ -248,6 +257,125 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     ) {
         var text by remember { mutableStateOf("") }
         JengaTextField(text, { text = it }, label = "Email", placeholder = "you@example.com")
+    },
+    CatalogEntry(
+        name = "OTP field",
+        group = "Inputs",
+        description = "A one-time-code input drawn as cells. Paste, SMS autofill and screen readers treat it as one field.",
+        keywords = "otp code pin verification sms one-time passcode",
+        code = """
+            var code by remember { mutableStateOf("") }
+            JengaOtpField(
+                value = code,
+                onValueChange = { code = it },
+                contentDescription = "Verification code",
+                onComplete = { verify(it) },
+            )
+        """.trimIndent(),
+    ) {
+        var code by remember { mutableStateOf("") }
+        JengaStack(space = JengaTheme.spacing.lg) {
+            JengaOtpField(value = code, onValueChange = { code = it }, contentDescription = "Verification code")
+            JengaOtpField(
+                value = code.take(4),
+                onValueChange = { code = it },
+                contentDescription = "PIN",
+                length = 4,
+                masked = true,
+                style = JengaOtpCellStyle.Filled,
+            )
+            JengaOtpField(
+                value = code,
+                onValueChange = { code = it },
+                contentDescription = "Verification code",
+                style = JengaOtpCellStyle.Underline,
+                groupSize = 3,
+            )
+        }
+    },
+    CatalogEntry(
+        name = "OTP resend",
+        group = "Inputs",
+        description = "A countdown that turns into a resend action. The caller owns the time.",
+        keywords = "otp resend countdown timer code",
+        code = """
+            val countdown = rememberJengaCountdown(duration = 30.seconds)
+            JengaOtpResend(
+                remaining = countdown.remaining,
+                onResend = { countdown.restart() },
+                countdownText = { "Resend code in ${'$'}{JengaOtpResendDefaults.formatRemaining(it)}" },
+                resendText = "Resend code",
+            )
+        """.trimIndent(),
+    ) {
+        val countdown = rememberJengaCountdown(duration = 30.seconds)
+        JengaOtpResend(
+            remaining = countdown.remaining,
+            onResend = { countdown.restart() },
+            countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+            resendText = "Resend code",
+        )
+    },
+    CatalogEntry(
+        name = "OTP verification",
+        group = "Inputs",
+        description = "Title, description, code field, verifying row, resend and actions in one block for screens, sheets and dialogs.",
+        keywords = "otp verification code sheet dialog screen",
+        code = """
+            JengaOtpVerification(
+                title = "Enter the code",
+                description = AnnotatedString("We sent a 6-digit code to +254 712 345 678"),
+                field = { JengaOtpField(code, { code = it }, contentDescription = "Verification code", onComplete = { verify(it) }) },
+                verifying = verifying,
+                verifyingText = "Verifying…",
+                resend = { JengaOtpResend(remaining, onResend = {}, countdownText = { ... }, resendText = "Resend code") },
+            )
+        """.trimIndent(),
+    ) {
+        var code by remember { mutableStateOf("") }
+        var verifying by remember { mutableStateOf(false) }
+        var status by remember { mutableStateOf(JengaTextFieldStatus.Default) }
+        val countdown = rememberJengaCountdown(duration = 5.minutes)
+        LaunchedEffect(verifying) {
+            if (verifying) {
+                delay(1200)
+                status = if (code == "123456") JengaTextFieldStatus.Success else JengaTextFieldStatus.Error
+                verifying = false
+            }
+        }
+        JengaOtpVerification(
+            title = "Enter the code",
+            description = AnnotatedString("We sent a 6-digit code to +254 712 345 678. Try 123456."),
+            contentPadding = PaddingValues(),
+            field = {
+                JengaOtpField(
+                    value = code,
+                    onValueChange = {
+                        code = it
+                        status = JengaTextFieldStatus.Default
+                    },
+                    contentDescription = "Verification code",
+                    onComplete = { verifying = true },
+                    readOnly = verifying,
+                    status = status,
+                    supportingText = when (status) {
+                        JengaTextFieldStatus.Error -> "That code is not right. Try again."
+                        JengaTextFieldStatus.Success -> "Verified"
+                        JengaTextFieldStatus.Default -> null
+                    },
+                )
+            },
+            verifying = verifying,
+            verifyingText = "Verifying…",
+            resend = {
+                JengaOtpResend(
+                    remaining = countdown.remaining,
+                    onResend = { countdown.restart() },
+                    countdownText = { "Resend code in ${JengaOtpResendDefaults.formatRemaining(it)}" },
+                    resendText = "Resend code",
+                )
+            },
+        )
     },
     CatalogEntry(
         name = "Search field",
