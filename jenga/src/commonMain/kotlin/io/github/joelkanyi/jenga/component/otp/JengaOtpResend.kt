@@ -80,7 +80,7 @@ public object JengaOtpResendDefaults {
      * shows `0:00` while time is left. Hours roll into minutes (`75:00`).
      */
     public fun formatRemaining(remaining: Duration): String {
-        val totalSeconds = (remaining.inWholeMilliseconds.coerceAtLeast(0) + 999) / 1000
+        val totalSeconds = (remaining.inWholeMilliseconds.coerceIn(0, Long.MAX_VALUE - 999) + 999) / 1000
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
         return "$minutes:${seconds.toString().padStart(2, '0')}"

@@ -224,7 +224,8 @@ public object JengaOtpFieldDefaults {
  *
  * The field never clears itself: after a failed check, set [status] to
  * [JengaTextFieldStatus.Error] (the cells turn red and shake) and clear [value] if the code
- * should be re-entered.
+ * should be re-entered. The shake runs when [status] changes to Error, so set it back to
+ * [JengaTextFieldStatus.Default] when the user edits the code; a later failure then shakes again.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaOtpFieldSample
  *

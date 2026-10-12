@@ -51,6 +51,59 @@ public class JengaSegmentedControlColors(
 }
 
 /** Defaults and token mappings for [JengaSegmentedControl]. */
+/**
+ * Theme-wide style for every [JengaSegmentedControl], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.segmentedControl]. A `null` value keeps
+ * Jenga's default; arguments passed to a call still win.
+ *
+ * @property shape the outer shape.
+ * @property segmentShape the shape of each segment; falls back to the outer shape.
+ * @property segmentMinHeight the minimum segment height.
+ * @property trackPadding padding inside the track, around the segments.
+ * @property selectedElevation shadow under the selected segment.
+ * @property textStyle the segment label text style.
+ * @property selectedTextStyle merged onto the label text style of the selected segment, so set only
+ *   what changes, e.g. `TextStyle(fontWeight = FontWeight.SemiBold)`.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaSegmentedControlStyle(
+    public val shape: Shape? = null,
+    public val segmentShape: Shape? = null,
+    public val segmentMinHeight: Dp? = null,
+    public val trackPadding: Dp? = null,
+    public val selectedElevation: Dp? = null,
+    public val textStyle: TextStyle? = null,
+    public val selectedTextStyle: TextStyle? = null,
+    public val colors: JengaSegmentedControlColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        segmentShape: Shape? = this.segmentShape,
+        segmentMinHeight: Dp? = this.segmentMinHeight,
+        trackPadding: Dp? = this.trackPadding,
+        selectedElevation: Dp? = this.selectedElevation,
+        textStyle: TextStyle? = this.textStyle,
+        selectedTextStyle: TextStyle? = this.selectedTextStyle,
+        colors: JengaSegmentedControlColors? = this.colors,
+    ): JengaSegmentedControlStyle = JengaSegmentedControlStyle(
+        shape,
+        segmentShape,
+        segmentMinHeight,
+        trackPadding,
+        selectedElevation,
+        textStyle,
+        selectedTextStyle,
+        colors,
+    )
+}
+
+/**
+ * Defaults for [JengaSegmentedControl]. The composable members follow the theme's
+ * [JengaSegmentedControlStyle]; the constants are Jenga's built-in values, and
+ * [JengaSegmentedControl] resolves the theme's values over them.
+ */
 public object JengaSegmentedControlDefaults {
     /** Padding inside the track, around the segments. */
     public val TrackPadding: Dp = 4.dp
@@ -63,15 +116,16 @@ public object JengaSegmentedControlDefaults {
 
     /** Default outer shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.pill
+        @Composable get() = JengaTheme.components.segmentedControl?.shape ?: JengaTheme.shapes.pill
 
     /** Segment label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleSmall
+        @Composable get() = JengaTheme.components.segmentedControl?.textStyle ?: JengaTheme.typography.titleSmall
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaSegmentedControlColors {
+        JengaTheme.components.segmentedControl?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaSegmentedControlColors(
             track = c.surfaceSunk,
@@ -97,12 +151,13 @@ public object JengaSegmentedControlDefaults {
  * @param shape the outer shape; defaults to [JengaSegmentedControlDefaults.shape].
  * @param colors the color set; defaults to [JengaSegmentedControlDefaults.colors].
  * @param isEnabled whether the segment at an index can be selected.
- * @param segmentShape the shape of each segment; defaults to [shape].
+ * @param segmentShape the shape of each segment; defaults to the theme's segment shape, else [shape].
  * @param segmentMinHeight the minimum segment height.
  * @param trackPadding padding inside the track, around the segments.
  * @param selectedElevation shadow under the selected segment.
  * @param textStyle the segment label text style.
- * @param selectedTextStyle the label text style of the selected segment; defaults to [textStyle].
+ * @param selectedTextStyle the label text style of the selected segment; defaults to [textStyle] with
+ *   the theme's [JengaSegmentedControlStyle.selectedTextStyle] merged on top.
  */
 @Composable
 public fun JengaSegmentedControl(
@@ -113,12 +168,14 @@ public fun JengaSegmentedControl(
     shape: Shape = JengaSegmentedControlDefaults.shape,
     colors: JengaSegmentedControlColors = JengaSegmentedControlDefaults.colors(),
     isEnabled: (Int) -> Boolean = { true },
-    segmentShape: Shape = shape,
-    segmentMinHeight: Dp = JengaSegmentedControlDefaults.SegmentMinHeight,
-    trackPadding: Dp = JengaSegmentedControlDefaults.TrackPadding,
-    selectedElevation: Dp = JengaSegmentedControlDefaults.SelectedElevation,
+    segmentShape: Shape = JengaTheme.components.segmentedControl?.segmentShape ?: shape,
+    segmentMinHeight: Dp = JengaTheme.components.segmentedControl?.segmentMinHeight
+        ?: JengaSegmentedControlDefaults.SegmentMinHeight,
+    trackPadding: Dp = JengaTheme.components.segmentedControl?.trackPadding ?: JengaSegmentedControlDefaults.TrackPadding,
+    selectedElevation: Dp = JengaTheme.components.segmentedControl?.selectedElevation
+        ?: JengaSegmentedControlDefaults.SelectedElevation,
     textStyle: TextStyle = JengaSegmentedControlDefaults.textStyle,
-    selectedTextStyle: TextStyle = textStyle,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.segmentedControl?.selectedTextStyle),
 ) {
     Row(
         modifier = modifier

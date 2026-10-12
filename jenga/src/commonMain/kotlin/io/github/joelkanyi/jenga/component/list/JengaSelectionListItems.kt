@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
@@ -15,17 +16,103 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaCheckboxColors
 import io.github.joelkanyi.jenga.component.selection.JengaCheckboxDefaults
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButtonDefaults
+import io.github.joelkanyi.jenga.theme.JengaTheme
 
-/** Defaults for [JengaRadioListItem] and [JengaCheckboxListItem]. */
+/**
+ * Theme-wide style for every [JengaRadioListItem] and [JengaCheckboxListItem], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.selectionListItem]. A `null` value falls
+ * back to the theme's list item style, then to Jenga's default; arguments passed to a call still win.
+ *
+ * @property minHeight the minimum row height.
+ * @property contentPadding inner padding around the row content.
+ * @property contentSpacing the gap between the control and the text.
+ * @property headlineStyle the headline text style.
+ * @property supportingStyle the supporting text style.
+ * @property colors the row color set.
+ * @property radioSize the diameter of the radio.
+ * @property checkboxShape the checkbox box shape.
+ */
+@Poko
+@Immutable
+public class JengaSelectionListItemStyle(
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val contentSpacing: Dp? = null,
+    public val headlineStyle: TextStyle? = null,
+    public val supportingStyle: TextStyle? = null,
+    public val colors: JengaListItemColors? = null,
+    public val radioSize: Dp? = null,
+    public val checkboxShape: Shape? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        contentSpacing: Dp? = this.contentSpacing,
+        headlineStyle: TextStyle? = this.headlineStyle,
+        supportingStyle: TextStyle? = this.supportingStyle,
+        colors: JengaListItemColors? = this.colors,
+        radioSize: Dp? = this.radioSize,
+        checkboxShape: Shape? = this.checkboxShape,
+    ): JengaSelectionListItemStyle = JengaSelectionListItemStyle(
+        minHeight,
+        contentPadding,
+        contentSpacing,
+        headlineStyle,
+        supportingStyle,
+        colors,
+        radioSize,
+        checkboxShape,
+    )
+}
+
+/**
+ * Defaults for [JengaRadioListItem] and [JengaCheckboxListItem]. The composable members follow the
+ * theme's [JengaSelectionListItemStyle], then its list item style.
+ */
 public object JengaSelectionListItemDefaults {
     /** Diameter of the spinner shown in place of the checkbox while loading. */
     public val LoadingIndicatorSize: Dp = 18.dp
+
+    /** Minimum row height. */
+    public val minHeight: Dp
+        @Composable get() = JengaTheme.components.selectionListItem?.minHeight
+            ?: JengaTheme.components.listItem?.minHeight
+            ?: JengaListItemDefaults.MinHeight
+
+    /** Inner padding around the row content. */
+    public val contentPadding: PaddingValues
+        @Composable get() = JengaTheme.components.selectionListItem?.contentPadding ?: JengaListItemDefaults.contentPadding
+
+    /** Gap between the control and the text. */
+    public val contentSpacing: Dp
+        @Composable get() = JengaTheme.components.selectionListItem?.contentSpacing ?: JengaListItemDefaults.contentSpacing
+
+    /** Headline text style. */
+    public val headlineStyle: TextStyle
+        @Composable get() = JengaTheme.components.selectionListItem?.headlineStyle ?: JengaListItemDefaults.headlineStyle
+
+    /** Supporting text style. */
+    public val supportingStyle: TextStyle
+        @Composable get() = JengaTheme.components.selectionListItem?.supportingStyle ?: JengaListItemDefaults.supportingStyle
+
+    /** Diameter of the radio. */
+    public val radioSize: Dp
+        @Composable get() = JengaTheme.components.selectionListItem?.radioSize ?: JengaRadioButtonDefaults.Size
+
+    /** Checkbox box shape. */
+    public val checkboxShape: Shape
+        @Composable get() = JengaTheme.components.selectionListItem?.checkboxShape ?: JengaCheckboxDefaults.shape
+
+    /** Row colors. */
+    @Composable
+    public fun colors(): JengaListItemColors = JengaTheme.components.selectionListItem?.colors ?: JengaListItemDefaults.colors()
 }
 
 /** Where a selection list item draws its control. */
@@ -50,7 +137,7 @@ public enum class JengaControlPosition { Leading, Trailing }
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
  * @param radioSize the diameter of the radio.
- * @param colors the row color set (e.g. a warning-colored supporting line); defaults to [JengaListItemDefaults.colors].
+ * @param colors the row color set (e.g. a warning-colored supporting line); defaults to [JengaSelectionListItemDefaults.colors].
  * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it selects the row.
  */
 @Composable
@@ -62,13 +149,13 @@ public fun JengaRadioListItem(
     supporting: String? = null,
     enabled: Boolean = true,
     controlPosition: JengaControlPosition = JengaControlPosition.Leading,
-    minHeight: Dp = JengaListItemDefaults.MinHeight,
-    contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
-    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
-    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
-    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
-    radioSize: Dp = JengaRadioButtonDefaults.Size,
-    colors: JengaListItemColors = JengaListItemDefaults.colors(),
+    minHeight: Dp = JengaSelectionListItemDefaults.minHeight,
+    contentPadding: PaddingValues = JengaSelectionListItemDefaults.contentPadding,
+    contentSpacing: Dp = JengaSelectionListItemDefaults.contentSpacing,
+    headlineStyle: TextStyle = JengaSelectionListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaSelectionListItemDefaults.supportingStyle,
+    radioSize: Dp = JengaSelectionListItemDefaults.radioSize,
+    colors: JengaListItemColors = JengaSelectionListItemDefaults.colors(),
     trailingContent: (@Composable () -> Unit)? = null,
 ) {
     val control: @Composable () -> Unit = {
@@ -129,14 +216,14 @@ public fun JengaCheckboxListItem(
     supporting: String? = null,
     enabled: Boolean = true,
     controlPosition: JengaControlPosition = JengaControlPosition.Leading,
-    minHeight: Dp = JengaListItemDefaults.MinHeight,
-    contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
-    contentSpacing: Dp = JengaListItemDefaults.contentSpacing,
-    headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
-    supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
+    minHeight: Dp = JengaSelectionListItemDefaults.minHeight,
+    contentPadding: PaddingValues = JengaSelectionListItemDefaults.contentPadding,
+    contentSpacing: Dp = JengaSelectionListItemDefaults.contentSpacing,
+    headlineStyle: TextStyle = JengaSelectionListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaSelectionListItemDefaults.supportingStyle,
     trailingContent: (@Composable () -> Unit)? = null,
-    checkboxShape: Shape = JengaCheckboxDefaults.shape,
-    colors: JengaListItemColors = JengaListItemDefaults.colors(),
+    checkboxShape: Shape = JengaSelectionListItemDefaults.checkboxShape,
+    colors: JengaListItemColors = JengaSelectionListItemDefaults.colors(),
     checkboxColors: JengaCheckboxColors = JengaCheckboxDefaults.colors(),
     loading: Boolean = false,
 ) {

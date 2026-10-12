@@ -53,6 +53,32 @@ public class JengaKeyValueRowColors(
 }
 
 /** Defaults and token mappings for [JengaKeyValueRow]. */
+/**
+ * Theme-wide style for every [JengaKeyValueRow], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.keyValueRow]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property minHeight the minimum row height.
+ * @property contentPadding inner padding around the label and value.
+ * @property labelStyle the label text style (made bold for [JengaKeyValueEmphasis.Total]).
+ * @property valueStyle the value text style (made bold for [JengaKeyValueEmphasis.Total]).
+ */
+@Poko
+@Immutable
+public class JengaKeyValueRowStyle(
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val labelStyle: TextStyle? = null,
+    public val valueStyle: TextStyle? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        labelStyle: TextStyle? = this.labelStyle,
+        valueStyle: TextStyle? = this.valueStyle,
+    ): JengaKeyValueRowStyle = JengaKeyValueRowStyle(minHeight, contentPadding, labelStyle, valueStyle)
+}
+
 public object JengaKeyValueRowDefaults {
     /** Minimum row height; a clickable row is never shorter than the touch target. */
     public val MinHeight: Dp = 0.dp
@@ -62,7 +88,15 @@ public object JengaKeyValueRowDefaults {
 
     /** Inner padding around the label and value. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(vertical = JengaTheme.spacing.sm)
+        @Composable get() = JengaTheme.components.keyValueRow?.contentPadding ?: PaddingValues(vertical = JengaTheme.spacing.sm)
+
+    /** Label text style. */
+    public val labelStyle: TextStyle
+        @Composable get() = JengaTheme.components.keyValueRow?.labelStyle ?: JengaTheme.typography.bodyMedium
+
+    /** Value text style. */
+    public val valueStyle: TextStyle
+        @Composable get() = JengaTheme.components.keyValueRow?.valueStyle ?: JengaTheme.typography.bodyMedium
 
     /**
      * Themed colors for [emphasis]; a non-null [valueTone] tints the value
@@ -111,29 +145,32 @@ public object JengaKeyValueRowDefaults {
  * @param onClick optional click handler; makes the whole row clickable.
  * @param valueMaxLines the maximum lines for [value] before it is truncated.
  * @param valueMaxWidthFraction the largest share of the row width the value may take.
- * @param minHeight the minimum row height.
+ * @param minHeight the minimum row height; defaults to the theme's [JengaKeyValueRowStyle.minHeight], else
+ *   [JengaKeyValueRowDefaults.MinHeight].
  * @param contentPadding inner padding around the label and value.
  * @param colors the color set; defaults to [JengaKeyValueRowDefaults.colors].
+ * @param labelStyle the label's [TextStyle].
  */
 @Composable
 public fun JengaKeyValueRow(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
-    valueStyle: TextStyle = JengaTheme.typography.bodyMedium,
+    valueStyle: TextStyle = JengaKeyValueRowDefaults.valueStyle,
     valueTone: JengaBadgeTone? = null,
     emphasis: JengaKeyValueEmphasis = JengaKeyValueEmphasis.Default,
     trailingContent: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
     valueMaxLines: Int = Int.MAX_VALUE,
     valueMaxWidthFraction: Float = JengaKeyValueRowDefaults.ValueMaxWidthFraction,
-    minHeight: Dp = JengaKeyValueRowDefaults.MinHeight,
+    minHeight: Dp = JengaTheme.components.keyValueRow?.minHeight ?: JengaKeyValueRowDefaults.MinHeight,
     contentPadding: PaddingValues = JengaKeyValueRowDefaults.contentPadding,
     colors: JengaKeyValueRowColors = JengaKeyValueRowDefaults.colors(emphasis, valueTone),
+    labelStyle: TextStyle = JengaKeyValueRowDefaults.labelStyle,
 ) {
     val isTotal = emphasis == JengaKeyValueEmphasis.Total
     val bold = TextStyle(fontWeight = FontWeight.Bold)
-    val labelStyle = JengaTheme.typography.bodyMedium.let { if (isTotal) it.merge(bold) else it }
+    val resolvedLabelStyle = if (isTotal) labelStyle.merge(bold) else labelStyle
     val rowMinHeight = if (onClick != null) maxOf(minHeight, JengaTheme.sizing.minTouchTarget) else minHeight
     Box(
         modifier = modifier
@@ -151,7 +188,7 @@ public fun JengaKeyValueRow(
             JengaText(
                 text = label,
                 modifier = Modifier.weight(1f),
-                style = labelStyle,
+                style = resolvedLabelStyle,
                 color = colors.label,
             )
             JengaText(

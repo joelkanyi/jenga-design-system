@@ -69,7 +69,8 @@ public class JengaChipColors(
  * @property minHeight the minimum visual height.
  * @property contentPadding padding inside the chip.
  * @property textStyle the label text style.
- * @property selectedTextStyle the label text style while selected; falls back to the call's text style.
+ * @property selectedTextStyle merged onto the chip's text style while selected, so set only what
+ *   changes, e.g. `TextStyle(fontWeight = FontWeight.Medium)`.
  * @property colors the color set.
  */
 @Poko
@@ -147,8 +148,8 @@ public object JengaChipDefaults {
  * @param colors the color set; defaults to [JengaChipDefaults.colors].
  * @param trailingContent optional slot after the label (e.g. a count); inherits the content color.
  * @param textStyle the label text style.
- * @param selectedTextStyle the label text style while selected; defaults to the theme's
- *   [JengaChipStyle.selectedTextStyle], else [textStyle].
+ * @param selectedTextStyle the label text style while selected; defaults to [textStyle] with the
+ *   theme's [JengaChipStyle.selectedTextStyle] merged on top.
  * @param minHeight the minimum visual height; defaults to the theme's [JengaChipStyle.minHeight], else
  *   [JengaChipDefaults.MinHeight].
  * @param contentPadding padding inside the chip.
@@ -165,7 +166,7 @@ public fun JengaChip(
     colors: JengaChipColors = JengaChipDefaults.colors(),
     trailingContent: (@Composable () -> Unit)? = null,
     textStyle: TextStyle = JengaChipDefaults.textStyle,
-    selectedTextStyle: TextStyle = JengaTheme.components.chip?.selectedTextStyle ?: textStyle,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.chip?.selectedTextStyle),
     minHeight: Dp = JengaTheme.components.chip?.minHeight ?: JengaChipDefaults.MinHeight,
     contentPadding: PaddingValues = JengaChipDefaults.contentPadding,
 ) {

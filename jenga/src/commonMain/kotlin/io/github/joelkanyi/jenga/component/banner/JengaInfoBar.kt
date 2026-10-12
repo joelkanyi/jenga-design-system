@@ -39,13 +39,13 @@ public class JengaInfoBarColors(
 
 /** Defaults and token mappings for [JengaInfoBar]. */
 public object JengaInfoBarDefaults {
-    /** Default shape, matching a button. */
+    /** Default shape, matching a medium button. */
     public val shape: Shape
-        @Composable get() = JengaButtonDefaults.shape
+        @Composable get() = JengaTheme.components.button?.medium?.shape ?: JengaButtonDefaults.shape
 
     /** Minimum height, matching a medium button. */
     public val minHeight: Dp
-        @Composable get() = JengaTheme.sizing.controlHeightMedium
+        @Composable get() = JengaTheme.components.button?.medium?.minHeight ?: JengaTheme.sizing.controlHeightMedium
 
     /** Padding inside the bar. */
     public val contentPadding: PaddingValues

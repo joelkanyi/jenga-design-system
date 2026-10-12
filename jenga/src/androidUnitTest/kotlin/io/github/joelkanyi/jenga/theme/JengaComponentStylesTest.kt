@@ -10,11 +10,13 @@ import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonColors
 import io.github.joelkanyi.jenga.component.button.JengaButtonDefaults
+import io.github.joelkanyi.jenga.component.button.JengaButtonSize
 import io.github.joelkanyi.jenga.component.button.JengaButtonSizeStyle
 import io.github.joelkanyi.jenga.component.button.JengaButtonStyle
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
@@ -29,15 +31,39 @@ import io.github.joelkanyi.jenga.component.chip.JengaChipStyle
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogColors
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogDefaults
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogStyle
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheetDefaults
+import io.github.joelkanyi.jenga.component.feedback.JengaListSheetStyle
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarDefaults
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarStyle
+import io.github.joelkanyi.jenga.component.icon.JengaIconTile
+import io.github.joelkanyi.jenga.component.icon.JengaIconTileSizeStyle
+import io.github.joelkanyi.jenga.component.icon.JengaIconTileStyle
+import io.github.joelkanyi.jenga.component.link.JengaLinkDefaults
+import io.github.joelkanyi.jenga.component.link.JengaLinkStyle
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
+import io.github.joelkanyi.jenga.component.list.JengaKeyValueRowStyle
 import io.github.joelkanyi.jenga.component.list.JengaListItemDefaults
 import io.github.joelkanyi.jenga.component.list.JengaListItemStyle
+import io.github.joelkanyi.jenga.component.list.JengaSelectionListItemDefaults
+import io.github.joelkanyi.jenga.component.list.JengaSelectionListItemStyle
+import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
+import io.github.joelkanyi.jenga.component.progress.JengaProgressStyle
+import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarDefaults
+import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarStyle
+import io.github.joelkanyi.jenga.component.state.JengaStateDefaults
+import io.github.joelkanyi.jenga.component.state.JengaStateStyle
+import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
+import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControlStyle
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldDefaults
 import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldStyle
+import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
+import io.github.joelkanyi.jenga.pattern.JengaSectionHeaderStyle
+import io.github.joelkanyi.jenga.pattern.JengaSectionHeaderStyles
+import io.github.joelkanyi.jenga.pattern.JengaSectionHeaderVariantStyle
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -149,5 +175,96 @@ class JengaComponentStylesTest {
         }
         compose.onNodeWithTag("single").assertHeightIsEqualTo(46.dp)
         compose.onNodeWithTag("multi").assertHeightIsEqualTo(92.dp)
+    }
+
+    private val phase2 = JengaComponentStyles(
+        listItem = JengaListItemStyle(minHeight = 64.dp),
+        sectionHeader = JengaSectionHeaderStyles(
+            overline = JengaSectionHeaderVariantStyle(minHeight = 60.dp, contentPadding = PaddingValues(0.dp)),
+        ),
+        progress = JengaProgressStyle(trackHeight = 4.dp),
+        selectionListItem = JengaSelectionListItemStyle(contentPadding = PaddingValues(0.dp), radioSize = 20.dp),
+        keyValueRow = JengaKeyValueRowStyle(minHeight = 50.dp, contentPadding = PaddingValues(0.dp)),
+        state = JengaStateStyle(spacing = 8.dp, actionSize = JengaButtonSize.Small),
+        iconTile = JengaIconTileStyle(medium = JengaIconTileSizeStyle(tileSize = 40.dp, iconSize = 21.dp)),
+        listSheet = JengaListSheetStyle(subtitleColor = Color.Magenta, footerSpacing = 10.dp),
+        link = JengaLinkStyle(underline = false),
+        segmentedControl = JengaSegmentedControlStyle(
+            segmentMinHeight = 38.dp,
+            trackPadding = 3.dp,
+            selectedTextStyle = TextStyle(fontWeight = FontWeight.SemiBold),
+        ),
+        topAppBar = JengaTopAppBarStyle(height = 56.dp, titleStyle = chipText),
+        chip = JengaChipStyle(selectedTextStyle = TextStyle(fontWeight = FontWeight.Medium)),
+    )
+
+    @Test
+    fun secondBatchDefaultsFollowTheThemeStyle() {
+        compose.setContent {
+            JengaTheme(components = phase2) {
+                assertEquals(64.dp, JengaSelectionListItemDefaults.minHeight)
+                assertEquals(20.dp, JengaSelectionListItemDefaults.radioSize)
+                assertEquals(JengaButtonSize.Small, JengaStateDefaults.actionSize)
+                assertEquals(8.dp, JengaStateDefaults.spacing)
+                assertEquals(Color.Magenta, JengaListSheetDefaults.subtitleColor)
+                assertEquals(10.dp, JengaListSheetDefaults.footerSpacing)
+                assertEquals(false, JengaLinkDefaults.underline)
+                assertEquals(chipText, JengaTopAppBarDefaults.titleStyle)
+            }
+            JengaTheme {
+                assertEquals(JengaListItemDefaults.MinHeight, JengaSelectionListItemDefaults.minHeight)
+                assertEquals(true, JengaLinkDefaults.underline)
+            }
+        }
+        compose.waitForIdle()
+    }
+
+    @Test
+    fun secondBatchComponentsMeasureWithTheThemeStyle() {
+        compose.setContent {
+            JengaTheme(components = phase2) {
+                JengaSectionHeader(
+                    title = "Customer",
+                    style = JengaSectionHeaderStyle.Overline,
+                    modifier = Modifier.testTag("overline"),
+                )
+                JengaLinearProgress(progress = 0.5f, modifier = Modifier.testTag("progress"))
+                JengaKeyValueRow(label = "Plan", value = "Monthly", modifier = Modifier.testTag("kv"))
+                JengaIconTile(icon = JengaTheme.icons.search, contentDescription = null, modifier = Modifier.testTag("tile"))
+                JengaSegmentedControl(
+                    selectedIndex = 0,
+                    segments = listOf("Yes", "No"),
+                    onSelect = {},
+                    modifier = Modifier.testTag("segmented"),
+                )
+            }
+        }
+        compose.onNodeWithTag("overline").assertHeightIsEqualTo(60.dp)
+        compose.onNodeWithTag("progress").assertHeightIsEqualTo(4.dp)
+        compose.onNodeWithTag("kv").assertHeightIsEqualTo(50.dp)
+        compose.onNodeWithTag("tile").assertWidthIsEqualTo(40.dp)
+        compose.onNodeWithTag("segmented").assertHeightIsEqualTo(44.dp)
+    }
+
+    @Test
+    fun selectedStylesMergeOntoTheCallTextStyle() {
+        compose.setContent {
+            JengaTheme(components = phase2) {
+                val call = TextStyle(fontSize = 18.sp)
+                val merged = call.merge(TextStyle(fontWeight = FontWeight.Medium))
+                assertEquals(merged, call.merge(JengaTheme.components.chip?.selectedTextStyle))
+            }
+        }
+        compose.waitForIdle()
+    }
+
+    @Test
+    fun formatRemainingHandlesInfinity() {
+        assertTrue(
+            io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
+                .formatRemaining(kotlin.time.Duration.INFINITE)
+                .first()
+                .isDigit(),
+        )
     }
 }

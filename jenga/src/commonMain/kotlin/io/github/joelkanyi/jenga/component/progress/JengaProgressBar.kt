@@ -59,6 +59,48 @@ public class JengaProgressColors(
 }
 
 /** Defaults for the Jenga progress bars. */
+/**
+ * Theme-wide style for every [JengaLinearProgress], [JengaLabelledProgress] and
+ * [JengaLinearProgressIndeterminate], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.progress]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property trackHeight the track height.
+ * @property shape the track and indicator shape.
+ * @property default colors for [JengaProgressTone.Default], also used by the indeterminate bar.
+ * @property success colors for [JengaProgressTone.Success].
+ * @property neutral colors for [JengaProgressTone.Neutral].
+ * @property labelStyle the label text style of [JengaLabelledProgress].
+ * @property labelSpacing the gap between the label row and the bar.
+ */
+@Poko
+@Immutable
+public class JengaProgressStyle(
+    public val trackHeight: Dp? = null,
+    public val shape: Shape? = null,
+    public val default: JengaProgressColors? = null,
+    public val success: JengaProgressColors? = null,
+    public val neutral: JengaProgressColors? = null,
+    public val labelStyle: TextStyle? = null,
+    public val labelSpacing: Dp? = null,
+) {
+    public fun copy(
+        trackHeight: Dp? = this.trackHeight,
+        shape: Shape? = this.shape,
+        default: JengaProgressColors? = this.default,
+        success: JengaProgressColors? = this.success,
+        neutral: JengaProgressColors? = this.neutral,
+        labelStyle: TextStyle? = this.labelStyle,
+        labelSpacing: Dp? = this.labelSpacing,
+    ): JengaProgressStyle = JengaProgressStyle(trackHeight, shape, default, success, neutral, labelStyle, labelSpacing)
+
+    internal fun colors(tone: JengaProgressTone): JengaProgressColors? = when (tone) {
+        JengaProgressTone.Default -> default
+        JengaProgressTone.Success -> success
+        JengaProgressTone.Neutral -> neutral
+    }
+}
+
 public object JengaProgressDefaults {
     /** Duration of one indeterminate sweep (ms). Loop animation, hence outside
      *  the discrete [io.github.joelkanyi.jenga.foundation.motion.JengaMotion] scale. */
@@ -69,7 +111,7 @@ public object JengaProgressDefaults {
 
     /** Default track and indicator shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.pill
+        @Composable get() = JengaTheme.components.progress?.shape ?: JengaTheme.shapes.pill
 
     /** How the indicator animates to a new progress value. */
     public val animationSpec: AnimationSpec<Float>
@@ -77,15 +119,16 @@ public object JengaProgressDefaults {
 
     /** Gap between the label row and the bar in [JengaLabelledProgress]. */
     public val labelSpacing: Dp
-        @Composable get() = JengaTheme.spacing.sm
+        @Composable get() = JengaTheme.components.progress?.labelSpacing ?: JengaTheme.spacing.sm
 
     /** Label text style for [JengaLabelledProgress]. */
     public val labelStyle: TextStyle
-        @Composable get() = JengaTheme.typography.caption
+        @Composable get() = JengaTheme.components.progress?.labelStyle ?: JengaTheme.typography.caption
 
     /** Themed colors for [tone]. */
     @Composable
     public fun colors(tone: JengaProgressTone): JengaProgressColors {
+        JengaTheme.components.progress?.colors(tone)?.let { return it }
         val c = JengaTheme.colors
         return JengaProgressColors(
             track = c.surfaceSunk,
@@ -96,6 +139,9 @@ public object JengaProgressDefaults {
             },
         )
     }
+
+    @Composable
+    internal fun trackHeight(): Dp = JengaTheme.components.progress?.trackHeight ?: TrackHeight
 }
 
 /**
@@ -105,7 +151,8 @@ public object JengaProgressDefaults {
  * @param modifier the [Modifier] for this bar.
  * @param tone the bar tone; see [JengaProgressTone].
  * @param colors the color set; defaults to [JengaProgressDefaults.colors] for [tone].
- * @param trackHeight the bar height.
+ * @param trackHeight the bar height; defaults to the theme's [JengaProgressStyle.trackHeight], else
+ *   [JengaProgressDefaults.TrackHeight].
  * @param shape the track and indicator shape.
  * @param animationSpec how the indicator animates to a new [progress].
  *
@@ -117,7 +164,7 @@ public fun JengaLinearProgress(
     modifier: Modifier = Modifier,
     tone: JengaProgressTone = JengaProgressTone.Default,
     colors: JengaProgressColors = JengaProgressDefaults.colors(tone),
-    trackHeight: Dp = JengaProgressDefaults.TrackHeight,
+    trackHeight: Dp = JengaProgressDefaults.trackHeight(),
     shape: Shape = JengaProgressDefaults.shape,
     animationSpec: AnimationSpec<Float> = JengaProgressDefaults.animationSpec,
 ) {
@@ -146,7 +193,8 @@ public fun JengaLinearProgress(
  * @param valueLabel optional end label.
  * @param tone the bar tone; see [JengaProgressTone].
  * @param colors the color set; defaults to [JengaProgressDefaults.colors] for [tone].
- * @param trackHeight the bar height.
+ * @param trackHeight the bar height; defaults to the theme's [JengaProgressStyle.trackHeight], else
+ *   [JengaProgressDefaults.TrackHeight].
  * @param shape the track and indicator shape.
  * @param labelStyle the label text style.
  * @param spacing the gap between the label row and the bar.
@@ -160,7 +208,7 @@ public fun JengaLabelledProgress(
     valueLabel: String? = null,
     tone: JengaProgressTone = JengaProgressTone.Default,
     colors: JengaProgressColors = JengaProgressDefaults.colors(tone),
-    trackHeight: Dp = JengaProgressDefaults.TrackHeight,
+    trackHeight: Dp = JengaProgressDefaults.trackHeight(),
     shape: Shape = JengaProgressDefaults.shape,
     labelStyle: TextStyle = JengaProgressDefaults.labelStyle,
     spacing: Dp = JengaProgressDefaults.labelSpacing,
@@ -210,11 +258,13 @@ public fun JengaLinearProgressIndeterminate(
         ),
         label = "offset",
     )
+    val colors = JengaProgressDefaults.colors(JengaProgressTone.Default)
+    val shape = JengaProgressDefaults.shape
     Track(
         modifier = modifier,
-        height = JengaProgressDefaults.TrackHeight,
-        shape = JengaTheme.shapes.pill,
-        color = JengaTheme.colors.surfaceSunk,
+        height = JengaProgressDefaults.trackHeight(),
+        shape = shape,
+        color = colors.track,
     ) {
         val indicatorWidth = 0.4f
         Box(
@@ -229,8 +279,8 @@ public fun JengaLinearProgressIndeterminate(
                         placeable.placeRelative(x, 0)
                     }
                 }
-                .clip(JengaTheme.shapes.pill)
-                .background(JengaTheme.colors.brand),
+                .clip(shape)
+                .background(colors.indicator),
         )
     }
 }

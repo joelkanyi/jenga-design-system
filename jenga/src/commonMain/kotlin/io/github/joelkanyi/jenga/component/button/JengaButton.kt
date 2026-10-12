@@ -162,8 +162,9 @@ public class JengaButtonStyle(
 /**
  * Default values and token mappings for [JengaButton]. Override any of these per call.
  *
- * The composable members follow the theme's [JengaButtonStyle]; the plain functions and constants
- * are Jenga's built-in values.
+ * [textStyle] and [colors] follow the theme's [JengaButtonStyle]; [shape], the plain functions and
+ * the constants are Jenga's built-in values, and [JengaButton] resolves the theme's per-size values
+ * over them.
  */
 public object JengaButtonDefaults {
 

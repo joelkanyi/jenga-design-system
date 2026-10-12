@@ -34,6 +34,62 @@ public class JengaIconTileColors(
 }
 
 /** Defaults and token mappings for [JengaIconTile]. */
+/**
+ * Theme-wide metrics for one [JengaIconTileSize], part of a [JengaIconTileStyle]. A `null` value
+ * keeps Jenga's default.
+ *
+ * @property tileSize the tile's edge length.
+ * @property iconSize the icon's edge length.
+ */
+@Poko
+@Immutable
+public class JengaIconTileSizeStyle(
+    public val tileSize: Dp? = null,
+    public val iconSize: Dp? = null,
+) {
+    public fun copy(
+        tileSize: Dp? = this.tileSize,
+        iconSize: Dp? = this.iconSize,
+    ): JengaIconTileSizeStyle = JengaIconTileSizeStyle(tileSize, iconSize)
+}
+
+/**
+ * Theme-wide style for every [JengaIconTile], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.iconTile]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property shape the tile shape.
+ * @property small metrics for [JengaIconTileSize.Small].
+ * @property medium metrics for [JengaIconTileSize.Medium].
+ * @property large metrics for [JengaIconTileSize.Large].
+ */
+@Poko
+@Immutable
+public class JengaIconTileStyle(
+    public val shape: Shape? = null,
+    public val small: JengaIconTileSizeStyle? = null,
+    public val medium: JengaIconTileSizeStyle? = null,
+    public val large: JengaIconTileSizeStyle? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        small: JengaIconTileSizeStyle? = this.small,
+        medium: JengaIconTileSizeStyle? = this.medium,
+        large: JengaIconTileSizeStyle? = this.large,
+    ): JengaIconTileStyle = JengaIconTileStyle(shape, small, medium, large)
+
+    internal fun size(size: JengaIconTileSize): JengaIconTileSizeStyle? = when (size) {
+        JengaIconTileSize.Small -> small
+        JengaIconTileSize.Medium -> medium
+        JengaIconTileSize.Large -> large
+    }
+}
+
+/**
+ * Defaults for [JengaIconTile]. [shape] follows the theme's [JengaIconTileStyle]; [tileSize] and
+ * [iconSize] are Jenga's built-in values, and [JengaIconTile] resolves the theme's per-size values
+ * over them.
+ */
 public object JengaIconTileDefaults {
     /** Themed colors per [tone]. */
     @Composable
@@ -51,7 +107,7 @@ public object JengaIconTileDefaults {
 
     /** Default tile shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.control
+        @Composable get() = JengaTheme.components.iconTile?.shape ?: JengaTheme.shapes.control
 
     /** The tile's square edge length for a given [size]. */
     public fun tileSize(size: JengaIconTileSize): Dp = when (size) {
@@ -84,8 +140,10 @@ public object JengaIconTileDefaults {
  * @param size the tile size; see [JengaIconTileSize].
  * @param colors the color set; defaults to [JengaIconTileDefaults.colors] for [tone].
  * @param shape the tile shape.
- * @param tileSize the tile's edge length; defaults to the one for [size].
- * @param iconSize the icon's edge length; defaults to the one for [size].
+ * @param tileSize the tile's edge length; defaults to the theme's value for [size], else
+ *   [JengaIconTileDefaults.tileSize].
+ * @param iconSize the icon's edge length; defaults to the theme's value for [size], else
+ *   [JengaIconTileDefaults.iconSize].
  */
 @Composable
 public fun JengaIconTile(
@@ -96,8 +154,8 @@ public fun JengaIconTile(
     size: JengaIconTileSize = JengaIconTileSize.Medium,
     colors: JengaIconTileColors = JengaIconTileDefaults.colors(tone),
     shape: Shape = JengaIconTileDefaults.shape,
-    tileSize: Dp = JengaIconTileDefaults.tileSize(size),
-    iconSize: Dp = JengaIconTileDefaults.iconSize(size),
+    tileSize: Dp = JengaTheme.components.iconTile?.size(size)?.tileSize ?: JengaIconTileDefaults.tileSize(size),
+    iconSize: Dp = JengaTheme.components.iconTile?.size(size)?.iconSize ?: JengaIconTileDefaults.iconSize(size),
 ) {
     Box(
         modifier = modifier

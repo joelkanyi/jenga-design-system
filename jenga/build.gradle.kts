@@ -137,6 +137,8 @@ android {
             all {
                 // Improves Roborazzi screenshot fidelity (Robolectric 4.12.2+).
                 it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
+                // Every preview renders in one Robolectric JVM; the 512m default runs out.
+                it.maxHeapSize = "2g"
             }
         }
     }
