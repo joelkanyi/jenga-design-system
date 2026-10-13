@@ -281,6 +281,7 @@ public object JengaButtonDefaults {
  * @param leadingIcon optional icon before the label.
  * @param trailingIcon optional icon after the label.
  * @param colors the color set; defaults to [JengaButtonDefaults.colors] for [variant].
+ * @param loadingText optional label shown beside the spinner while [loading].
  */
 @Composable
 public fun JengaButton(
@@ -294,20 +295,25 @@ public fun JengaButton(
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
+    loadingText: String? = null,
 ) {
     JengaButton(
         onClick = onClick,
         modifier = modifier,
         variant = variant,
         size = size,
-        enabled = enabled,
-        loading = loading,
-        leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
+        enabled = enabled && !loading,
+        loading = loading && loadingText == null,
+        leadingIcon = if (loading && loadingText != null) {
+            { JengaButtonSpinner() }
+        } else {
+            leadingIcon
+        },
+        trailingIcon = trailingIcon.takeUnless { loading && loadingText != null },
         colors = colors,
     ) {
         JengaText(
-            text = text,
+            text = if (loading && loadingText != null) loadingText else text,
             style = JengaButtonDefaults.textStyle(size),
             maxLines = 1,
         )
@@ -379,11 +385,7 @@ public fun JengaButton(
         val rowScope = this
         CompositionLocalProvider(LocalJengaContentColor provides contentColor) {
             if (loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(JengaButtonDefaults.SpinnerSize),
-                    color = contentColor,
-                    strokeWidth = 2.dp,
-                )
+                JengaButtonSpinner()
             } else {
                 leadingIcon?.invoke()
                 rowScope.content()
@@ -391,4 +393,42 @@ public fun JengaButton(
             }
         }
     }
+}
+
+@Composable
+private fun JengaButtonSpinner() {
+    CircularProgressIndicator(
+        modifier = Modifier.size(JengaButtonDefaults.SpinnerSize),
+        color = LocalJengaContentColor.current,
+        strokeWidth = 2.dp,
+    )
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    variant: JengaButtonVariant = JengaButtonVariant.Primary,
+    size: JengaButtonSize = JengaButtonSize.Medium,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
+) {
+    JengaButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        variant = variant,
+        size = size,
+        enabled = enabled,
+        loading = loading,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        colors = colors,
+        loadingText = null,
+    )
 }

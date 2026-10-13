@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaStatusPill]. */
 @Poko
@@ -121,6 +123,8 @@ public object JengaStatusPillDefaults {
  * @param minHeight the minimum pill height.
  * @param contentPadding padding inside the pill.
  * @param textStyle the label text style.
+ * @param leadingIcon optional icon before the label, tinted with the accent color; replaces the dot.
+ *   The spinner still shows while [loading].
  */
 @Composable
 public fun JengaStatusPill(
@@ -135,6 +139,7 @@ public fun JengaStatusPill(
     minHeight: Dp = JengaTheme.components.statusPill?.minHeight ?: JengaStatusPillDefaults.MinHeight,
     contentPadding: PaddingValues = JengaStatusPillDefaults.contentPadding,
     textStyle: TextStyle = JengaStatusPillDefaults.textStyle,
+    leadingIcon: (@Composable () -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -153,6 +158,8 @@ public fun JengaStatusPill(
                 color = colors.accent,
                 trackColor = colors.accent.copy(alpha = 0.25f),
             )
+        } else if (leadingIcon != null) {
+            CompositionLocalProvider(LocalJengaContentColor provides colors.accent, content = leadingIcon)
         } else if (showDot) {
             Box(
                 Modifier
@@ -163,4 +170,35 @@ public fun JengaStatusPill(
         }
         JengaText(text = label, style = textStyle, color = colors.content)
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaStatusPill(
+    label: String,
+    modifier: Modifier = Modifier,
+    tone: JengaBadgeTone = JengaBadgeTone.Neutral,
+    loading: Boolean = false,
+    onClick: (() -> Unit)? = null,
+    colors: JengaStatusPillColors = JengaStatusPillDefaults.colors(tone),
+    showDot: Boolean = true,
+    indicatorSize: Dp = JengaTheme.components.statusPill?.indicatorSize ?: JengaStatusPillDefaults.IndicatorSize,
+    minHeight: Dp = JengaTheme.components.statusPill?.minHeight ?: JengaStatusPillDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaStatusPillDefaults.contentPadding,
+    textStyle: TextStyle = JengaStatusPillDefaults.textStyle,
+) {
+    JengaStatusPill(
+        label = label,
+        modifier = modifier,
+        tone = tone,
+        loading = loading,
+        onClick = onClick,
+        colors = colors,
+        showDot = showDot,
+        indicatorSize = indicatorSize,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        textStyle = textStyle,
+        leadingIcon = null,
+    )
 }

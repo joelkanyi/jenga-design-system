@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaStatusPill` takes `leadingIcon`, shown in place of the dot.
+ * New: `JengaButton` (text overload) takes `loadingText`, shown beside the spinner while loading.
+
 ## Version 0.8.0
 
 _2026-10-13_
