@@ -59,7 +59,55 @@ public class JengaTabsColors(
     ): JengaTabsColors = JengaTabsColors(selectedContent, unselectedContent, indicator, divider, dot)
 }
 
-/** Defaults and token mappings for [JengaTabs]. */
+/**
+ * Theme-wide style for every [JengaTabs], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.tabs]. A `null` value keeps Jenga's default;
+ * arguments passed to a call still win.
+ *
+ * @property arrangement how the tabs are laid out.
+ * @property textStyle the tab label text style.
+ * @property selectedTextStyle merged onto the label text style of the selected tab, so set only what
+ *   changes, e.g. `TextStyle(fontWeight = FontWeight.SemiBold)`.
+ * @property minHeight the minimum tab height.
+ * @property spacing gap between tabs with [JengaTabsArrangement.Start].
+ * @property contentPadding padding around the row of tabs.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaTabsStyle(
+    public val arrangement: JengaTabsArrangement? = null,
+    public val textStyle: TextStyle? = null,
+    public val selectedTextStyle: TextStyle? = null,
+    public val minHeight: Dp? = null,
+    public val spacing: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val colors: JengaTabsColors? = null,
+) {
+    public fun copy(
+        arrangement: JengaTabsArrangement? = this.arrangement,
+        textStyle: TextStyle? = this.textStyle,
+        selectedTextStyle: TextStyle? = this.selectedTextStyle,
+        minHeight: Dp? = this.minHeight,
+        spacing: Dp? = this.spacing,
+        contentPadding: PaddingValues? = this.contentPadding,
+        colors: JengaTabsColors? = this.colors,
+    ): JengaTabsStyle = JengaTabsStyle(
+        arrangement,
+        textStyle,
+        selectedTextStyle,
+        minHeight,
+        spacing,
+        contentPadding,
+        colors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaTabs]. The composable members follow the theme's
+ * [JengaTabsStyle]; the constants are Jenga's built-in values, and [JengaTabs] resolves the theme's
+ * values over them.
+ */
 public object JengaTabsDefaults {
     /** Thickness of the selected-tab indicator. */
     public val IndicatorThickness: Dp = 2.dp
@@ -72,19 +120,20 @@ public object JengaTabsDefaults {
 
     /** Tab label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleSmall
+        @Composable get() = JengaTheme.components.tabs?.textStyle ?: JengaTheme.typography.titleSmall
 
     /** Gap between tabs with [JengaTabsArrangement.Start]. */
     public val spacing: Dp
-        @Composable get() = JengaTheme.spacing.xl
+        @Composable get() = JengaTheme.components.tabs?.spacing ?: JengaTheme.spacing.xl
 
     /** Padding around the row of tabs. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues()
+        @Composable get() = JengaTheme.components.tabs?.contentPadding ?: PaddingValues()
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaTabsColors {
+        JengaTheme.components.tabs?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaTabsColors(
             selectedContent = c.brand,
@@ -105,13 +154,16 @@ public object JengaTabsDefaults {
  * @param tabs the tab titles.
  * @param onSelect called with the index of a tapped tab.
  * @param modifier the [Modifier] for the tab row.
- * @param arrangement how the tabs are laid out; see [JengaTabsArrangement].
+ * @param arrangement how the tabs are laid out; see [JengaTabsArrangement]. Defaults to the theme's
+ *   arrangement, else [JengaTabsArrangement.Fill].
  * @param dotted indices of tabs that show a small dot after their label (e.g. needs attention).
  * @param textStyle the tab label text style.
- * @param minHeight the minimum tab height.
+ * @param minHeight the minimum tab height; defaults to the theme's value, else [JengaTabsDefaults.MinHeight].
  * @param spacing gap between tabs with [JengaTabsArrangement.Start].
  * @param contentPadding padding around the row of tabs.
  * @param colors the color set; defaults to [JengaTabsDefaults.colors].
+ * @param selectedTextStyle the label text style of the selected tab; defaults to [textStyle] with the
+ *   theme's [JengaTabsStyle.selectedTextStyle] merged on top.
  */
 @Composable
 public fun JengaTabs(
@@ -119,13 +171,14 @@ public fun JengaTabs(
     tabs: List<String>,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    arrangement: JengaTabsArrangement = JengaTabsArrangement.Fill,
+    arrangement: JengaTabsArrangement = JengaTheme.components.tabs?.arrangement ?: JengaTabsArrangement.Fill,
     dotted: Set<Int> = emptySet(),
     textStyle: TextStyle = JengaTabsDefaults.textStyle,
-    minHeight: Dp = JengaTabsDefaults.MinHeight,
+    minHeight: Dp = JengaTheme.components.tabs?.minHeight ?: JengaTabsDefaults.MinHeight,
     spacing: Dp = JengaTabsDefaults.spacing,
     contentPadding: PaddingValues = JengaTabsDefaults.contentPadding,
     colors: JengaTabsColors = JengaTabsDefaults.colors(),
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.tabs?.selectedTextStyle),
 ) {
     val fill = arrangement == JengaTabsArrangement.Fill
     Box(
@@ -177,7 +230,7 @@ public fun JengaTabs(
                     ) {
                         JengaText(
                             text = title,
-                            style = textStyle,
+                            style = if (selected) selectedTextStyle else textStyle,
                             color = if (selected) colors.selectedContent else colors.unselectedContent,
                             maxLines = 1,
                         )

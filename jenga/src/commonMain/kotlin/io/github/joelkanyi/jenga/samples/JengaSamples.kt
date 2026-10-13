@@ -73,6 +73,11 @@ import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
+import io.github.joelkanyi.jenga.component.otp.JengaOtpField
+import io.github.joelkanyi.jenga.component.otp.JengaOtpResend
+import io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
+import io.github.joelkanyi.jenga.component.otp.JengaOtpVerification
+import io.github.joelkanyi.jenga.component.otp.rememberJengaCountdown
 import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
 import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
@@ -122,6 +127,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Compiled usage samples surfaced in API docs via `@sample`. They are kept
@@ -802,5 +808,49 @@ internal fun JengaBarChartSample() {
         barContentDescription = { "${it.label}, ${it.value}" },
         selectedIndex = selected,
         onSelect = { selected = it },
+    )
+}
+
+@Composable
+internal fun JengaOtpFieldSample() {
+    var code by remember { mutableStateOf("") }
+    JengaOtpField(
+        value = code,
+        onValueChange = { code = it },
+        contentDescription = "Verification code",
+        onComplete = { },
+        autoFocus = true,
+    )
+}
+
+@Composable
+internal fun JengaOtpResendSample() {
+    val countdown = rememberJengaCountdown(duration = 5.minutes)
+    JengaOtpResend(
+        remaining = countdown.remaining,
+        onResend = { countdown.restart() },
+        countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
+        resendText = "Resend code",
+    )
+}
+
+@Composable
+internal fun JengaOtpVerificationSample() {
+    var code by remember { mutableStateOf("") }
+    val countdown = rememberJengaCountdown(duration = 5.minutes)
+    JengaOtpVerification(
+        title = "Enter the code",
+        description = AnnotatedString("We sent a 6-digit code to +254 712 345 678"),
+        field = {
+            JengaOtpField(value = code, onValueChange = { code = it }, contentDescription = "Verification code")
+        },
+        resend = {
+            JengaOtpResend(
+                remaining = countdown.remaining,
+                onResend = { countdown.restart() },
+                countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
+                resendText = "Resend code",
+            )
+        },
     )
 }

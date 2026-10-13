@@ -66,7 +66,7 @@ public fun JengaDatePickerDialog(
             modifier = modifier
                 .fillMaxWidth()
                 .clip(JengaDialogDefaults.shape)
-                .background(JengaTheme.colors.surface)
+                .background(JengaDialogDefaults.colors().container)
                 .padding(JengaTheme.spacing.lg),
             verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
         ) {

@@ -38,26 +38,60 @@ public class JengaInfoBarColors(
 }
 
 /** Defaults and token mappings for [JengaInfoBar]. */
+/**
+ * Theme-wide style for every [JengaInfoBar], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.infoBar]. A `null` value keeps Jenga's
+ * default (shape and height follow the theme's medium button); arguments passed to a call still win.
+ *
+ * @property shape the bar shape.
+ * @property minHeight the minimum bar height.
+ * @property contentPadding padding inside the bar.
+ * @property textStyle the text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaInfoBarStyle(
+    public val shape: Shape? = null,
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaInfoBarColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaInfoBarColors? = this.colors,
+    ): JengaInfoBarStyle = JengaInfoBarStyle(shape, minHeight, contentPadding, textStyle, colors)
+}
+
+/** Defaults for [JengaInfoBar]. Each one follows the theme's [JengaInfoBarStyle]. */
 public object JengaInfoBarDefaults {
-    /** Default shape, matching a button. */
+    /** Default shape, matching a medium button. */
     public val shape: Shape
-        @Composable get() = JengaButtonDefaults.shape
+        @Composable get() = JengaTheme.components.infoBar?.shape
+            ?: JengaTheme.components.button?.medium?.shape
+            ?: JengaButtonDefaults.shape
 
     /** Minimum height, matching a medium button. */
     public val minHeight: Dp
-        @Composable get() = JengaTheme.sizing.controlHeightMedium
+        @Composable get() = JengaTheme.components.infoBar?.minHeight
+            ?: JengaTheme.components.button?.medium?.minHeight
+            ?: JengaTheme.sizing.controlHeightMedium
 
     /** Padding inside the bar. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg)
+        @Composable get() = JengaTheme.components.infoBar?.contentPadding ?: PaddingValues(horizontal = JengaTheme.spacing.lg)
 
     /** Text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.button
+        @Composable get() = JengaTheme.components.infoBar?.textStyle ?: JengaTheme.typography.button
 
     /** Themed colors. */
     @Composable
-    public fun colors(): JengaInfoBarColors = JengaInfoBarColors(
+    public fun colors(): JengaInfoBarColors = JengaTheme.components.infoBar?.colors ?: JengaInfoBarColors(
         container = JengaTheme.colors.surfaceSunk,
         content = JengaTheme.colors.textSecondary,
     )

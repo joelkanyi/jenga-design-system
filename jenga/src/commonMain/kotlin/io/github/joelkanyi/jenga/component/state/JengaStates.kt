@@ -35,26 +35,66 @@ public class JengaStateColors(
 }
 
 /** Defaults and token mappings for [JengaEmptyState] / [JengaErrorState]. */
+/**
+ * Theme-wide style for every [JengaEmptyState] and [JengaErrorState], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.state]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property titleStyle the title text style.
+ * @property descriptionStyle the description text style.
+ * @property contentPadding padding around the state.
+ * @property spacing the gap between the icon, title and description.
+ * @property actionSpacing the gap above the action button; falls back to [spacing].
+ * @property actionSize the action button size.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaStateStyle(
+    public val titleStyle: TextStyle? = null,
+    public val descriptionStyle: TextStyle? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val spacing: Dp? = null,
+    public val actionSpacing: Dp? = null,
+    public val actionSize: JengaButtonSize? = null,
+    public val colors: JengaStateColors? = null,
+) {
+    public fun copy(
+        titleStyle: TextStyle? = this.titleStyle,
+        descriptionStyle: TextStyle? = this.descriptionStyle,
+        contentPadding: PaddingValues? = this.contentPadding,
+        spacing: Dp? = this.spacing,
+        actionSpacing: Dp? = this.actionSpacing,
+        actionSize: JengaButtonSize? = this.actionSize,
+        colors: JengaStateColors? = this.colors,
+    ): JengaStateStyle = JengaStateStyle(titleStyle, descriptionStyle, contentPadding, spacing, actionSpacing, actionSize, colors)
+}
+
+/** Defaults for [JengaEmptyState] and [JengaErrorState]. Each one follows the theme's [JengaStateStyle]. */
 public object JengaStateDefaults {
     /** Title text style. */
     public val titleStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleLarge
+        @Composable get() = JengaTheme.components.state?.titleStyle ?: JengaTheme.typography.titleLarge
 
     /** Description text style. */
     public val descriptionStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodySmall
+        @Composable get() = JengaTheme.components.state?.descriptionStyle ?: JengaTheme.typography.bodySmall
 
     /** Padding around the state. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(JengaTheme.spacing.xl)
+        @Composable get() = JengaTheme.components.state?.contentPadding ?: PaddingValues(JengaTheme.spacing.xl)
 
     /** Gap between the icon, title and description. */
     public val spacing: Dp
-        @Composable get() = JengaTheme.spacing.md
+        @Composable get() = JengaTheme.components.state?.spacing ?: JengaTheme.spacing.md
+
+    /** Action button size. */
+    public val actionSize: JengaButtonSize
+        @Composable get() = JengaTheme.components.state?.actionSize ?: JengaButtonSize.Medium
 
     /** Themed colors. */
     @Composable
-    public fun colors(): JengaStateColors = JengaStateColors(
+    public fun colors(): JengaStateColors = JengaTheme.components.state?.colors ?: JengaStateColors(
         title = JengaTheme.colors.textPrimary,
         description = JengaTheme.colors.textMuted,
     )
@@ -77,7 +117,8 @@ public object JengaStateDefaults {
  * @param descriptionStyle the [description] text style.
  * @param contentPadding padding around the state.
  * @param spacing the gap between the icon, title and description.
- * @param actionSpacing the gap above the action button.
+ * @param actionSpacing the gap above the action button; defaults to the theme's
+ *   [JengaStateStyle.actionSpacing], else [spacing].
  * @param actionSize the action button size.
  */
 @Composable
@@ -94,8 +135,8 @@ public fun JengaEmptyState(
     descriptionStyle: TextStyle = JengaStateDefaults.descriptionStyle,
     contentPadding: PaddingValues = JengaStateDefaults.contentPadding,
     spacing: Dp = JengaStateDefaults.spacing,
-    actionSpacing: Dp = spacing,
-    actionSize: JengaButtonSize = JengaButtonSize.Medium,
+    actionSpacing: Dp = JengaTheme.components.state?.actionSpacing ?: spacing,
+    actionSize: JengaButtonSize = JengaStateDefaults.actionSize,
 ) {
     StateLayout(
         title = title,
@@ -132,7 +173,8 @@ public fun JengaEmptyState(
  * @param descriptionStyle the [description] text style.
  * @param contentPadding padding around the state.
  * @param spacing the gap between the icon, title and description.
- * @param actionSpacing the gap above the action button.
+ * @param actionSpacing the gap above the action button; defaults to the theme's
+ *   [JengaStateStyle.actionSpacing], else [spacing].
  * @param actionSize the action button size.
  */
 @Composable
@@ -149,8 +191,8 @@ public fun JengaErrorState(
     descriptionStyle: TextStyle = JengaStateDefaults.descriptionStyle,
     contentPadding: PaddingValues = JengaStateDefaults.contentPadding,
     spacing: Dp = JengaStateDefaults.spacing,
-    actionSpacing: Dp = spacing,
-    actionSize: JengaButtonSize = JengaButtonSize.Medium,
+    actionSpacing: Dp = JengaTheme.components.state?.actionSpacing ?: spacing,
+    actionSize: JengaButtonSize = JengaStateDefaults.actionSize,
 ) {
     StateLayout(
         title = title,

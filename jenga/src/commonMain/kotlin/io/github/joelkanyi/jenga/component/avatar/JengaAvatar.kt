@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -19,6 +21,58 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public enum class JengaAvatarSize { Small, Medium, Large }
 
 /** Defaults for [JengaAvatar]. */
+/**
+ * Theme-wide metrics for one [JengaAvatarSize], part of a [JengaAvatarStyle]. A `null` value keeps
+ * Jenga's default.
+ *
+ * @property diameter the avatar diameter.
+ * @property textStyle the initials text style.
+ */
+@Poko
+@Immutable
+public class JengaAvatarSizeStyle(
+    public val diameter: Dp? = null,
+    public val textStyle: TextStyle? = null,
+) {
+    public fun copy(
+        diameter: Dp? = this.diameter,
+        textStyle: TextStyle? = this.textStyle,
+    ): JengaAvatarSizeStyle = JengaAvatarSizeStyle(diameter, textStyle)
+}
+
+/**
+ * Theme-wide style for every [JengaAvatar], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.avatar]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property small metrics for [JengaAvatarSize.Small].
+ * @property medium metrics for [JengaAvatarSize.Medium].
+ * @property large metrics for [JengaAvatarSize.Large].
+ */
+@Poko
+@Immutable
+public class JengaAvatarStyle(
+    public val small: JengaAvatarSizeStyle? = null,
+    public val medium: JengaAvatarSizeStyle? = null,
+    public val large: JengaAvatarSizeStyle? = null,
+) {
+    public fun copy(
+        small: JengaAvatarSizeStyle? = this.small,
+        medium: JengaAvatarSizeStyle? = this.medium,
+        large: JengaAvatarSizeStyle? = this.large,
+    ): JengaAvatarStyle = JengaAvatarStyle(small, medium, large)
+
+    internal fun size(size: JengaAvatarSize): JengaAvatarSizeStyle? = when (size) {
+        JengaAvatarSize.Small -> small
+        JengaAvatarSize.Medium -> medium
+        JengaAvatarSize.Large -> large
+    }
+}
+
+/**
+ * Defaults for [JengaAvatar]. [textStyle] follows the theme's [JengaAvatarStyle]; [diameter] is
+ * Jenga's built-in value, and [JengaAvatar] resolves the theme's diameter over it.
+ */
 public object JengaAvatarDefaults {
     /** Diameter per [size]. */
     public fun diameter(size: JengaAvatarSize): Dp = when (size) {
@@ -29,14 +83,15 @@ public object JengaAvatarDefaults {
 
     /** Initials text style per [size]. */
     @Composable
-    public fun textStyle(size: JengaAvatarSize): TextStyle = JengaTheme.typography.titleSmall.copy(
-        fontSize = when (size) {
-            JengaAvatarSize.Small -> 11.sp
-            JengaAvatarSize.Medium -> 15.sp
-            JengaAvatarSize.Large -> 20.sp
-        },
-        fontWeight = FontWeight.Bold,
-    )
+    public fun textStyle(size: JengaAvatarSize): TextStyle = JengaTheme.components.avatar?.size(size)?.textStyle
+        ?: JengaTheme.typography.titleSmall.copy(
+            fontSize = when (size) {
+                JengaAvatarSize.Small -> 11.sp
+                JengaAvatarSize.Medium -> 15.sp
+                JengaAvatarSize.Large -> 20.sp
+            },
+            fontWeight = FontWeight.Bold,
+        )
 }
 
 /**
@@ -57,7 +112,7 @@ public fun JengaAvatar(
     name: String,
     modifier: Modifier = Modifier,
     size: JengaAvatarSize = JengaAvatarSize.Medium,
-    diameter: Dp = JengaAvatarDefaults.diameter(size),
+    diameter: Dp = JengaTheme.components.avatar?.size(size)?.diameter ?: JengaAvatarDefaults.diameter(size),
     textStyle: TextStyle = JengaAvatarDefaults.textStyle(size),
 ) {
     Box(
@@ -87,7 +142,7 @@ public fun JengaAvatar(
 public fun JengaAvatar(
     modifier: Modifier = Modifier,
     size: JengaAvatarSize = JengaAvatarSize.Medium,
-    diameter: Dp = JengaAvatarDefaults.diameter(size),
+    diameter: Dp = JengaTheme.components.avatar?.size(size)?.diameter ?: JengaAvatarDefaults.diameter(size),
     content: @Composable () -> Unit,
 ) {
     Box(

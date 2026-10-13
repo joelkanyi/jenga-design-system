@@ -71,7 +71,7 @@ public fun JengaSelectField(
     textStyle: TextStyle = JengaTextFieldDefaults.textStyle,
     minHeight: Dp = JengaTextFieldDefaults.minHeight,
     contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding,
-    focusRingWidth: Dp = JengaTextFieldDefaults.FocusRingWidth,
+    focusRingWidth: Dp = JengaTheme.components.textField?.focusRingWidth ?: JengaTextFieldDefaults.FocusRingWidth,
 ) {
     val c = JengaTheme.colors
     val borderColor = when {

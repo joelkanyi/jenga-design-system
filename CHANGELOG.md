@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.8.0
+
+_2026-10-13_
+
+ * New: Theme-level component styles. `JengaTheme(components = JengaComponentStyles(...))` sets the look of 31 components for everything below it. A value passed to a call still wins, and an unset value keeps Jenga's default.
+ * New: `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` and `rememberJengaCountdown` for one-time-code entry.
+ * New: `JengaDialog` takes `colors`.
+ * New: `JengaButton` (text overload) takes `colors`.
+ * New: `JengaRadioListItem` and `JengaCheckboxListItem` take `headlineMaxLines` and `supportingMaxLines`.
+ * New: `JengaListSheet` takes `subtitleColor`, `JengaTopAppBar` takes `titleStyle`, `JengaKeyValueRow` takes `labelStyle`, `JengaDropdownMenu` takes `width` and `JengaTabs` takes `selectedTextStyle`.
+ * Changed: `JengaTheme`, `JengaDialog`, `JengaButton`, `JengaListSheet`, `JengaTopAppBar`, `JengaKeyValueRow`, `JengaDropdownMenu`, `JengaTabs` and the selection list items gained parameters. Source compatible, but code compiled against 0.7.0 must be recompiled.
+
 ## Version 0.7.0
 
 _2026-10-08_

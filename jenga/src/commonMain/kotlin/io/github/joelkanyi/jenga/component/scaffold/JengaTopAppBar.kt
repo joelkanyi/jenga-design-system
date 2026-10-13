@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -45,17 +46,53 @@ public class JengaTopAppBarColors(
 }
 
 /** Defaults and token mappings for [JengaTopAppBar]. */
+/**
+ * Theme-wide style for every [JengaTopAppBar], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.topAppBar]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property height the minimum bar height, excluding the status-bar inset.
+ * @property contentPadding padding inside the bar.
+ * @property titleStyle the title text style of the text overload.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaTopAppBarStyle(
+    public val height: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val titleStyle: TextStyle? = null,
+    public val colors: JengaTopAppBarColors? = null,
+) {
+    public fun copy(
+        height: Dp? = this.height,
+        contentPadding: PaddingValues? = this.contentPadding,
+        titleStyle: TextStyle? = this.titleStyle,
+        colors: JengaTopAppBarColors? = this.colors,
+    ): JengaTopAppBarStyle = JengaTopAppBarStyle(height, contentPadding, titleStyle, colors)
+}
+
+/**
+ * Defaults for [JengaTopAppBar]. The composable members follow the theme's [JengaTopAppBarStyle];
+ * [Height] is Jenga's built-in value, and [JengaTopAppBar] resolves the theme's height over it.
+ */
 public object JengaTopAppBarDefaults {
     /** Minimum bar height (excluding the status-bar inset). */
     public val Height: Dp = 56.dp
 
     /** Padding inside the bar. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+        @Composable get() = JengaTheme.components.topAppBar?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+
+    /** Title text style. */
+    public val titleStyle: TextStyle
+        @Composable get() = JengaTheme.components.topAppBar?.titleStyle ?: JengaTheme.typography.titleLarge
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaTopAppBarColors {
+        JengaTheme.components.topAppBar?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaTopAppBarColors(
             container = c.surface,
@@ -79,9 +116,11 @@ public object JengaTopAppBarDefaults {
  * @param navigationIcon optional leading icon (e.g. back); inherits content color.
  * @param actions trailing actions laid out in a [RowScope]; inherit content color.
  * @param showDivider whether the bottom divider is drawn (e.g. only once content scrolls under it).
- * @param height the minimum bar height, excluding the status-bar inset.
+ * @param height the minimum bar height, excluding the status-bar inset; defaults to the theme's
+ *   [JengaTopAppBarStyle.height], else [JengaTopAppBarDefaults.Height].
  * @param contentPadding padding inside the bar.
  * @param colors the color set; defaults to [JengaTopAppBarDefaults.colors].
+ * @param titleStyle the [title] text style.
  */
 @Composable
 public fun JengaTopAppBar(
@@ -91,16 +130,17 @@ public fun JengaTopAppBar(
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     showDivider: Boolean = true,
-    height: Dp = JengaTopAppBarDefaults.Height,
+    height: Dp = JengaTheme.components.topAppBar?.height ?: JengaTopAppBarDefaults.Height,
     contentPadding: PaddingValues = JengaTopAppBarDefaults.contentPadding,
     colors: JengaTopAppBarColors = JengaTopAppBarDefaults.colors(),
+    titleStyle: TextStyle = JengaTopAppBarDefaults.titleStyle,
 ) {
     JengaTopAppBar(
         title = {
             Column {
                 JengaText(
                     text = title,
-                    style = JengaTheme.typography.titleLarge,
+                    style = titleStyle,
                     color = colors.content,
                     maxLines = 1,
                 )
@@ -133,7 +173,8 @@ public fun JengaTopAppBar(
  * @param navigationIcon optional leading icon (e.g. back); inherits content color.
  * @param actions trailing actions laid out in a [RowScope]; inherit content color.
  * @param showDivider whether the bottom divider is drawn (e.g. only once content scrolls under it).
- * @param height the minimum bar height, excluding the status-bar inset.
+ * @param height the minimum bar height, excluding the status-bar inset; defaults to the theme's
+ *   [JengaTopAppBarStyle.height], else [JengaTopAppBarDefaults.Height].
  * @param contentPadding padding inside the bar.
  * @param colors the color set; defaults to [JengaTopAppBarDefaults.colors].
  */
@@ -144,7 +185,7 @@ public fun JengaTopAppBar(
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     showDivider: Boolean = true,
-    height: Dp = JengaTopAppBarDefaults.Height,
+    height: Dp = JengaTheme.components.topAppBar?.height ?: JengaTopAppBarDefaults.Height,
     contentPadding: PaddingValues = JengaTopAppBarDefaults.contentPadding,
     colors: JengaTopAppBarColors = JengaTopAppBarDefaults.colors(),
 ) {

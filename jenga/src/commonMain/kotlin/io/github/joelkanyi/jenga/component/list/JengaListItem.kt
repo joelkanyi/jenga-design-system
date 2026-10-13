@@ -57,30 +57,69 @@ public class JengaListItemColors(
     )
 }
 
-/** Defaults and token mappings for [JengaListItem]. */
+/**
+ * Theme-wide style for every [JengaListItem], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.listItem]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaListItem] call still win.
+ *
+ * @property minHeight the minimum row height.
+ * @property contentPadding inner padding around the row content.
+ * @property contentSpacing the gap between the leading content, the text and the trailing content.
+ * @property headlineStyle the headline text style.
+ * @property supportingStyle the supporting text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaListItemStyle(
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val contentSpacing: Dp? = null,
+    public val headlineStyle: TextStyle? = null,
+    public val supportingStyle: TextStyle? = null,
+    public val colors: JengaListItemColors? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        contentSpacing: Dp? = this.contentSpacing,
+        headlineStyle: TextStyle? = this.headlineStyle,
+        supportingStyle: TextStyle? = this.supportingStyle,
+        colors: JengaListItemColors? = this.colors,
+    ): JengaListItemStyle = JengaListItemStyle(minHeight, contentPadding, contentSpacing, headlineStyle, supportingStyle, colors)
+}
+
+/**
+ * Defaults and token mappings for [JengaListItem].
+ *
+ * The composable members follow the theme's [JengaListItemStyle]; [MinHeight] is Jenga's built-in
+ * value.
+ */
 public object JengaListItemDefaults {
     /** Minimum row height. */
     public val MinHeight: Dp = 56.dp
 
     /** Gap between the leading content, the text and the trailing content. */
     public val contentSpacing: Dp
-        @Composable get() = JengaTheme.spacing.md
+        @Composable get() = JengaTheme.components.listItem?.contentSpacing ?: JengaTheme.spacing.md
 
     /** Headline text style. */
     public val headlineStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleSmall
+        @Composable get() = JengaTheme.components.listItem?.headlineStyle ?: JengaTheme.typography.titleSmall
 
     /** Supporting text style. */
     public val supportingStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodySmall
+        @Composable get() = JengaTheme.components.listItem?.supportingStyle ?: JengaTheme.typography.bodySmall
 
     /** Inner padding around the row content. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
+        @Composable get() = JengaTheme.components.listItem?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md)
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaListItemColors {
+        JengaTheme.components.listItem?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaListItemColors(
             container = Color.Transparent,
@@ -112,7 +151,8 @@ public object JengaListItemDefaults {
  * @param enabled when false, the row uses the disabled colors from [colors] and [onClick] is ignored.
  * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
  * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
- * @param minHeight the minimum row height.
+ * @param minHeight the minimum row height; defaults to the theme's [JengaListItemStyle.minHeight], else
+ *   [JengaListItemDefaults.MinHeight].
  * @param contentPadding inner padding around the row content.
  * @param headlineStyle the [headline] text style.
  * @param supportingStyle the [supporting] text style.
@@ -132,7 +172,7 @@ public fun JengaListItem(
     enabled: Boolean = true,
     headlineMaxLines: Int = 1,
     supportingMaxLines: Int = 1,
-    minHeight: Dp = JengaListItemDefaults.MinHeight,
+    minHeight: Dp = JengaTheme.components.listItem?.minHeight ?: JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,
@@ -176,7 +216,8 @@ public fun JengaListItem(
  * @param enabled when false, the row uses the disabled colors from [colors] and [onClick] is ignored.
  * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
  * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
- * @param minHeight the minimum row height.
+ * @param minHeight the minimum row height; defaults to the theme's [JengaListItemStyle.minHeight], else
+ *   [JengaListItemDefaults.MinHeight].
  * @param contentPadding inner padding around the row content.
  * @param headlineStyle the [headline] text style; spans in [headline] override it.
  * @param supportingStyle the [supporting] text style.
@@ -196,7 +237,7 @@ public fun JengaListItem(
     enabled: Boolean = true,
     headlineMaxLines: Int = 1,
     supportingMaxLines: Int = 1,
-    minHeight: Dp = JengaListItemDefaults.MinHeight,
+    minHeight: Dp = JengaTheme.components.listItem?.minHeight ?: JengaListItemDefaults.MinHeight,
     contentPadding: PaddingValues = JengaListItemDefaults.contentPadding,
     headlineStyle: TextStyle = JengaListItemDefaults.headlineStyle,
     supportingStyle: TextStyle = JengaListItemDefaults.supportingStyle,

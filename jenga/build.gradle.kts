@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.7.1-SNAPSHOT"
+version = "0.8.0"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -98,6 +98,7 @@ kotlin {
                 implementation(libs.roborazzi.compose.preview.scanner.support)
                 implementation(libs.composable.preview.scanner)
                 implementation(libs.androidx.compose.ui.test.junit4)
+                implementation(libs.androidx.compose.ui.test.manifest)
                 implementation(libs.androidx.compose.ui.tooling)
             }
         }
@@ -136,6 +137,8 @@ android {
             all {
                 // Improves Roborazzi screenshot fidelity (Robolectric 4.12.2+).
                 it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
+                // Every preview renders in one Robolectric JVM; the 512m default runs out.
+                it.maxHeapSize = "2g"
             }
         }
     }

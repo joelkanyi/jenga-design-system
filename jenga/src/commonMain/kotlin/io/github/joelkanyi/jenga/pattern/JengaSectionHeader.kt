@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonSize
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
@@ -31,14 +33,65 @@ public enum class JengaSectionHeaderStyle {
     Overline,
 }
 
-/** Defaults for [JengaSectionHeader]. */
+/**
+ * Theme-wide look for one [JengaSectionHeaderStyle], part of [JengaSectionHeaderStyles]. A `null`
+ * value keeps Jenga's default.
+ *
+ * @property minHeight the minimum header height.
+ * @property contentPadding padding around the header.
+ * @property titleStyle the title text style.
+ */
+@Poko
+@Immutable
+public class JengaSectionHeaderVariantStyle(
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val titleStyle: TextStyle? = null,
+) {
+    public fun copy(
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        titleStyle: TextStyle? = this.titleStyle,
+    ): JengaSectionHeaderVariantStyle = JengaSectionHeaderVariantStyle(minHeight, contentPadding, titleStyle)
+}
+
+/**
+ * Theme-wide styles for every [JengaSectionHeader], one per [JengaSectionHeaderStyle], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.sectionHeader]. A `null` value keeps
+ * Jenga's default; arguments passed to a call still win.
+ *
+ * @property title the look of [JengaSectionHeaderStyle.Title].
+ * @property overline the look of [JengaSectionHeaderStyle.Overline].
+ */
+@Poko
+@Immutable
+public class JengaSectionHeaderStyles(
+    public val title: JengaSectionHeaderVariantStyle? = null,
+    public val overline: JengaSectionHeaderVariantStyle? = null,
+) {
+    public fun copy(
+        title: JengaSectionHeaderVariantStyle? = this.title,
+        overline: JengaSectionHeaderVariantStyle? = this.overline,
+    ): JengaSectionHeaderStyles = JengaSectionHeaderStyles(title, overline)
+
+    internal fun of(style: JengaSectionHeaderStyle): JengaSectionHeaderVariantStyle? = when (style) {
+        JengaSectionHeaderStyle.Title -> title
+        JengaSectionHeaderStyle.Overline -> overline
+    }
+}
+
+/**
+ * Defaults for [JengaSectionHeader]. [titleStyle] follows the theme's [JengaSectionHeaderStyles];
+ * [MinHeight] and [contentPadding] are Jenga's built-in values, and [JengaSectionHeader] resolves the
+ * theme's per-style values over them.
+ */
 public object JengaSectionHeaderDefaults {
     /** Minimum header height. */
     public val MinHeight: Dp = 0.dp
 
     /** Title text style for [style]. */
     @Composable
-    public fun titleStyle(style: JengaSectionHeaderStyle): TextStyle = when (style) {
+    public fun titleStyle(style: JengaSectionHeaderStyle): TextStyle = JengaTheme.components.sectionHeader?.of(style)?.titleStyle ?: when (style) {
         JengaSectionHeaderStyle.Title -> JengaTheme.typography.titleLarge
         JengaSectionHeaderStyle.Overline -> JengaTheme.typography.label
     }
@@ -65,8 +118,8 @@ public object JengaSectionHeaderDefaults {
  * @param style the header style; see [JengaSectionHeaderStyle].
  * @param trailingContent optional end slot, after the action; inherits the secondary text color.
  * @param titleStyle the title text style; defaults to the one for [style].
- * @param minHeight the minimum header height.
- * @param contentPadding padding around the header.
+ * @param minHeight the minimum header height; defaults to the theme's value for [style].
+ * @param contentPadding padding around the header; defaults to the theme's value for [style].
  */
 @Composable
 public fun JengaSectionHeader(
@@ -78,8 +131,9 @@ public fun JengaSectionHeader(
     style: JengaSectionHeaderStyle = JengaSectionHeaderStyle.Title,
     trailingContent: (@Composable () -> Unit)? = null,
     titleStyle: TextStyle = JengaSectionHeaderDefaults.titleStyle(style),
-    minHeight: Dp = JengaSectionHeaderDefaults.MinHeight,
-    contentPadding: PaddingValues = JengaSectionHeaderDefaults.contentPadding,
+    minHeight: Dp = JengaTheme.components.sectionHeader?.of(style)?.minHeight ?: JengaSectionHeaderDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaTheme.components.sectionHeader?.of(style)?.contentPadding
+        ?: JengaSectionHeaderDefaults.contentPadding,
 ) {
     val isOverline = style == JengaSectionHeaderStyle.Overline
     Row(

@@ -44,7 +44,40 @@ public class JengaThumbnailStripColors(
     ): JengaThumbnailStripColors = JengaThumbnailStripColors(thumbnail, addBorder, addContent)
 }
 
-/** Defaults and token mappings for [JengaThumbnailStrip]. */
+/**
+ * Theme-wide style for every [JengaThumbnailStrip], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.thumbnailStrip]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property thumbnailSize the edge length of each thumbnail and the add tile.
+ * @property spacing the gap between tiles.
+ * @property contentPadding padding around the row.
+ * @property shape the tile shape.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaThumbnailStripStyle(
+    public val thumbnailSize: Dp? = null,
+    public val spacing: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val shape: Shape? = null,
+    public val colors: JengaThumbnailStripColors? = null,
+) {
+    public fun copy(
+        thumbnailSize: Dp? = this.thumbnailSize,
+        spacing: Dp? = this.spacing,
+        contentPadding: PaddingValues? = this.contentPadding,
+        shape: Shape? = this.shape,
+        colors: JengaThumbnailStripColors? = this.colors,
+    ): JengaThumbnailStripStyle = JengaThumbnailStripStyle(thumbnailSize, spacing, contentPadding, shape, colors)
+}
+
+/**
+ * Defaults and token mappings for [JengaThumbnailStrip]. The composable members follow the theme's
+ * [JengaThumbnailStripStyle]; the constants are Jenga's built-in values, and [JengaThumbnailStrip]
+ * resolves the theme's values over them.
+ */
 public object JengaThumbnailStripDefaults {
     /** Edge length of each square thumbnail. */
     public val ThumbnailSize: Dp = 80.dp
@@ -54,19 +87,20 @@ public object JengaThumbnailStripDefaults {
 
     /** Thumbnail and add-tile shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.md
+        @Composable get() = JengaTheme.components.thumbnailStrip?.shape ?: JengaTheme.shapes.md
 
     /** Gap between thumbnails. */
     public val spacing: Dp
-        @Composable get() = JengaTheme.spacing.sm
+        @Composable get() = JengaTheme.components.thumbnailStrip?.spacing ?: JengaTheme.spacing.sm
 
     /** Padding around the row. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg)
+        @Composable get() = JengaTheme.components.thumbnailStrip?.contentPadding ?: PaddingValues(horizontal = JengaTheme.spacing.lg)
 
     /** Themed colors. */
     @Composable
     public fun colors(): JengaThumbnailStripColors {
+        JengaTheme.components.thumbnailStrip?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaThumbnailStripColors(
             thumbnail = c.surfaceSunk,
@@ -88,7 +122,8 @@ public object JengaThumbnailStripDefaults {
  * @param onAdd called when the add tile is tapped; null hides the tile.
  * @param addContentDescription accessibility label for the add tile.
  * @param addIcon the icon inside the add tile; inherits the add color.
- * @param thumbnailSize the edge length of each thumbnail and the add tile.
+ * @param thumbnailSize the edge length of each thumbnail and the add tile; defaults to the theme's
+ *   value, else [JengaThumbnailStripDefaults.ThumbnailSize].
  * @param spacing the gap between tiles.
  * @param contentPadding padding around the row.
  * @param shape the tile shape.
@@ -102,7 +137,7 @@ public fun JengaThumbnailStrip(
     onAdd: (() -> Unit)? = null,
     addContentDescription: String? = null,
     addIcon: @Composable () -> Unit = { JengaIcon(JengaTheme.icons.add, contentDescription = null) },
-    thumbnailSize: Dp = JengaThumbnailStripDefaults.ThumbnailSize,
+    thumbnailSize: Dp = JengaTheme.components.thumbnailStrip?.thumbnailSize ?: JengaThumbnailStripDefaults.ThumbnailSize,
     spacing: Dp = JengaThumbnailStripDefaults.spacing,
     contentPadding: PaddingValues = JengaThumbnailStripDefaults.contentPadding,
     shape: Shape = JengaThumbnailStripDefaults.shape,

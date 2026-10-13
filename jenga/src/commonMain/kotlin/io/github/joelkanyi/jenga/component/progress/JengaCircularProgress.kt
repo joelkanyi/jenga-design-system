@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -18,9 +19,41 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Defaults and token mappings for the Jenga circular progress indicators. */
+/**
+ * Theme-wide style for every [JengaCircularProgress] and [JengaCircularProgressIndeterminate], set
+ * through [io.github.joelkanyi.jenga.theme.JengaComponentStyles.circularProgress]. A `null` value
+ * keeps Jenga's default; arguments passed to a call still win.
+ *
+ * @property size the diameter.
+ * @property strokeWidth the ring stroke width.
+ * @property color the indicator color.
+ * @property trackColor the track color.
+ */
+@Poko
+@Immutable
+public class JengaCircularProgressStyle(
+    public val size: Dp? = null,
+    public val strokeWidth: Dp? = null,
+    public val color: Color? = null,
+    public val trackColor: Color? = null,
+) {
+    public fun copy(
+        size: Dp? = this.size,
+        strokeWidth: Dp? = this.strokeWidth,
+        color: Color? = this.color,
+        trackColor: Color? = this.trackColor,
+    ): JengaCircularProgressStyle = JengaCircularProgressStyle(size, strokeWidth, color, trackColor)
+}
+
+/**
+ * Defaults for the circular progress indicators. [color] and [trackColor] follow the theme's
+ * [JengaCircularProgressStyle]; [Size] and [StrokeWidth] are Jenga's built-in values, and the
+ * indicators resolve the theme's values over them.
+ */
 public object JengaCircularProgressDefaults {
     /** Default diameter. */
     public val Size: Dp = 40.dp
@@ -38,11 +71,11 @@ public object JengaCircularProgressDefaults {
 
     /** Brand-colored indicator. */
     public val color: Color
-        @Composable get() = JengaTheme.colors.brand
+        @Composable get() = JengaTheme.components.circularProgress?.color ?: JengaTheme.colors.brand
 
     /** The faint full-circle track behind the indicator. */
     public val trackColor: Color
-        @Composable get() = JengaTheme.colors.surfaceSunk
+        @Composable get() = JengaTheme.components.circularProgress?.trackColor ?: JengaTheme.colors.surfaceSunk
 }
 
 /**
@@ -62,8 +95,8 @@ public object JengaCircularProgressDefaults {
 public fun JengaCircularProgress(
     progress: Float,
     modifier: Modifier = Modifier,
-    size: Dp = JengaCircularProgressDefaults.Size,
-    strokeWidth: Dp = JengaCircularProgressDefaults.StrokeWidth,
+    size: Dp = JengaTheme.components.circularProgress?.size ?: JengaCircularProgressDefaults.Size,
+    strokeWidth: Dp = JengaTheme.components.circularProgress?.strokeWidth ?: JengaCircularProgressDefaults.StrokeWidth,
     color: Color = JengaCircularProgressDefaults.color,
     trackColor: Color = JengaCircularProgressDefaults.trackColor,
 ) {
@@ -88,8 +121,8 @@ public fun JengaCircularProgress(
 @Composable
 public fun JengaCircularProgressIndeterminate(
     modifier: Modifier = Modifier,
-    size: Dp = JengaCircularProgressDefaults.Size,
-    strokeWidth: Dp = JengaCircularProgressDefaults.StrokeWidth,
+    size: Dp = JengaTheme.components.circularProgress?.size ?: JengaCircularProgressDefaults.Size,
+    strokeWidth: Dp = JengaTheme.components.circularProgress?.strokeWidth ?: JengaCircularProgressDefaults.StrokeWidth,
     color: Color = JengaCircularProgressDefaults.color,
     trackColor: Color = JengaCircularProgressDefaults.trackColor,
 ) {

@@ -34,14 +34,50 @@ public class JengaLinkColors(
 }
 
 /** Defaults and token mappings for [JengaLink]. */
+/**
+ * Theme-wide style for every [JengaLink], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.link]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property textStyle the link text style.
+ * @property underline whether the label is underlined.
+ * @property contentPadding padding around the link.
+ * @property colors the link colors.
+ */
+@Poko
+@Immutable
+public class JengaLinkStyle(
+    public val textStyle: TextStyle? = null,
+    public val underline: Boolean? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val colors: JengaLinkColors? = null,
+) {
+    public fun copy(
+        textStyle: TextStyle? = this.textStyle,
+        underline: Boolean? = this.underline,
+        contentPadding: PaddingValues? = this.contentPadding,
+        colors: JengaLinkColors? = this.colors,
+    ): JengaLinkStyle = JengaLinkStyle(textStyle, underline, contentPadding, colors)
+}
+
+/** Defaults for [JengaLink]. Each one follows the theme's [JengaLinkStyle]. */
 public object JengaLinkDefaults {
     /** Padding around the link. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues()
+        @Composable get() = JengaTheme.components.link?.contentPadding ?: PaddingValues()
+
+    /** Link text style. */
+    public val textStyle: TextStyle
+        @Composable get() = JengaTheme.components.link?.textStyle ?: JengaTheme.typography.bodyMedium
+
+    /** Whether the label is underlined. */
+    public val underline: Boolean
+        @Composable get() = JengaTheme.components.link?.underline ?: true
 
     /** Themed link colors: the brand accent, muted when disabled. */
     @Composable
     public fun colors(): JengaLinkColors {
+        JengaTheme.components.link?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaLinkColors(content = c.brand, disabledContent = c.textMuted)
     }
@@ -62,7 +98,7 @@ public object JengaLinkDefaults {
  * @param text the link label.
  * @param onClick invoked when the link is tapped; not called while disabled.
  * @param modifier the [Modifier] for this link.
- * @param style the [TextStyle]; defaults to body text from the theme.
+ * @param style the [TextStyle]; defaults to [JengaLinkDefaults.textStyle].
  * @param colors the link colors; defaults to [JengaLinkDefaults.colors].
  * @param enabled whether the link responds to taps and uses its enabled color.
  * @param underline whether the label is underlined (the link affordance).
@@ -74,10 +110,10 @@ public fun JengaLink(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    style: TextStyle = JengaTheme.typography.bodyMedium,
+    style: TextStyle = JengaLinkDefaults.textStyle,
     colors: JengaLinkColors = JengaLinkDefaults.colors(),
     enabled: Boolean = true,
-    underline: Boolean = true,
+    underline: Boolean = JengaLinkDefaults.underline,
     leadingIcon: (@Composable () -> Unit)? = null,
     contentPadding: PaddingValues = JengaLinkDefaults.contentPadding,
 ) {

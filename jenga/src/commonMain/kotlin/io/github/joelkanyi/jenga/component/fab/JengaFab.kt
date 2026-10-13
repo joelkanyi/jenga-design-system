@@ -43,7 +43,62 @@ public class JengaFabColors(
     ): JengaFabColors = JengaFabColors(container, content)
 }
 
-/** Defaults and token mappings for [JengaFab]. */
+/**
+ * Theme-wide style for every [JengaFab] and [JengaExtendedFab], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.fab]. A `null` value keeps Jenga's default;
+ * arguments passed to a call still win.
+ *
+ * @property shape the [JengaFab] shape.
+ * @property size the [JengaFab] edge length.
+ * @property extendedShape the [JengaExtendedFab] shape.
+ * @property extendedHeight the [JengaExtendedFab] height.
+ * @property extendedContentPadding padding inside a [JengaExtendedFab].
+ * @property elevation the shadow elevation.
+ * @property shadowColor the shadow color.
+ * @property textStyle the [JengaExtendedFab] label text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaFabStyle(
+    public val shape: Shape? = null,
+    public val size: Dp? = null,
+    public val extendedShape: Shape? = null,
+    public val extendedHeight: Dp? = null,
+    public val extendedContentPadding: PaddingValues? = null,
+    public val elevation: Dp? = null,
+    public val shadowColor: Color? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaFabColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        size: Dp? = this.size,
+        extendedShape: Shape? = this.extendedShape,
+        extendedHeight: Dp? = this.extendedHeight,
+        extendedContentPadding: PaddingValues? = this.extendedContentPadding,
+        elevation: Dp? = this.elevation,
+        shadowColor: Color? = this.shadowColor,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaFabColors? = this.colors,
+    ): JengaFabStyle = JengaFabStyle(
+        shape,
+        size,
+        extendedShape,
+        extendedHeight,
+        extendedContentPadding,
+        elevation,
+        shadowColor,
+        textStyle,
+        colors,
+    )
+}
+
+/**
+ * Defaults and token mappings for [JengaFab]. The composable members follow the theme's
+ * [JengaFabStyle]; the constants are Jenga's built-in values, and [JengaFab] and [JengaExtendedFab]
+ * resolve the theme's values over them.
+ */
 public object JengaFabDefaults {
     public val Size: Dp = 56.dp
 
@@ -52,29 +107,30 @@ public object JengaFabDefaults {
 
     /** Default FAB shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.lg
+        @Composable get() = JengaTheme.components.fab?.shape ?: JengaTheme.shapes.lg
 
     /** Extended-FAB shape: a full pill, so the label reads as one confident tap target. */
     public val extendedShape: Shape = RoundedCornerShape(percent = 50)
 
     /** Resting elevation. */
     public val elevation: Dp
-        @Composable get() = JengaTheme.elevation.lg
+        @Composable get() = JengaTheme.components.fab?.elevation ?: JengaTheme.elevation.lg
 
     /** Shadow color; tint it (e.g. with the brand color) for a colored glow. */
     public val ShadowColor: Color = DefaultShadowColor
 
     /** Padding inside an extended FAB. */
     public val extendedContentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg)
+        @Composable get() = JengaTheme.components.fab?.extendedContentPadding ?: PaddingValues(horizontal = JengaTheme.spacing.lg)
 
     /** Extended FAB label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.titleSmall
+        @Composable get() = JengaTheme.components.fab?.textStyle ?: JengaTheme.typography.titleSmall
 
     /** Themed colors. */
     @Composable
-    public fun colors(): JengaFabColors = JengaFabColors(container = JengaTheme.colors.brand, content = JengaTheme.colors.onBrand)
+    public fun colors(): JengaFabColors = JengaTheme.components.fab?.colors
+        ?: JengaFabColors(container = JengaTheme.colors.brand, content = JengaTheme.colors.onBrand)
 }
 
 /**
@@ -87,8 +143,8 @@ public object JengaFabDefaults {
  * @param shape the FAB shape; defaults to [JengaFabDefaults.shape].
  * @param colors the color set; defaults to [JengaFabDefaults.colors].
  * @param elevation the shadow elevation.
- * @param shadowColor the shadow color.
- * @param size the FAB edge length.
+ * @param shadowColor the shadow color; defaults to the theme's value, else [JengaFabDefaults.ShadowColor].
+ * @param size the FAB edge length; defaults to the theme's value, else [JengaFabDefaults.Size].
  * @param content the FAB content (typically a single icon); inherits content color.
  */
 @Composable
@@ -98,8 +154,8 @@ public fun JengaFab(
     shape: Shape = JengaFabDefaults.shape,
     colors: JengaFabColors = JengaFabDefaults.colors(),
     elevation: Dp = JengaFabDefaults.elevation,
-    shadowColor: Color = JengaFabDefaults.ShadowColor,
-    size: Dp = JengaFabDefaults.Size,
+    shadowColor: Color = JengaTheme.components.fab?.shadowColor ?: JengaFabDefaults.ShadowColor,
+    size: Dp = JengaTheme.components.fab?.size ?: JengaFabDefaults.Size,
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -129,11 +185,12 @@ public fun JengaFab(
  * @param onClick called when tapped.
  * @param modifier the [Modifier] for this FAB.
  * @param icon an optional leading icon; inherits the content color.
- * @param shape the FAB shape; defaults to a full pill ([JengaFabDefaults.extendedShape]).
+ * @param shape the FAB shape; defaults to the theme's extended shape, else a full pill
+ *   ([JengaFabDefaults.extendedShape]).
  * @param colors the color set; defaults to [JengaFabDefaults.colors].
  * @param elevation the shadow elevation.
- * @param shadowColor the shadow color.
- * @param height the FAB height.
+ * @param shadowColor the shadow color; defaults to the theme's value, else [JengaFabDefaults.ShadowColor].
+ * @param height the FAB height; defaults to the theme's value, else [JengaFabDefaults.ExtendedHeight].
  * @param contentPadding padding inside the FAB.
  * @param textStyle the label text style.
  */
@@ -143,11 +200,11 @@ public fun JengaExtendedFab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: (@Composable () -> Unit)? = null,
-    shape: Shape = JengaFabDefaults.extendedShape,
+    shape: Shape = JengaTheme.components.fab?.extendedShape ?: JengaFabDefaults.extendedShape,
     colors: JengaFabColors = JengaFabDefaults.colors(),
     elevation: Dp = JengaFabDefaults.elevation,
-    shadowColor: Color = JengaFabDefaults.ShadowColor,
-    height: Dp = JengaFabDefaults.ExtendedHeight,
+    shadowColor: Color = JengaTheme.components.fab?.shadowColor ?: JengaFabDefaults.ShadowColor,
+    height: Dp = JengaTheme.components.fab?.extendedHeight ?: JengaFabDefaults.ExtendedHeight,
     contentPadding: PaddingValues = JengaFabDefaults.extendedContentPadding,
     textStyle: TextStyle = JengaFabDefaults.textStyle,
 ) {

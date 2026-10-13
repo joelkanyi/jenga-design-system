@@ -32,18 +32,43 @@ public class JengaCardFooterColors(
 }
 
 /** Defaults and token mappings for [JengaCardFooter]. */
+/**
+ * Theme-wide style for every [JengaCardFooter], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.cardFooter]. A `null` value keeps Jenga's
+ * default; arguments passed to a call still win.
+ *
+ * @property contentPadding padding inside the footer.
+ * @property textStyle the text style.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaCardFooterStyle(
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+    public val colors: JengaCardFooterColors? = null,
+) {
+    public fun copy(
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        colors: JengaCardFooterColors? = this.colors,
+    ): JengaCardFooterStyle = JengaCardFooterStyle(contentPadding, textStyle, colors)
+}
+
+/** Defaults for [JengaCardFooter]. Each one follows the theme's [JengaCardFooterStyle]. */
 public object JengaCardFooterDefaults {
     /** Padding inside the footer. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+        @Composable get() = JengaTheme.components.cardFooter?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
 
     /** Text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.caption
+        @Composable get() = JengaTheme.components.cardFooter?.textStyle ?: JengaTheme.typography.caption
 
     /** Themed colors. */
     @Composable
-    public fun colors(): JengaCardFooterColors = JengaCardFooterColors(
+    public fun colors(): JengaCardFooterColors = JengaTheme.components.cardFooter?.colors ?: JengaCardFooterColors(
         container = JengaTheme.colors.surfaceSunk,
         content = JengaTheme.colors.textSecondary,
     )

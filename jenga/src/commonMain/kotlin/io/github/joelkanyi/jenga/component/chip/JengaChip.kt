@@ -60,26 +60,65 @@ public class JengaChipColors(
     )
 }
 
-/** Defaults and token mappings for [JengaChip]. Override any of these per call. */
+/**
+ * Theme-wide style for every [JengaChip], set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.chip]. A `null` value keeps Jenga's
+ * default; arguments passed to a [JengaChip] call still win.
+ *
+ * @property shape the chip shape.
+ * @property minHeight the minimum visual height.
+ * @property contentPadding padding inside the chip.
+ * @property textStyle the label text style.
+ * @property selectedTextStyle merged onto the chip's text style while selected, so set only what
+ *   changes, e.g. `TextStyle(fontWeight = FontWeight.Medium)`.
+ * @property colors the color set.
+ */
+@Poko
+@Immutable
+public class JengaChipStyle(
+    public val shape: Shape? = null,
+    public val minHeight: Dp? = null,
+    public val contentPadding: PaddingValues? = null,
+    public val textStyle: TextStyle? = null,
+    public val selectedTextStyle: TextStyle? = null,
+    public val colors: JengaChipColors? = null,
+) {
+    public fun copy(
+        shape: Shape? = this.shape,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        selectedTextStyle: TextStyle? = this.selectedTextStyle,
+        colors: JengaChipColors? = this.colors,
+    ): JengaChipStyle = JengaChipStyle(shape, minHeight, contentPadding, textStyle, selectedTextStyle, colors)
+}
+
+/**
+ * Defaults and token mappings for [JengaChip]. Override any of these per call.
+ *
+ * The composable members follow the theme's [JengaChipStyle]; [MinHeight] is Jenga's built-in value.
+ */
 public object JengaChipDefaults {
     /** Default chip shape. */
     public val shape: Shape
-        @Composable get() = JengaTheme.shapes.pill
+        @Composable get() = JengaTheme.components.chip?.shape ?: JengaTheme.shapes.pill
 
     /** Minimum visual height (touch target is expanded to 48dp separately). */
     public val MinHeight: Dp = 36.dp
 
     /** Padding inside the chip. */
     public val contentPadding: PaddingValues
-        @Composable get() = PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
+        @Composable get() = JengaTheme.components.chip?.contentPadding
+            ?: PaddingValues(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm)
 
     /** Label text style. */
     public val textStyle: TextStyle
-        @Composable get() = JengaTheme.typography.bodySmall
+        @Composable get() = JengaTheme.components.chip?.textStyle ?: JengaTheme.typography.bodySmall
 
     /** Themed colors for all chip states. */
     @Composable
     public fun colors(): JengaChipColors {
+        JengaTheme.components.chip?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaChipColors(
             selectedContainer = c.brand,
@@ -109,8 +148,10 @@ public object JengaChipDefaults {
  * @param colors the color set; defaults to [JengaChipDefaults.colors].
  * @param trailingContent optional slot after the label (e.g. a count); inherits the content color.
  * @param textStyle the label text style.
- * @param selectedTextStyle the label text style while selected; defaults to [textStyle].
- * @param minHeight the minimum visual height.
+ * @param selectedTextStyle the label text style while selected; defaults to [textStyle] with the
+ *   theme's [JengaChipStyle.selectedTextStyle] merged on top.
+ * @param minHeight the minimum visual height; defaults to the theme's [JengaChipStyle.minHeight], else
+ *   [JengaChipDefaults.MinHeight].
  * @param contentPadding padding inside the chip.
  */
 @Composable
@@ -125,8 +166,8 @@ public fun JengaChip(
     colors: JengaChipColors = JengaChipDefaults.colors(),
     trailingContent: (@Composable () -> Unit)? = null,
     textStyle: TextStyle = JengaChipDefaults.textStyle,
-    selectedTextStyle: TextStyle = textStyle,
-    minHeight: Dp = JengaChipDefaults.MinHeight,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.chip?.selectedTextStyle),
+    minHeight: Dp = JengaTheme.components.chip?.minHeight ?: JengaChipDefaults.MinHeight,
     contentPadding: PaddingValues = JengaChipDefaults.contentPadding,
 ) {
     val container = when {
