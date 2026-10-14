@@ -49,5 +49,6 @@ private fun ButtonShowcase() {
         }
         JengaButton(text = "Disabled", onClick = {}, enabled = false)
         JengaButton(text = "Loading", onClick = {}, loading = true)
+        JengaButton(text = "Check ID", onClick = {}, loading = true, loadingText = "Checking…")
     }
 }

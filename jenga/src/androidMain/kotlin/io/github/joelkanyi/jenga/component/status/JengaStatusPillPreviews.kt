@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
+import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -48,6 +50,12 @@ internal fun JengaStatusPillNoDotPreview() {
         JengaInline(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
             JengaStatusPill(label = "In warranty", tone = JengaBadgeTone.Success, showDot = false)
             JengaStatusPill(label = "Waiting for parts", tone = JengaBadgeTone.Brand, indicatorSize = JengaTheme.spacing.xs)
+            JengaStatusPill(
+                label = "28:41",
+                tone = JengaBadgeTone.Warning,
+                onClick = {},
+                leadingIcon = { JengaIcon(JengaTheme.icons.info, contentDescription = null, size = 15.dp) },
+            )
         }
     }
 }
