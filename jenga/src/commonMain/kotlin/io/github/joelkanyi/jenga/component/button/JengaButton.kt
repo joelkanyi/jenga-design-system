@@ -49,6 +49,9 @@ public enum class JengaButtonVariant {
 
     /** Destructive action: bordered, error-colored. */
     Danger,
+
+    /** Medium-emphasis in the brand color: brand border and label on a surface fill. */
+    BrandOutline,
 }
 
 /** Size of a [JengaButton]; controls height, padding and label style. */
@@ -117,6 +120,7 @@ public class JengaButtonSizeStyle(
  * @property neutral colors for [JengaButtonVariant.Neutral].
  * @property outline colors for [JengaButtonVariant.Outline].
  * @property danger colors for [JengaButtonVariant.Danger].
+ * @property brandOutline colors for [JengaButtonVariant.BrandOutline].
  */
 @Poko
 @androidx.compose.runtime.Immutable
@@ -130,7 +134,21 @@ public class JengaButtonStyle(
     public val neutral: JengaButtonColors? = null,
     public val outline: JengaButtonColors? = null,
     public val danger: JengaButtonColors? = null,
+    public val brandOutline: JengaButtonColors? = null,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        small: JengaButtonSizeStyle? = null,
+        medium: JengaButtonSizeStyle? = null,
+        large: JengaButtonSizeStyle? = null,
+        primary: JengaButtonColors? = null,
+        ink: JengaButtonColors? = null,
+        ghost: JengaButtonColors? = null,
+        neutral: JengaButtonColors? = null,
+        outline: JengaButtonColors? = null,
+        danger: JengaButtonColors? = null,
+    ) : this(small, medium, large, primary, ink, ghost, neutral, outline, danger, brandOutline = null)
+
     public fun copy(
         small: JengaButtonSizeStyle? = this.small,
         medium: JengaButtonSizeStyle? = this.medium,
@@ -141,7 +159,21 @@ public class JengaButtonStyle(
         neutral: JengaButtonColors? = this.neutral,
         outline: JengaButtonColors? = this.outline,
         danger: JengaButtonColors? = this.danger,
-    ): JengaButtonStyle = JengaButtonStyle(small, medium, large, primary, ink, ghost, neutral, outline, danger)
+        brandOutline: JengaButtonColors? = this.brandOutline,
+    ): JengaButtonStyle = JengaButtonStyle(small, medium, large, primary, ink, ghost, neutral, outline, danger, brandOutline)
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        small: JengaButtonSizeStyle? = this.small,
+        medium: JengaButtonSizeStyle? = this.medium,
+        large: JengaButtonSizeStyle? = this.large,
+        primary: JengaButtonColors? = this.primary,
+        ink: JengaButtonColors? = this.ink,
+        ghost: JengaButtonColors? = this.ghost,
+        neutral: JengaButtonColors? = this.neutral,
+        outline: JengaButtonColors? = this.outline,
+        danger: JengaButtonColors? = this.danger,
+    ): JengaButtonStyle = copy(small, medium, large, primary, ink, ghost, neutral, outline, danger, this.brandOutline)
 
     internal fun size(size: JengaButtonSize): JengaButtonSizeStyle? = when (size) {
         JengaButtonSize.Small -> small
@@ -156,6 +188,7 @@ public class JengaButtonStyle(
         JengaButtonVariant.Neutral -> neutral
         JengaButtonVariant.Outline -> outline
         JengaButtonVariant.Danger -> danger
+        JengaButtonVariant.BrandOutline -> brandOutline
     }
 }
 
@@ -255,6 +288,14 @@ public object JengaButtonDefaults {
                 content = c.error,
                 border = c.borderStrong,
                 disabledContainer = Color.Transparent,
+                disabledContent = c.contentDisabled,
+                disabledBorder = c.borderDisabled,
+            )
+            JengaButtonVariant.BrandOutline -> JengaButtonColors(
+                container = c.surface,
+                content = c.brand,
+                border = c.brand,
+                disabledContainer = c.surfaceDisabled,
                 disabledContent = c.contentDisabled,
                 disabledBorder = c.borderDisabled,
             )

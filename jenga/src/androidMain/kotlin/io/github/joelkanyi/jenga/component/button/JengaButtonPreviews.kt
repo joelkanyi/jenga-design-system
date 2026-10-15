@@ -45,6 +45,7 @@ private fun ButtonShowcase() {
         JengaButton(text = "Neutral", onClick = {}, variant = JengaButtonVariant.Neutral)
         JengaButton(text = "Outline", onClick = {}, variant = JengaButtonVariant.Outline)
         JengaButton(text = "Danger", onClick = {}, variant = JengaButtonVariant.Danger)
+        JengaButton(text = "Brand outline", onClick = {}, variant = JengaButtonVariant.BrandOutline)
         Row(horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm)) {
             JengaButton(text = "Small", onClick = {}, size = JengaButtonSize.Small)
             JengaButton(text = "Large", onClick = {}, size = JengaButtonSize.Large)

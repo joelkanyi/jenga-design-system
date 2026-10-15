@@ -2,6 +2,7 @@ package io.github.joelkanyi.jenga.component.button
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.width
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.theme.JengaComponentStyles
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -131,5 +133,27 @@ class JengaButtonLoadingTest {
             it(layouts)
         }
         assertEquals(13.5.sp, layouts.single().layoutInput.style.fontSize)
+    }
+
+    @Test
+    fun brandOutlineUsesBrandBorderAndLabel() {
+        compose.setContent {
+            JengaTheme {
+                val colors = JengaButtonDefaults.colors(JengaButtonVariant.BrandOutline)
+                assertEquals(JengaTheme.colors.brand, colors.content)
+                assertEquals(JengaTheme.colors.brand, colors.border)
+                assertEquals(JengaTheme.colors.surface, colors.container)
+            }
+        }
+    }
+
+    @Test
+    fun brandOutlineFollowsThemeStyle() {
+        val themed = JengaButtonColors(Color.Red, Color.Green, Color.Blue, Color.Gray, Color.Gray, Color.Gray)
+        compose.setContent {
+            JengaTheme(components = JengaComponentStyles(button = JengaButtonStyle(brandOutline = themed))) {
+                assertEquals(themed, JengaButtonDefaults.colors(JengaButtonVariant.BrandOutline))
+            }
+        }
     }
 }
