@@ -78,6 +78,9 @@ internal fun JengaCardDisabledPreview() {
             JengaCard(variant = JengaCardVariant.Outlined, onClick = {}) {
                 JengaText("Solar home system · available")
             }
+            JengaCard(variant = JengaCardVariant.Outlined, onClick = {}, selected = true) {
+                JengaText("Solar home system · selected")
+            }
             JengaCard(variant = JengaCardVariant.Outlined, onClick = {}, enabled = false) {
                 JengaText("Solar home system · already has a work order")
             }

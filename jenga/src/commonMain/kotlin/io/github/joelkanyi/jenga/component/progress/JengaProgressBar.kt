@@ -43,6 +43,9 @@ public enum class JengaProgressTone {
 
     /** Stopped or paused, in a neutral color. */
     Neutral,
+
+    /** Failed or over a limit, in the error color. */
+    Error,
 }
 
 /** Resolved colors for a determinate progress bar. Override via [JengaProgressDefaults.colors]. */
@@ -72,6 +75,7 @@ public class JengaProgressColors(
  * @property neutral colors for [JengaProgressTone.Neutral].
  * @property labelStyle the label text style of [JengaLabelledProgress].
  * @property labelSpacing the gap between the label row and the bar.
+ * @property error colors for [JengaProgressTone.Error].
  */
 @Poko
 @Immutable
@@ -83,7 +87,19 @@ public class JengaProgressStyle(
     public val neutral: JengaProgressColors? = null,
     public val labelStyle: TextStyle? = null,
     public val labelSpacing: Dp? = null,
+    public val error: JengaProgressColors? = null,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        trackHeight: Dp? = null,
+        shape: Shape? = null,
+        default: JengaProgressColors? = null,
+        success: JengaProgressColors? = null,
+        neutral: JengaProgressColors? = null,
+        labelStyle: TextStyle? = null,
+        labelSpacing: Dp? = null,
+    ) : this(trackHeight, shape, default, success, neutral, labelStyle, labelSpacing, error = null)
+
     public fun copy(
         trackHeight: Dp? = this.trackHeight,
         shape: Shape? = this.shape,
@@ -92,12 +108,25 @@ public class JengaProgressStyle(
         neutral: JengaProgressColors? = this.neutral,
         labelStyle: TextStyle? = this.labelStyle,
         labelSpacing: Dp? = this.labelSpacing,
-    ): JengaProgressStyle = JengaProgressStyle(trackHeight, shape, default, success, neutral, labelStyle, labelSpacing)
+        error: JengaProgressColors? = this.error,
+    ): JengaProgressStyle = JengaProgressStyle(trackHeight, shape, default, success, neutral, labelStyle, labelSpacing, error)
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        trackHeight: Dp? = this.trackHeight,
+        shape: Shape? = this.shape,
+        default: JengaProgressColors? = this.default,
+        success: JengaProgressColors? = this.success,
+        neutral: JengaProgressColors? = this.neutral,
+        labelStyle: TextStyle? = this.labelStyle,
+        labelSpacing: Dp? = this.labelSpacing,
+    ): JengaProgressStyle = copy(trackHeight, shape, default, success, neutral, labelStyle, labelSpacing, this.error)
 
     internal fun colors(tone: JengaProgressTone): JengaProgressColors? = when (tone) {
         JengaProgressTone.Default -> default
         JengaProgressTone.Success -> success
         JengaProgressTone.Neutral -> neutral
+        JengaProgressTone.Error -> error
     }
 }
 
@@ -136,6 +165,7 @@ public object JengaProgressDefaults {
                 JengaProgressTone.Default -> c.brand
                 JengaProgressTone.Success -> c.success
                 JengaProgressTone.Neutral -> c.textMuted
+                JengaProgressTone.Error -> c.error
             },
         )
     }

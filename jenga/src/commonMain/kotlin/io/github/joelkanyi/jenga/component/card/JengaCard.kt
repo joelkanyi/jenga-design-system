@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -103,6 +104,9 @@ public object JengaCardDefaults {
     /** Width of the border drawn inside the card edge when [JengaCardColors.border] is set. */
     public val BorderWidth: Dp = 1.dp
 
+    /** Width of the border of a selected card. */
+    public val SelectedBorderWidth: Dp = 2.dp
+
     /** Opacity of the whole card when it is not enabled. */
     public const val DisabledAlpha: Float = 0.38f
 
@@ -117,17 +121,21 @@ public object JengaCardDefaults {
         JengaCardVariant.Filled -> JengaTheme.elevation.none
     }
 
-    /** Themed colors per [variant]. */
+    /** Themed colors per [variant]; a [selected] card takes the brand color as its border. */
     @Composable
-    public fun colors(variant: JengaCardVariant): JengaCardColors {
-        JengaTheme.components.card?.colors(variant)?.let { return it }
+    public fun colors(variant: JengaCardVariant, selected: Boolean = false): JengaCardColors {
         val c = JengaTheme.colors
-        return when (variant) {
+        val colors = JengaTheme.components.card?.colors(variant) ?: when (variant) {
             JengaCardVariant.Elevated -> JengaCardColors(c.surface, Color.Transparent)
             JengaCardVariant.Outlined -> JengaCardColors(c.surface, c.border)
             JengaCardVariant.Filled -> JengaCardColors(c.surfaceVariant, Color.Transparent)
         }
+        return if (selected) colors.copy(border = c.brand) else colors
     }
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    @Composable
+    public fun colors(variant: JengaCardVariant): JengaCardColors = colors(variant, selected = false)
 }
 
 /**
@@ -141,13 +149,16 @@ public object JengaCardDefaults {
  *   and clickable with a ripple.
  * @param enabled when false, the card is drawn at [disabledAlpha], [onClick] is ignored and
  *   the card is reported as disabled to accessibility services.
+ * @param selected whether the card is the chosen one; draws a brand border of
+ *   [JengaCardDefaults.SelectedBorderWidth] and reports the card as selected to accessibility services.
  * @param shape the card shape; defaults to [JengaCardDefaults.shape].
- * @param colors the color set; defaults to [JengaCardDefaults.colors] for [variant].
+ * @param colors the color set; defaults to [JengaCardDefaults.colors] for [variant] and [selected].
  * @param elevation resting shadow depth; defaults to [JengaCardDefaults.elevation].
  * @param contentPadding inner padding around [content]; defaults to the theme's [JengaCardStyle], else
  *   [JengaCardDefaults.contentPadding].
- * @param borderWidth width of the border, drawn inside the card edge (e.g. 2dp for a selected card);
- *   defaults to the theme's [JengaCardStyle], else [JengaCardDefaults.BorderWidth].
+ * @param borderWidth width of the border, drawn inside the card edge; defaults to
+ *   [JengaCardDefaults.SelectedBorderWidth] when [selected], else the theme's [JengaCardStyle], else
+ *   [JengaCardDefaults.BorderWidth].
  * @param disabledAlpha opacity of the whole card when [enabled] is false; defaults to the theme's
  *   [JengaCardStyle], else [JengaCardDefaults.DisabledAlpha].
  * @param content the card body, laid out in a [ColumnScope].
@@ -158,11 +169,16 @@ public fun JengaCard(
     variant: JengaCardVariant = JengaCardVariant.Elevated,
     onClick: (() -> Unit)? = null,
     enabled: Boolean = true,
+    selected: Boolean = false,
     shape: Shape = JengaCardDefaults.shape,
-    colors: JengaCardColors = JengaCardDefaults.colors(variant),
+    colors: JengaCardColors = JengaCardDefaults.colors(variant, selected),
     elevation: Dp = JengaCardDefaults.elevation(variant),
     contentPadding: PaddingValues = JengaTheme.components.card?.contentPadding ?: JengaCardDefaults.contentPadding,
-    borderWidth: Dp = JengaTheme.components.card?.borderWidth ?: JengaCardDefaults.BorderWidth,
+    borderWidth: Dp = if (selected) {
+        JengaCardDefaults.SelectedBorderWidth
+    } else {
+        JengaTheme.components.card?.borderWidth ?: JengaCardDefaults.BorderWidth
+    },
     disabledAlpha: Float = JengaTheme.components.card?.disabledAlpha ?: JengaCardDefaults.DisabledAlpha,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -175,6 +191,7 @@ public fun JengaCard(
                     Modifier.alpha(disabledAlpha).semantics { disabled() }
                 },
             )
+            .then(if (selected) Modifier.semantics { this.selected = true } else Modifier)
             .shadow(elevation, shape)
             .clip(shape)
             .background(colors.container)
@@ -193,6 +210,37 @@ public fun JengaCard(
                 },
             )
             .padding(contentPadding),
+        content = content,
+    )
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaCard(
+    modifier: Modifier = Modifier,
+    variant: JengaCardVariant = JengaCardVariant.Elevated,
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
+    shape: Shape = JengaCardDefaults.shape,
+    colors: JengaCardColors = JengaCardDefaults.colors(variant, selected = false),
+    elevation: Dp = JengaCardDefaults.elevation(variant),
+    contentPadding: PaddingValues = JengaTheme.components.card?.contentPadding ?: JengaCardDefaults.contentPadding,
+    borderWidth: Dp = JengaTheme.components.card?.borderWidth ?: JengaCardDefaults.BorderWidth,
+    disabledAlpha: Float = JengaTheme.components.card?.disabledAlpha ?: JengaCardDefaults.DisabledAlpha,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    JengaCard(
+        modifier = modifier,
+        variant = variant,
+        onClick = onClick,
+        enabled = enabled,
+        selected = false,
+        shape = shape,
+        colors = colors,
+        elevation = elevation,
+        contentPadding = contentPadding,
+        borderWidth = borderWidth,
+        disabledAlpha = disabledAlpha,
         content = content,
     )
 }
