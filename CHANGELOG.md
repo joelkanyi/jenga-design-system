@@ -3,6 +3,8 @@
 ## Unreleased
 
  * New: `JengaButton` (text overload) takes `contentPadding` and `textStyle`.
+ * New: `JengaProgressTone.Error`, and `error` colors in `JengaProgressStyle`. A `when` over `JengaProgressTone` without an `else` branch needs the new case.
+ * New: `JengaCard` takes `selected`, drawing a brand border and reporting the card as selected to accessibility services.
 
 ## Version 0.8.1
 

@@ -63,6 +63,7 @@ internal fun JengaLabelledProgressPreview() {
             )
             JengaLabelledProgress(progress = 1f, label = buildAnnotatedString { append("Done") }, tone = JengaProgressTone.Success)
             JengaLinearProgress(progress = 0.4f, tone = JengaProgressTone.Neutral, trackHeight = JengaTheme.spacing.xs)
+            JengaLabelledProgress(progress = 0.3f, label = buildAnnotatedString { append("Too small") }, tone = JengaProgressTone.Error)
         }
     }
 }

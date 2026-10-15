@@ -492,9 +492,9 @@ public final class io/github/joelkanyi/jenga/component/card/ComposableSingletons
 	public fun <init> ()V
 	public final fun getLambda$-865807429$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1672426938$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$2120404672$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1712381057$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$473146422$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$661204592$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$881170037$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/card/ComposableSingletons$JengaCardPreviewsKt {
@@ -502,12 +502,13 @@ public final class io/github/joelkanyi/jenga/component/card/ComposableSingletons
 	public fun <init> ()V
 	public final fun getLambda$-1451697370$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-2080170470$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-220125705$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-350103311$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$-475964523$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-483822730$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-537480578$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-936962122$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1564163166$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1998126847$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$498724129$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$742315094$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class io/github/joelkanyi/jenga/component/card/JengaCardColors {
@@ -526,10 +527,12 @@ public final class io/github/joelkanyi/jenga/component/card/JengaCardDefaults {
 	public static final field $stable I
 	public static final field DisabledAlpha F
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/card/JengaCardDefaults;
-	public final fun colors (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
+	public final synthetic fun colors (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
+	public final fun colors (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;ZLandroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
 	public final fun elevation-ccRj1GA (Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Landroidx/compose/runtime/Composer;I)F
 	public final fun getBorderWidth-D9Ej5fM ()F
 	public final fun getContentPadding ()Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getSelectedBorderWidth-D9Ej5fM ()F
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 }
 
@@ -573,7 +576,8 @@ public final class io/github/joelkanyi/jenga/component/card/JengaCardFooterStyle
 }
 
 public final class io/github/joelkanyi/jenga/component/card/JengaCardKt {
-	public static final fun JengaCard-LRJM5oM (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Lkotlin/jvm/functions/Function0;ZLandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/card/JengaCardColors;FLandroidx/compose/foundation/layout/PaddingValues;FFLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaCard-LBhLsqs (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Lkotlin/jvm/functions/Function0;ZZLandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/card/JengaCardColors;FLandroidx/compose/foundation/layout/PaddingValues;FFLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaCard-LRJM5oM (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/card/JengaCardVariant;Lkotlin/jvm/functions/Function0;ZLandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/card/JengaCardColors;FLandroidx/compose/foundation/layout/PaddingValues;FFLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/card/JengaCardStyle {
@@ -760,19 +764,19 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 public final class io/github/joelkanyi/jenga/component/expandable/ComposableSingletons$JengaExpandableRowPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/expandable/ComposableSingletons$JengaExpandableRowPreviewsKt;
 	public fun <init> ()V
-	public final fun getLambda$-1034918810$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1241467011$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1749065070$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1758275274$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1838515200$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1988731159$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-41000726$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-864562032$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1579287575$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$36568271$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$189455159$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1984298704$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$198665363$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$384325271$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$471530196$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$612819291$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$883945324$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$912811623$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowColors {
@@ -2244,11 +2248,16 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaProgressDef
 public final class io/github/joelkanyi/jenga/component/progress/JengaProgressStyle {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-27rdPV4 (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;)Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;
+	public final synthetic fun copy-27rdPV4 (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;)Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;
 	public static synthetic fun copy-27rdPV4$default (Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;
+	public final fun copy-fABo5lc (Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;)Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;
+	public static synthetic fun copy-fABo5lc$default (Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/unit/Dp;Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/progress/JengaProgressStyle;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefault ()Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;
+	public final fun getError ()Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;
 	public final fun getLabelSpacing-lTKBWiU ()Landroidx/compose/ui/unit/Dp;
 	public final fun getLabelStyle ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getNeutral ()Lio/github/joelkanyi/jenga/component/progress/JengaProgressColors;
@@ -2261,6 +2270,7 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaProgressSty
 
 public final class io/github/joelkanyi/jenga/component/progress/JengaProgressTone : java/lang/Enum {
 	public static final field Default Lio/github/joelkanyi/jenga/component/progress/JengaProgressTone;
+	public static final field Error Lio/github/joelkanyi/jenga/component/progress/JengaProgressTone;
 	public static final field Neutral Lio/github/joelkanyi/jenga/component/progress/JengaProgressTone;
 	public static final field Success Lio/github/joelkanyi/jenga/component/progress/JengaProgressTone;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
@@ -2281,11 +2291,11 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaShimmerKt {
 public final class io/github/joelkanyi/jenga/component/reaction/ComposableSingletons$JengaReactionBarPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/reaction/ComposableSingletons$JengaReactionBarPreviewsKt;
 	public fun <init> ()V
-	public final fun getLambda$-137940978$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$-1725719236$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1489549413$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-488606458$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-862815473$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1115763707$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$98228845$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors {
@@ -3787,9 +3797,9 @@ public final class io/github/joelkanyi/jenga/pattern/JengaTicketRowKt {
 public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
-	public final fun getLambda$-1092496627$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1848930134$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1944683725$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1988505284$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2138543669$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2146798839$jenga_release ()Lkotlin/jvm/functions/Function2;
@@ -3801,7 +3811,6 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-895332967$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-983531617$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1056921111$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$1273730162$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1375474695$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1557062852$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$183897136$jenga_release ()Lkotlin/jvm/functions/Function3;
@@ -3813,6 +3822,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$2127897924$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$277114736$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$380858747$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$401415822$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$561998281$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$878903685$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$927163277$jenga_release ()Lkotlin/jvm/functions/Function3;
@@ -3823,23 +3833,23 @@ public final class io/github/joelkanyi/jenga/theme/ComposableSingletons$JengaBra
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/theme/ComposableSingletons$JengaBrandShowcasePreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$1262252746$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$1605039375$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$901176400$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$976417543$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/theme/ComposableSingletons$JengaComponentStylesPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/theme/ComposableSingletons$JengaComponentStylesPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1012146525$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1802845875$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1834692052$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-202638151$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-263080888$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$-596819708$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-615414200$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$1016356072$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1126518276$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1969988652$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$250806291$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$264806919$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$29834013$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
