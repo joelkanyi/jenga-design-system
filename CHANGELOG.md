@@ -1,6 +1,8 @@
 # Change Log
 
-## Unreleased
+## Version 0.8.2
+
+_2026-10-15_
 
  * New: `JengaButton` (text overload) takes `contentPadding` and `textStyle`.
  * New: `JengaProgressTone.Error`, and `error` colors in `JengaProgressStyle`. A `when` over `JengaProgressTone` without an `else` branch needs the new case.
