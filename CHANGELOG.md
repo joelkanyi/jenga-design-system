@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaButton` (text overload) takes `contentPadding` and `textStyle`.
+
 ## Version 0.8.1
 
 _2026-10-14_

@@ -3,12 +3,14 @@ package io.github.joelkanyi.jenga.component.button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -50,5 +52,11 @@ private fun ButtonShowcase() {
         JengaButton(text = "Disabled", onClick = {}, enabled = false)
         JengaButton(text = "Loading", onClick = {}, loading = true)
         JengaButton(text = "Check ID", onClick = {}, loading = true, loadingText = "Checking…")
+        JengaButton(
+            text = "Compact padding",
+            onClick = {},
+            variant = JengaButtonVariant.Outline,
+            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 12.dp),
+        )
     }
 }

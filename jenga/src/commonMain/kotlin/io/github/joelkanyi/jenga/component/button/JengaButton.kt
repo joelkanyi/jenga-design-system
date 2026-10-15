@@ -282,6 +282,9 @@ public object JengaButtonDefaults {
  * @param trailingIcon optional icon after the label.
  * @param colors the color set; defaults to [JengaButtonDefaults.colors] for [variant].
  * @param loadingText optional label shown beside the spinner while [loading].
+ * @param contentPadding inner padding; defaults to the theme's [JengaButtonSizeStyle.contentPadding]
+ *   for [size], else [JengaButtonDefaults.contentPadding].
+ * @param textStyle the label style; defaults to [JengaButtonDefaults.textStyle] for [size].
  */
 @Composable
 public fun JengaButton(
@@ -296,6 +299,9 @@ public fun JengaButton(
     trailingIcon: (@Composable () -> Unit)? = null,
     colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
     loadingText: String? = null,
+    contentPadding: PaddingValues = JengaTheme.components.button?.size(size)?.contentPadding
+        ?: JengaButtonDefaults.contentPadding(size),
+    textStyle: TextStyle = JengaButtonDefaults.textStyle(size),
 ) {
     JengaButton(
         onClick = onClick,
@@ -311,10 +317,11 @@ public fun JengaButton(
         },
         trailingIcon = trailingIcon.takeUnless { loading && loadingText != null },
         colors = colors,
+        contentPadding = contentPadding,
     ) {
         JengaText(
             text = if (loading && loadingText != null) loadingText else text,
-            style = JengaButtonDefaults.textStyle(size),
+            style = textStyle,
             maxLines = 1,
         )
     }
@@ -401,6 +408,37 @@ private fun JengaButtonSpinner() {
         modifier = Modifier.size(JengaButtonDefaults.SpinnerSize),
         color = LocalJengaContentColor.current,
         strokeWidth = 2.dp,
+    )
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    variant: JengaButtonVariant = JengaButtonVariant.Primary,
+    size: JengaButtonSize = JengaButtonSize.Medium,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    colors: JengaButtonColors = JengaButtonDefaults.colors(variant),
+    loadingText: String? = null,
+) {
+    JengaButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        variant = variant,
+        size = size,
+        enabled = enabled,
+        loading = loading,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        colors = colors,
+        loadingText = loadingText,
+        textStyle = JengaButtonDefaults.textStyle(size),
     )
 }
 
