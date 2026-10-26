@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -92,6 +94,8 @@ public object JengaSearchFieldDefaults {
  * @param textStyle the query and placeholder text style.
  * @param minHeight the minimum height of the field.
  * @param contentPadding padding inside the field.
+ * @param keyboardOptions software-keyboard configuration (e.g. a number pad, the Search key).
+ * @param keyboardActions IME action handlers (e.g. run the search when Search is pressed).
  */
 @Composable
 public fun JengaSearchField(
@@ -109,6 +113,8 @@ public fun JengaSearchField(
     textStyle: TextStyle = JengaTheme.components.searchField?.textStyle ?: JengaTextFieldDefaults.textStyle,
     minHeight: Dp = JengaTheme.components.searchField?.minHeight ?: JengaTextFieldDefaults.minHeight,
     contentPadding: PaddingValues = JengaTheme.components.searchField?.contentPadding ?: JengaTextFieldDefaults.contentPadding,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     val clear: @Composable () -> Unit = {
         JengaIcon(
@@ -137,6 +143,8 @@ public fun JengaSearchField(
             textStyle = textStyle,
             minHeight = minHeight,
             contentPadding = contentPadding,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
         )
         if (supportingContent != null) {
             CompositionLocalProvider(LocalJengaContentColor provides JengaTheme.colors.textMuted) {
@@ -144,6 +152,43 @@ public fun JengaSearchField(
             }
         }
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaSearchField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    clearContentDescription: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClear: (() -> Unit)? = null,
+    trailingContent: (@Composable () -> Unit)? = null,
+    supportingContent: (@Composable () -> Unit)? = null,
+    shape: Shape = JengaTheme.components.searchField?.shape ?: JengaSearchFieldDefaults.shape,
+    colors: JengaTextFieldColors = JengaTheme.components.searchField?.colors ?: JengaTextFieldDefaults.colors(),
+    textStyle: TextStyle = JengaTheme.components.searchField?.textStyle ?: JengaTextFieldDefaults.textStyle,
+    minHeight: Dp = JengaTheme.components.searchField?.minHeight ?: JengaTextFieldDefaults.minHeight,
+    contentPadding: PaddingValues = JengaTheme.components.searchField?.contentPadding ?: JengaTextFieldDefaults.contentPadding,
+) {
+    JengaSearchField(
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = placeholder,
+        clearContentDescription = clearContentDescription,
+        modifier = modifier,
+        enabled = enabled,
+        onClear = onClear,
+        trailingContent = trailingContent,
+        supportingContent = supportingContent,
+        shape = shape,
+        colors = colors,
+        textStyle = textStyle,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        keyboardOptions = KeyboardOptions.Default,
+    )
 }
 
 /**

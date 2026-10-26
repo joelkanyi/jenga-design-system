@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaSearchField` takes `keyboardOptions` and `keyboardActions`.
+
 ## Version 0.8.2
 
 _2026-10-15_
