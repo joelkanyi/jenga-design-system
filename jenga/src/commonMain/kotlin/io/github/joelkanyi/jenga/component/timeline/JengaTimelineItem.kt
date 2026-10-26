@@ -62,6 +62,26 @@ public enum class JengaTimelinePosition {
 
     /** The only stage. */
     Only,
+    ;
+
+    public companion object {
+        /** The position of the item at [index] in a timeline of [count] items. */
+        public fun of(index: Int, count: Int): JengaTimelinePosition = when {
+            count == 1 -> Only
+            index == 0 -> First
+            index == count - 1 -> Last
+            else -> Middle
+        }
+    }
+}
+
+/** How a [JengaTimelineMarker] is drawn. */
+public enum class JengaTimelineMarkerStyle {
+    /** A solid circle in the marker color. */
+    Filled,
+
+    /** A circle outline in the marker color. */
+    Ring,
 }
 
 /** Resolved colors for a [JengaTimelineItem]. Override via [JengaTimelineDefaults.colors]. */
@@ -108,6 +128,9 @@ public object JengaTimelineDefaults {
 
     /** Width of the connector line. */
     public val ConnectorWidth: Dp = 2.dp
+
+    /** Width of the outline of a [JengaTimelineMarkerStyle.Ring] marker. */
+    public val RingWidth: Dp = 2.dp
 
     /** Padding around the stage text. */
     public val contentPadding: PaddingValues
@@ -176,80 +199,145 @@ public fun JengaTimelineItem(
     subtitleStyle: TextStyle = JengaTimelineDefaults.subtitleStyle,
     colors: JengaTimelineColors = JengaTimelineDefaults.colors(),
 ) {
-    val hasBelow = position == JengaTimelinePosition.First || position == JengaTimelinePosition.Middle
-    val belowColor = if (state == JengaTimelineState.Done) colors.reachedConnector else colors.connector
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .semantics(mergeDescendants = true) {
-                if (stateDescription != null) this.stateDescription = stateDescription
-            },
+    val lineColor = if (state == JengaTimelineState.Done) colors.reachedConnector else colors.connector
+    JengaTimelineItem(
+        position = position,
+        marker = { StateMarker(state = state, size = markerSize, colors = colors) },
+        modifier = modifier.semantics(mergeDescendants = true) {
+            if (stateDescription != null) this.stateDescription = stateDescription
+        },
+        lineColor = lineColor,
+        markerSize = markerSize,
+        contentPadding = contentPadding,
     ) {
+        StageText(title, subtitle, trailingContent, titleStyle, subtitleStyle, colors)
+    }
+}
+
+@Composable
+private fun StageText(
+    title: String,
+    subtitle: String?,
+    trailingContent: (@Composable () -> Unit)?,
+    titleStyle: TextStyle,
+    subtitleStyle: TextStyle,
+    colors: JengaTimelineColors,
+) {
+    Row(
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            JengaText(text = title, style = titleStyle, color = colors.title)
+            if (subtitle != null) {
+                JengaText(text = subtitle, style = subtitleStyle, color = colors.subtitle)
+            }
+        }
+        if (trailingContent != null) {
+            CompositionLocalProvider(LocalJengaContentColor provides colors.subtitle) {
+                trailingContent()
+            }
+        }
+    }
+}
+
+/**
+ * One item of a vertical timeline with any [marker] and any [content]: a marker with
+ * the content beside it, and a line in [lineColor] from the marker down to the next
+ * item. The line follows the item's height. Stack items in a column or give each its own
+ * `item {}` in a lazy list, with [JengaTimelinePosition.of] for [position].
+ *
+ * @param position where the item sits; the last and only items draw no line below.
+ * @param marker the marker, e.g. a [JengaTimelineMarker]; drawn in a [markerSize] wide column.
+ * @param modifier the [Modifier] for this item.
+ * @param lineColor the color of the line below this item.
+ * @param markerSize the width of the marker column; the line starts this far below the top.
+ * @param contentPadding padding around [content].
+ * @param content the item body.
+ */
+@Composable
+public fun JengaTimelineItem(
+    position: JengaTimelinePosition,
+    marker: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    lineColor: Color = JengaTimelineDefaults.colors().connector,
+    markerSize: Dp = JengaTimelineDefaults.MarkerSize,
+    contentPadding: PaddingValues = JengaTimelineDefaults.contentPadding,
+    content: @Composable () -> Unit,
+) {
+    val hasLineBelow = position == JengaTimelinePosition.First || position == JengaTimelinePosition.Middle
+    Row(modifier = modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
         Box(
             modifier = Modifier
                 .width(markerSize)
                 .fillMaxHeight()
                 .drawBehind {
-                    if (hasBelow) {
+                    if (hasLineBelow) {
                         val x = size.width / 2
                         val stroke = JengaTimelineDefaults.ConnectorWidth.toPx()
-                        drawLine(belowColor, Offset(x, markerSize.toPx()), Offset(x, size.height), stroke)
+                        drawLine(lineColor, Offset(x, markerSize.toPx()), Offset(x, size.height), stroke)
                     }
                 },
             contentAlignment = Alignment.TopCenter,
         ) {
-            Marker(state = state, size = markerSize, colors = colors)
+            marker()
         }
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .padding(contentPadding),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                JengaText(text = title, style = titleStyle, color = colors.title)
-                if (subtitle != null) {
-                    JengaText(text = subtitle, style = subtitleStyle, color = colors.subtitle)
-                }
-            }
-            if (trailingContent != null) {
-                CompositionLocalProvider(LocalJengaContentColor provides colors.subtitle) {
-                    trailingContent()
-                }
-            }
+        Box(modifier = Modifier.weight(1f).padding(contentPadding)) {
+            content()
+        }
+    }
+}
+
+/**
+ * A round timeline marker in [color], filled or as a ring, with optional [content]
+ * (e.g. a step number or an icon) centered inside.
+ *
+ * @param color the fill or outline color.
+ * @param modifier the [Modifier] for this marker.
+ * @param style filled or ring; see [JengaTimelineMarkerStyle].
+ * @param size the marker diameter.
+ * @param ringWidth the outline width of a ring marker.
+ * @param contentColor the color provided to [content].
+ * @param content optional centered content.
+ */
+@Composable
+public fun JengaTimelineMarker(
+    color: Color,
+    modifier: Modifier = Modifier,
+    style: JengaTimelineMarkerStyle = JengaTimelineMarkerStyle.Filled,
+    size: Dp = JengaTimelineDefaults.MarkerSize,
+    ringWidth: Dp = JengaTimelineDefaults.RingWidth,
+    contentColor: Color = JengaTimelineDefaults.colors().onMarker,
+    content: (@Composable () -> Unit)? = null,
+) {
+    val shape = JengaTheme.shapes.pill
+    val fill = when (style) {
+        JengaTimelineMarkerStyle.Filled -> Modifier.background(color)
+        JengaTimelineMarkerStyle.Ring -> Modifier.border(ringWidth, color, shape)
+    }
+    Box(
+        modifier = modifier.size(size).clip(shape).then(fill),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (content != null) {
+            CompositionLocalProvider(LocalJengaContentColor provides contentColor, content = content)
         }
     }
 }
 
 @Composable
-private fun Marker(state: JengaTimelineState, size: Dp, colors: JengaTimelineColors) {
-    val shape = JengaTheme.shapes.pill
+private fun StateMarker(state: JengaTimelineState, size: Dp, colors: JengaTimelineColors) {
     val iconSize = size * 0.6f
     when (state) {
-        JengaTimelineState.Done -> Box(
-            modifier = Modifier.size(size).clip(shape).background(colors.done),
-            contentAlignment = Alignment.Center,
-        ) {
-            JengaIcon(JengaTheme.icons.check, contentDescription = null, tint = colors.onMarker, size = iconSize)
+        JengaTimelineState.Done -> JengaTimelineMarker(color = colors.done, size = size, contentColor = colors.onMarker) {
+            JengaIcon(JengaTheme.icons.check, contentDescription = null, size = iconSize)
         }
-        JengaTimelineState.Stopped -> Box(
-            modifier = Modifier.size(size).clip(shape).background(colors.stopped),
-            contentAlignment = Alignment.Center,
-        ) {
-            JengaIcon(JengaTheme.icons.close, contentDescription = null, tint = colors.onMarker, size = iconSize)
+        JengaTimelineState.Stopped -> JengaTimelineMarker(color = colors.stopped, size = size, contentColor = colors.onMarker) {
+            JengaIcon(JengaTheme.icons.close, contentDescription = null, size = iconSize)
         }
-        JengaTimelineState.Current -> Box(
-            modifier = Modifier.size(size).clip(shape).border(ConnectorBorder, colors.current, shape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Box(modifier = Modifier.size(size * 0.4f).clip(shape).background(colors.current))
+        JengaTimelineState.Current -> JengaTimelineMarker(color = colors.current, style = JengaTimelineMarkerStyle.Ring, size = size) {
+            Box(modifier = Modifier.size(size * 0.4f).clip(JengaTheme.shapes.pill).background(colors.current))
         }
-        JengaTimelineState.ToDo -> Box(
-            modifier = Modifier.size(size).clip(shape).border(ConnectorBorder, colors.toDo, shape),
-        )
+        JengaTimelineState.ToDo -> JengaTimelineMarker(color = colors.toDo, style = JengaTimelineMarkerStyle.Ring, size = size)
     }
 }
-
-private val ConnectorBorder: Dp = 2.dp
