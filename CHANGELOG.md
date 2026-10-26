@@ -3,6 +3,7 @@
 ## Unreleased
 
  * New: `JengaSearchField` takes `keyboardOptions` and `keyboardActions`.
+ * New: `JengaTimelineItem` overload with `marker` and `content` slots and a per-item `lineColor`; `JengaTimelineMarker` (filled or ring, optional content); `JengaTimelinePosition.of(index, count)`.
 
 ## Version 0.8.2
 

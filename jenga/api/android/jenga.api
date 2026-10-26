@@ -3280,9 +3280,15 @@ public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldS
 public final class io/github/joelkanyi/jenga/component/timeline/ComposableSingletons$JengaTimelinePreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/timeline/ComposableSingletons$JengaTimelinePreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1037038129$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1097763350$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1548022592$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1918679414$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-21010571$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2144466987$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-300483477$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-705066381$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$443651192$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineColors {
@@ -3311,15 +3317,27 @@ public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineDef
 	public final fun getConnectorWidth-D9Ej5fM ()F
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getMarkerSize-D9Ej5fM ()F
+	public final fun getRingWidth-D9Ej5fM ()F
 	public final fun getSubtitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineItemKt {
 	public static final fun JengaTimelineItem-k3FuEkE (Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineState;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaTimelineItem-rT3HnGc (Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;JFLandroidx/compose/foundation/layout/PaddingValues;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTimelineMarker-gWUcAKE (JLandroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle;FFJLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle : java/lang/Enum {
+	public static final field Filled Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle;
+	public static final field Ring Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/timeline/JengaTimelineMarkerStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition : java/lang/Enum {
+	public static final field Companion Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition$Companion;
 	public static final field First Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
 	public static final field Last Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
 	public static final field Middle Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
@@ -3327,6 +3345,10 @@ public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelinePos
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
 	public static fun values ()[Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
+}
+
+public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition$Companion {
+	public final fun of (II)Lio/github/joelkanyi/jenga/component/timeline/JengaTimelinePosition;
 }
 
 public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineState : java/lang/Enum {
