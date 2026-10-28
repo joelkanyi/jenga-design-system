@@ -3,18 +3,23 @@ package io.github.joelkanyi.jenga.catalog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +28,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
@@ -35,6 +41,8 @@ import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonSize
+import io.github.joelkanyi.jenga.component.button.JengaButtonSizeStyle
+import io.github.joelkanyi.jenga.component.button.JengaButtonStyle
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
@@ -43,6 +51,9 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
+import io.github.joelkanyi.jenga.component.camera.JengaShutterButton
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
@@ -58,7 +69,10 @@ import io.github.joelkanyi.jenga.component.feedback.JengaDialog
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
+import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
+import io.github.joelkanyi.jenga.component.feedback.rememberJengaSheetState
+import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
@@ -93,6 +107,9 @@ import io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
 import io.github.joelkanyi.jenga.component.otp.JengaOtpVerification
 import io.github.joelkanyi.jenga.component.otp.rememberJengaCountdown
 import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
+import io.github.joelkanyi.jenga.component.picker.JengaTimeInput
+import io.github.joelkanyi.jenga.component.picker.JengaTimeInputStyle
+import io.github.joelkanyi.jenga.component.picker.JengaTimePickerDialog
 import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
@@ -100,6 +117,7 @@ import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
 import io.github.joelkanyi.jenga.component.progress.JengaLabelledProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgressIndeterminate
+import io.github.joelkanyi.jenga.component.progress.JengaProgressTone
 import io.github.joelkanyi.jenga.component.progress.jengaShimmer
 import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
 import io.github.joelkanyi.jenga.component.refresh.JengaPullToRefresh
@@ -123,6 +141,9 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
@@ -132,6 +153,8 @@ import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldStatus
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineMarker
+import io.github.joelkanyi.jenga.component.timeline.JengaTimelineMarkerStyle
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
@@ -141,9 +164,12 @@ import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
 import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
+import io.github.joelkanyi.jenga.theme.JengaComponentStyles
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
 import kotlin.time.Duration.Companion.minutes
@@ -158,13 +184,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Button",
         group = "Actions",
-        description = "Triggers an action or event, in five variants.",
-        keywords = "primary ink ghost outline danger loading",
+        description = "Triggers an action or event, in seven variants, with a loading state.",
+        keywords = "primary ink ghost outline brand outline danger loading",
         code = """
             JengaButton("Primary", onClick = {})
             JengaButton("Outline", onClick = {}, variant = JengaButtonVariant.Outline)
+            JengaButton("Brand outline", onClick = {}, variant = JengaButtonVariant.BrandOutline)
             JengaButton("Danger", onClick = {}, variant = JengaButtonVariant.Danger)
-            JengaButton("Loading", onClick = {}, loading = true)
+            JengaButton("Save", onClick = {}, loading = true, loadingText = "Saving")
         """.trimIndent(),
     ) {
         JengaStack(space = JengaTheme.spacing.sm) {
@@ -175,8 +202,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             }
             JengaInline(space = JengaTheme.spacing.sm) {
                 JengaButton("Outline", {}, variant = JengaButtonVariant.Outline)
+                JengaButton("Brand outline", {}, variant = JengaButtonVariant.BrandOutline)
+            }
+            JengaInline(space = JengaTheme.spacing.sm) {
                 JengaButton("Danger", {}, variant = JengaButtonVariant.Danger)
-                JengaButton("Loading", {}, loading = true)
+                JengaButton("Save", {}, loading = true, loadingText = "Saving")
             }
         }
     },
@@ -388,7 +418,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         """.trimIndent(),
     ) {
         var query by remember { mutableStateOf("") }
-        JengaSearchField(query, { query = it }, placeholder = "Search", clearContentDescription = "Clear search")
+        JengaSearchField(
+            query,
+            { query = it },
+            placeholder = "Search",
+            clearContentDescription = "Clear search",
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = {}),
+        )
     },
     CatalogEntry(
         name = "Search trigger",
@@ -1076,6 +1113,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         keywords = "linear circular loading indeterminate",
         code = """
             JengaLinearProgress(progress = 0.6f)
+            JengaLinearProgress(progress = 0.2f, tone = JengaProgressTone.Error)
             JengaLinearProgressIndeterminate()
             JengaCircularProgress(progress = 0.7f)
             JengaCircularProgressIndeterminate()
@@ -1083,6 +1121,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     ) {
         JengaStack(space = JengaTheme.spacing.md) {
             JengaLinearProgress(progress = 0.6f)
+            JengaLinearProgress(progress = 0.2f, tone = JengaProgressTone.Error)
             JengaLinearProgressIndeterminate()
             JengaInline {
                 JengaCircularProgress(progress = 0.7f)
@@ -1635,6 +1674,34 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         }
     },
     CatalogEntry(
+        name = "Image viewer with pages",
+        group = "Media",
+        description = "Swipe between several images, each zoomed on its own.",
+        keywords = "viewer gallery pager swipe photos pages zoom",
+        code = """
+            JengaImageViewer(
+                pageCount = 3,
+                onDismissRequest = { open = false },
+                title = { page -> "Photo ${'$'}{page + 1} of 3" },
+                closeContentDescription = "Close",
+                bottomBar = { page, goToPage -> /* thumbnail strip calling goToPage(i) */ },
+            ) { page -> JengaImage(urls[page], contentDescription = null, fit = JengaImageFit.Contain) }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        JengaButton("Open 3 photos", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaImageViewer(
+                pageCount = 3,
+                onDismissRequest = { open = false },
+                title = { page -> "Photo ${page + 1} of 3" },
+                closeContentDescription = "Close",
+            ) { page ->
+                JengaText("Photo ${page + 1}", color = JengaTheme.colors.onOverlay)
+            }
+        }
+    },
+    CatalogEntry(
         name = "Date picker",
         group = "Inputs",
         description = "A month calendar for picking one date.",
@@ -1664,8 +1731,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Date picker dialog",
         group = "Inputs",
-        description = "A date picker in a dialog with confirm and dismiss.",
-        keywords = "date calendar dialog modal",
+        description = "A date picker in a dialog; here limited to adults' birth dates, with a year grid behind the title.",
+        keywords = "date calendar dialog modal range birth year",
         code = """
             var open by remember { mutableStateOf(false) }
             JengaButton("Pick a date", { open = true }, variant = JengaButtonVariant.Outline)
@@ -1673,6 +1740,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaDatePickerDialog(
                     onDismissRequest = { open = false },
                     onConfirm = { open = false },
+                    dateRange = LocalDate(1906, 1, 1)..LocalDate(2008, 10, 28),
+                    yearPickerLabel = { "Choose year, ${'$'}{it.year}" },
                     confirmLabel = "OK",
                     dismissLabel = "Cancel",
                     monthTitle = { "${'$'}{it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${'$'}{it.year}" },
@@ -1689,6 +1758,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaDatePickerDialog(
                 onDismissRequest = { open = false },
                 onConfirm = { open = false },
+                dateRange = LocalDate(1906, 1, 1)..LocalDate(2008, 10, 28),
+                yearPickerLabel = { "Choose year, ${it.year}" },
                 confirmLabel = "OK",
                 dismissLabel = "Cancel",
                 monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
@@ -1765,5 +1836,240 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             selectedIndex = selected,
             onSelect = { selected = it },
         )
+    },
+    CatalogEntry(
+        name = "Bottom sheet that asks before closing",
+        group = "Feedback",
+        description = "A sheet that refuses a drag, scrim tap or Back until the user confirms.",
+        keywords = "sheet confirm dismiss discard unsaved signature",
+        code = """
+            var askDiscard by remember { mutableStateOf(false) }
+            var discard by remember { mutableStateOf(false) }
+            val sheetState = rememberJengaSheetState(confirmDismiss = { discard.also { if (!it) askDiscard = true } })
+            JengaBottomSheet(onDismissRequest = { open = false }, sheetState = sheetState, gesturesEnabled = false) { /* signature pad */ }
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        var askDiscard by remember { mutableStateOf(false) }
+        var discard by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
+        val sheetState = rememberJengaSheetState(
+            confirmDismiss = {
+                if (!discard) askDiscard = true
+                discard
+            },
+        )
+        JengaButton("Sign", {
+            discard = false
+            open = true
+        }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaBottomSheet(onDismissRequest = { open = false }, sheetState = sheetState, gesturesEnabled = false) {
+                JengaStack(modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.xl)) {
+                    JengaText("Customer signature", style = JengaTheme.typography.titleLarge)
+                    JengaText("Drag, Back and the scrim ask first.", color = JengaTheme.colors.textMuted)
+                }
+            }
+        }
+        if (askDiscard) {
+            JengaDialog(
+                onDismissRequest = { askDiscard = false },
+                title = "Discard the signature?",
+                confirmButton = {
+                    JengaButton("Discard", {
+                        askDiscard = false
+                        discard = true
+                        scope.launch { sheetState.hide() }
+                    })
+                },
+                dismissButton = { JengaButton("Keep", { askDiscard = false }, variant = JengaButtonVariant.Ghost) },
+            )
+        }
+    },
+    CatalogEntry(
+        name = "Snackbar host",
+        group = "Feedback",
+        description = "Shows snackbars one at a time from a host state, usually in a scaffold.",
+        keywords = "snackbar host toast message queue",
+        code = """
+            val host = rememberJengaSnackbarHostState()
+            val scope = rememberCoroutineScope()
+            JengaButton("Save", { scope.launch { host.showSnackbar("Saved offline") } })
+            JengaSnackbarHost(host)
+        """.trimIndent(),
+    ) {
+        val host = rememberJengaSnackbarHostState()
+        val scope = rememberCoroutineScope()
+        JengaStack(space = JengaTheme.spacing.sm) {
+            JengaButton("Save", { scope.launch { host.showSnackbar("Saved offline") } }, variant = JengaButtonVariant.Outline)
+            JengaSnackbarHost(host)
+        }
+    },
+    CatalogEntry(
+        name = "Timeline with your own markers",
+        group = "Data display",
+        description = "Timeline rows with any marker and any content; positions worked out from the list.",
+        keywords = "timeline marker steps numbered history log slot",
+        code = """
+            val stages = listOf("Deposit paid", "Installed", "Handover")
+            stages.forEachIndexed { index, stage ->
+                JengaTimelineItem(
+                    position = JengaTimelinePosition.of(index, stages.size),
+                    marker = { JengaTimelineMarker(JengaTheme.colors.brand) { JengaText("${'$'}{index + 1}") } },
+                ) { JengaText(stage) }
+            }
+        """.trimIndent(),
+    ) {
+        val stages = listOf("Deposit paid", "Installed", "Handover")
+        JengaStack(space = JengaTheme.spacing.none) {
+            stages.forEachIndexed { index, stage ->
+                JengaTimelineItem(
+                    position = JengaTimelinePosition.of(index, stages.size),
+                    marker = {
+                        JengaTimelineMarker(
+                            color = JengaTheme.colors.brand,
+                            style = if (index == 2) JengaTimelineMarkerStyle.Ring else JengaTimelineMarkerStyle.Filled,
+                        ) {
+                            JengaText("${index + 1}", style = JengaTheme.typography.caption)
+                        }
+                    },
+                ) {
+                    JengaText(stage)
+                }
+            }
+        }
+    },
+    CatalogEntry(
+        name = "Step indicator",
+        group = "Navigation",
+        description = "A row of steps for a multi-step flow: done, current, pending or locked.",
+        keywords = "steps stepper progress wizard flow checkout",
+        code = """
+            val steps = listOf(
+                JengaStep("Details", JengaStepState.Done),
+                JengaStep("Choices", JengaStepState.Current),
+                JengaStep("Review", JengaStepState.Pending),
+            )
+            JengaStepIndicator(steps, stepContentDescription = { index, step -> "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}" })
+        """.trimIndent(),
+    ) {
+        val steps = listOf(
+            JengaStep("Details", JengaStepState.Done),
+            JengaStep("Choices", JengaStepState.Current),
+            JengaStep("Review", JengaStepState.Pending),
+        )
+        JengaStepIndicator(steps, stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" })
+    },
+    CatalogEntry(
+        name = "Time input",
+        group = "Inputs",
+        description = "Hour and minute as scroll wheels or typed fields, with AM / PM.",
+        keywords = "time clock hour minute am pm wheel picker",
+        code = """
+            var time by remember { mutableStateOf(LocalTime(9, 30)) }
+            JengaTimeInput(time, { time = it }, hourLabel = "Hour", minuteLabel = "Minute", amLabel = "AM", pmLabel = "PM")
+            JengaTimeInput(time, { time = it }, "Hour", "Minute", "AM", "PM", style = JengaTimeInputStyle.Fields)
+        """.trimIndent(),
+    ) {
+        var time by remember { mutableStateOf(LocalTime(9, 30)) }
+        JengaStack(space = JengaTheme.spacing.lg) {
+            JengaTimeInput(time, { time = it }, hourLabel = "Hour", minuteLabel = "Minute", amLabel = "AM", pmLabel = "PM")
+            JengaTimeInput(time, { time = it }, "Hour", "Minute", "AM", "PM", style = JengaTimeInputStyle.Fields)
+        }
+    },
+    CatalogEntry(
+        name = "Time picker dialog",
+        group = "Inputs",
+        description = "A time input in a dialog with confirm and dismiss.",
+        keywords = "time dialog modal clock",
+        code = """
+            JengaTimePickerDialog(
+                onDismissRequest = { open = false },
+                onConfirm = { open = false },
+                title = "Delivery time",
+                confirmLabel = "OK",
+                dismissLabel = "Cancel",
+                initialTime = LocalTime(14, 0),
+                hourLabel = "Hour", minuteLabel = "Minute", amLabel = "AM", pmLabel = "PM",
+            )
+        """.trimIndent(),
+    ) {
+        var open by remember { mutableStateOf(false) }
+        JengaButton("Pick a time", { open = true }, variant = JengaButtonVariant.Outline)
+        if (open) {
+            JengaTimePickerDialog(
+                onDismissRequest = { open = false },
+                onConfirm = { open = false },
+                title = "Delivery time",
+                confirmLabel = "OK",
+                dismissLabel = "Cancel",
+                initialTime = LocalTime(14, 0),
+                hourLabel = "Hour",
+                minuteLabel = "Minute",
+                amLabel = "AM",
+                pmLabel = "PM",
+            )
+        }
+    },
+    CatalogEntry(
+        name = "Capture frame",
+        group = "Scanner",
+        description = "A guide over a camera preview for a face, card or page, with hold progress.",
+        keywords = "camera capture selfie id card document kyc frame oval",
+        code = """
+            Box(Modifier.fillMaxSize()) {
+                /* camera preview */
+                JengaCaptureFrame(
+                    shape = JengaCaptureShape.Rectangle(aspectRatio = 1.586f),
+                    modifier = Modifier.fillMaxSize(),
+                    ready = ready,
+                    holdProgress = progress,
+                )
+            }
+        """.trimIndent(),
+    ) {
+        JengaInline(space = JengaTheme.spacing.sm) {
+            Box(Modifier.size(width = 120.dp, height = 200.dp).background(Color(0xFF6B6F76))) {
+                JengaCaptureFrame(shape = JengaCaptureShape.Oval, modifier = Modifier.fillMaxSize(), holdProgress = 0.6f)
+            }
+            Box(Modifier.size(width = 120.dp, height = 200.dp).background(Color(0xFF6B6F76))) {
+                JengaCaptureFrame(shape = JengaCaptureShape.Rectangle(1.586f), modifier = Modifier.fillMaxSize(), ready = true)
+            }
+        }
+    },
+    CatalogEntry(
+        name = "Shutter button",
+        group = "Scanner",
+        description = "The round take-photo button for a camera screen.",
+        keywords = "camera shutter capture photo take",
+        code = """JengaShutterButton(onClick = {}, contentDescription = "Take photo")""",
+    ) {
+        Box(Modifier.background(Color.Black).padding(JengaTheme.spacing.md)) {
+            JengaShutterButton(onClick = {}, contentDescription = "Take photo")
+        }
+    },
+    CatalogEntry(
+        name = "Theme component styles",
+        group = "Layout",
+        description = "Set a component's look once in the theme; a value passed to a call still wins.",
+        keywords = "theme style components shape default override brand",
+        code = """
+            JengaTheme(
+                components = JengaComponentStyles(
+                    button = JengaButtonStyle(medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp))),
+                ),
+            ) {
+                JengaButton("Square corners", onClick = {})
+            }
+        """.trimIndent(),
+    ) {
+        JengaTheme(
+            colors = JengaTheme.colors,
+            components = JengaComponentStyles(
+                button = JengaButtonStyle(medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp))),
+            ),
+        ) {
+            JengaButton("Square corners", onClick = {})
+        }
     },
 )
