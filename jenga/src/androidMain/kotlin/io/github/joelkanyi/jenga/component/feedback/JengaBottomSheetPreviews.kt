@@ -43,8 +43,7 @@ private fun BottomSheetSurfacePreview() {
         Column(
             modifier = Modifier
                 .clip(BottomSheetDefaults.ExpandedShape)
-                .background(JengaTheme.colors.surface)
-                .overlayOutline(darkThemeHairline(), BottomSheetDefaults.ExpandedShape),
+                .background(JengaTheme.colors.surface),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             JengaDragHandle()
