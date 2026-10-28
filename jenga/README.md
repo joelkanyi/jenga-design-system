@@ -2,7 +2,7 @@
 
 A **Kotlin Multiplatform + Compose Multiplatform** design system: its own semantic token API
 and `Jenga*` components built on Compose Foundation, with Material 3 bridged *internally only*.
-Runs on Android, Desktop (JVM) and iOS. Reusable, themeable, accessible, and published to Maven
+Runs on Android, iOS, Desktop (JVM) and the Web (Wasm). Reusable, themeable, accessible, and published to Maven
 Central (stable public API, screenshot-tested, lint-enforced).
 
 > *Jenga* is Swahili for **"to build."**
@@ -47,8 +47,8 @@ Three-tier tokens → blocks → patterns:
 ```
 foundation/   primitive palette → semantic JengaColors → typography/spacing/shape/sizing/elevation/motion
 theme/        JengaTheme (CompositionLocals) + internal Material 3 bridge
-component/    blocks: text, button, card, badge, chip, textfield, scaffold, selection, avatar,
-              progress, feedback, icon, navigation, tabs, search, slider, list, divider, layout …
+component/    blocks, one package each: button, card, textfield, calendar, picker, camera,
+              feedback, timeline, stepindicator, … (all packages are described in Module.md)
 pattern/      organisms composed from blocks (TicketRow, StatCard, SectionHeader)
 ```
 
@@ -57,6 +57,8 @@ pattern/      organisms composed from blocks (TicketRow, StatCard, SectionHeader
 - **Semantic** roles (`brand`, `surface`, `textPrimary`, `success`…) are the public color contract;
   they flip for dark mode.
 - **Component** tokens are each block's `*Defaults` object (reading only semantic tokens).
+- **Component styles** (`JengaTheme(components = JengaComponentStyles(...))`) set a block's look
+  for a whole app. A value passed to a call wins, then the theme style, then the `*Defaults`.
 
 ---
 
@@ -112,9 +114,9 @@ helper that rebrands one palette. Dark mode is a semantic swap (`jengaLightColor
 | Unit + contrast/a11y tests | `./gradlew :jenga:testDebugUnitTest` |
 | Public API compatibility (BCV) | `./gradlew apiCheck` (update: `apiDump`) |
 | Screenshot tests (Roborazzi) | `./gradlew :jenga:verifyRoborazziDebug` (update: `recordRoborazziDebug`) |
-| API docs (Dokka) | `./gradlew :jenga:dokkaGenerate` |
+| API docs (Dokka) | `./gradlew :jenga:dokkaGenerateHtml` |
 
-All of the above run on CI (`.github/workflows/jenga-ci.yml`). Kotlin **explicit-API mode** is on,
+All of the above run on CI (`.github/workflows/ci.yml`). Kotlin **explicit-API mode** is on,
 so the public surface is intentional and tracked.
 
 ### Token pipeline
@@ -131,5 +133,5 @@ primitive layer and commit:
 ## Principles
 
 1. **Tokens, never hardcoded values.** 2. **Blocks are stateless & data-driven.**
-3. **Override via `Defaults`, don't fork.** 4. **Accessible by default.**
+3. **Override via `Defaults` or theme component styles, don't fork.** 4. **Accessible by default.**
 5. **Light & dark are first-class.**

@@ -139,6 +139,8 @@ android {
                 it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
                 // Every preview renders in one Robolectric JVM; the 512m default runs out.
                 it.maxHeapSize = "2g"
+                it.inputs.file(rootProject.file("README.md"))
+                it.inputs.dir(rootProject.file("catalog/src/commonMain"))
             }
         }
     }
