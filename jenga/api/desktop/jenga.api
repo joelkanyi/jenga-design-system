@@ -1663,6 +1663,12 @@ public final class io/github/joelkanyi/jenga/component/otp/JengaOtpVerificationK
 	public static final fun JengaOtpVerification-ajgufuY (Ljava/lang/String;Landroidx/compose/ui/text/AnnotatedString;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;III)V
 }
 
+public final class io/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaTimeInputKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaTimeInputKt;
+	public fun <init> ()V
+	public final fun getLambda$-340790524$jenga ()Lkotlin/jvm/functions/Function3;
+}
+
 public final class io/github/joelkanyi/jenga/component/picker/JengaDateFieldOrder : java/lang/Enum {
 	public static final field DayMonthYear Lio/github/joelkanyi/jenga/component/picker/JengaDateFieldOrder;
 	public static final field MonthDayYear Lio/github/joelkanyi/jenga/component/picker/JengaDateFieldOrder;
@@ -1680,6 +1686,22 @@ public final class io/github/joelkanyi/jenga/component/picker/JengaDateOfBirthPi
 
 public final class io/github/joelkanyi/jenga/component/picker/JengaDateOfBirthPickerKt {
 	public static final fun JengaDateOfBirthPicker-Kp3ePZc (Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Lio/github/joelkanyi/jenga/component/picker/JengaDateFieldOrder;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IFLio/github/joelkanyi/jenga/component/picker/JengaWheelPickerColors;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/picker/JengaTimeInputKt {
+	public static final fun JengaTimeInput (Lkotlinx/datetime/LocalTime;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;ZILandroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle : java/lang/Enum {
+	public static final field Fields Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;
+	public static final field Wheel Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/picker/JengaTimePickerDialogKt {
+	public static final fun JengaTimePickerDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/datetime/LocalTime;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/picker/JengaTimeInputStyle;ZILandroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/picker/JengaWheelPickerColors {

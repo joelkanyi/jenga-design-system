@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -130,51 +131,69 @@ public fun <T> JengaWheelPicker(
         )
     },
 ) {
+    WheelPicker(
+        items = items,
+        selectedIndex = selectedIndex,
+        onSelectedIndexChange = onSelectedIndexChange,
+        modifier = modifier,
+        itemLabel = itemLabel,
+        contentDescription = contentDescription,
+        visibleItemCount = visibleItemCount,
+        itemHeight = itemHeight,
+        selectionShape = selectionShape,
+        colors = colors,
+        looping = false,
+        itemContent = itemContent,
+    )
+}
+
+internal class WheelRows(private val optionCount: Int, private val looping: Boolean) {
+    val count: Int = if (looping && optionCount > 0) optionCount * LoopCopies else optionCount
+    val lastRow: Int get() = (count - 1).coerceAtLeast(0)
+    val lastOption: Int get() = (optionCount - 1).coerceAtLeast(0)
+
+    fun optionAt(row: Int): Int = if (looping && optionCount > 0) row % optionCount else row
+
+    fun rowNear(option: Int, row: Int): Int {
+        if (!looping) return option
+        var step = option - optionAt(row)
+        if (step > optionCount / 2) step -= optionCount
+        if (step < -optionCount / 2) step += optionCount
+        return row + step
+    }
+
+    fun firstRow(option: Int): Int = rowNear(option, if (looping) optionCount * (LoopCopies / 2) else 0)
+}
+
+private const val LoopCopies = 1000
+
+@Composable
+internal fun <T> WheelPicker(
+    items: List<T>,
+    selectedIndex: Int,
+    onSelectedIndexChange: (Int) -> Unit,
+    itemLabel: (T) -> String,
+    contentDescription: String?,
+    visibleItemCount: Int,
+    itemHeight: Dp,
+    selectionShape: Shape,
+    colors: JengaWheelPickerColors,
+    looping: Boolean,
+    modifier: Modifier = Modifier,
+    itemContent: @Composable (item: T, selected: Boolean) -> Unit,
+) {
     require(visibleItemCount > 0 && visibleItemCount % 2 == 1) { "visibleItemCount must be a positive odd number" }
-    val lastIndex = (items.size - 1).coerceAtLeast(0)
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = selectedIndex.coerceIn(0, lastIndex))
+    val rows = remember(items.size, looping) { WheelRows(items.size, looping) }
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = rows.firstRow(selectedIndex.coerceIn(0, rows.lastOption)))
     val scope = rememberCoroutineScope()
-    val itemHeightPx = with(LocalDensity.current) { itemHeight.toPx() }
-    val centeredIndex by remember(lastIndex, itemHeightPx) {
-        derivedStateOf {
-            val extra = if (listState.firstVisibleItemScrollOffset > itemHeightPx / 2) 1 else 0
-            (listState.firstVisibleItemIndex + extra).coerceIn(0, lastIndex)
-        }
-    }
-    val currentSelected by rememberUpdatedState(selectedIndex)
-    val currentOnChange by rememberUpdatedState(onSelectedIndexChange)
-    var settleCount by remember { mutableIntStateOf(0) }
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.isScrollInProgress }
-            .filter { !it }
-            .collect {
-                if (centeredIndex != currentSelected) currentOnChange(centeredIndex)
-                settleCount++
-            }
-    }
-    LaunchedEffect(selectedIndex, lastIndex, settleCount) {
-        val target = selectedIndex.coerceIn(0, lastIndex)
-        if (!listState.isScrollInProgress && centeredIndex != target) listState.scrollToItem(target)
-    }
-    val sidePadding = itemHeight * (visibleItemCount / 2)
-    val selectedLabel = items.getOrNull(centeredIndex)?.let(itemLabel)
-    val selectedPosition = centeredIndex.toFloat()
+    val centeredRow by rememberCenteredRow(listState, rows, itemHeight)
+    KeepWheelOnSelection(listState, rows, { centeredRow }, selectedIndex, onSelectedIndexChange)
+    val selectedLabel = items.getOrNull(rows.optionAt(centeredRow))?.let(itemLabel)
     Box(
         modifier = modifier
             .height(itemHeight * visibleItemCount)
-            .clearAndSetSemantics {
-                if (contentDescription != null) this.contentDescription = contentDescription
-                if (selectedLabel != null) stateDescription = selectedLabel
-                progressBarRangeInfo = ProgressBarRangeInfo(
-                    current = selectedPosition,
-                    range = 0f..lastIndex.toFloat(),
-                    steps = (lastIndex - 1).coerceAtLeast(0),
-                )
-                setProgress { value ->
-                    val index = value.roundToInt().coerceIn(0, lastIndex)
-                    scope.launch { listState.animateScrollToItem(index) }
-                    true
-                }
+            .wheelSemantics(contentDescription, selectedLabel, rows.optionAt(centeredRow), rows.lastOption) { option ->
+                scope.launch { listState.animateScrollToItem(rows.rowNear(option, centeredRow)) }
             },
         contentAlignment = Alignment.Center,
     ) {
@@ -185,26 +204,103 @@ public fun <T> JengaWheelPicker(
                 .clip(selectionShape)
                 .background(colors.selectedContainer),
         )
-        LazyColumn(
-            state = listState,
-            flingBehavior = rememberSnapFlingBehavior(listState),
-            contentPadding = PaddingValues(vertical = sidePadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            itemsIndexed(items) { index, item ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(itemHeight)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { scope.launch { listState.animateScrollToItem(index) } },
-                    contentAlignment = Alignment.Center,
-                ) {
-                    itemContent(item, index == centeredIndex)
-                }
+        WheelList(listState, rows, itemHeight, visibleItemCount) { row ->
+            itemContent(items[rows.optionAt(row)], row == centeredRow)
+        }
+    }
+}
+
+@Composable
+private fun WheelList(
+    listState: LazyListState,
+    rows: WheelRows,
+    itemHeight: Dp,
+    visibleItemCount: Int,
+    rowContent: @Composable (row: Int) -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+    LazyColumn(
+        state = listState,
+        flingBehavior = rememberSnapFlingBehavior(listState),
+        contentPadding = PaddingValues(vertical = itemHeight * (visibleItemCount / 2)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(rows.count) { row ->
+            WheelRow(height = itemHeight, onClick = { scope.launch { listState.animateScrollToItem(row) } }) {
+                rowContent(row)
             }
         }
+    }
+}
+
+@Composable
+private fun rememberCenteredRow(listState: LazyListState, rows: WheelRows, itemHeight: Dp): State<Int> {
+    val itemHeightPx = with(LocalDensity.current) { itemHeight.toPx() }
+    return remember(listState, rows, itemHeightPx) {
+        derivedStateOf {
+            val extra = if (listState.firstVisibleItemScrollOffset > itemHeightPx / 2) 1 else 0
+            (listState.firstVisibleItemIndex + extra).coerceIn(0, rows.lastRow)
+        }
+    }
+}
+
+@Composable
+private fun KeepWheelOnSelection(
+    listState: LazyListState,
+    rows: WheelRows,
+    centeredRow: () -> Int,
+    selectedIndex: Int,
+    onSelectedIndexChange: (Int) -> Unit,
+) {
+    val currentSelected by rememberUpdatedState(selectedIndex)
+    val currentOnChange by rememberUpdatedState(onSelectedIndexChange)
+    val currentCenteredRow by rememberUpdatedState(centeredRow)
+    var settleCount by remember { mutableIntStateOf(0) }
+    LaunchedEffect(listState, rows) {
+        snapshotFlow { listState.isScrollInProgress }
+            .filter { !it }
+            .collect {
+                val settled = rows.optionAt(currentCenteredRow())
+                if (settled != currentSelected) currentOnChange(settled)
+                settleCount++
+            }
+    }
+    LaunchedEffect(selectedIndex, rows, settleCount) {
+        val target = selectedIndex.coerceIn(0, rows.lastOption)
+        val row = currentCenteredRow()
+        if (!listState.isScrollInProgress && rows.optionAt(row) != target) listState.scrollToItem(rows.rowNear(target, row))
+    }
+}
+
+private fun Modifier.wheelSemantics(
+    contentDescription: String?,
+    selectedLabel: String?,
+    selectedOption: Int,
+    lastOption: Int,
+    onAdjust: (Int) -> Unit,
+): Modifier = clearAndSetSemantics {
+    if (contentDescription != null) this.contentDescription = contentDescription
+    if (selectedLabel != null) stateDescription = selectedLabel
+    progressBarRangeInfo = ProgressBarRangeInfo(
+        current = selectedOption.toFloat(),
+        range = 0f..lastOption.toFloat(),
+        steps = (lastOption - 1).coerceAtLeast(0),
+    )
+    setProgress { value ->
+        onAdjust(value.roundToInt().coerceIn(0, lastOption))
+        true
+    }
+}
+
+@Composable
+private fun WheelRow(height: Dp, onClick: () -> Unit, content: @Composable () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        content()
     }
 }

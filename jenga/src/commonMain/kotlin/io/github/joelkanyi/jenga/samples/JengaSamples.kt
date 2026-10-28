@@ -79,6 +79,8 @@ import io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
 import io.github.joelkanyi.jenga.component.otp.JengaOtpVerification
 import io.github.joelkanyi.jenga.component.otp.rememberJengaCountdown
 import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
+import io.github.joelkanyi.jenga.component.picker.JengaTimeInput
+import io.github.joelkanyi.jenga.component.picker.JengaTimePickerDialog
 import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
@@ -128,6 +130,7 @@ import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
 import kotlin.time.Duration.Companion.minutes
@@ -869,4 +872,36 @@ internal fun JengaStepIndicatorSample() {
         steps = steps,
         stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
     )
+}
+
+@Composable
+internal fun JengaTimeInputSample() {
+    var time by remember { mutableStateOf(LocalTime(9, 30)) }
+    JengaTimeInput(
+        time = time,
+        onTimeChange = { time = it },
+        hourLabel = "Hour",
+        minuteLabel = "Minute",
+        amLabel = "AM",
+        pmLabel = "PM",
+    )
+}
+
+@Composable
+internal fun JengaTimePickerDialogSample() {
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaTimePickerDialog(
+            onDismissRequest = { open = false },
+            onConfirm = { open = false },
+            title = "Delivery time",
+            confirmLabel = "OK",
+            dismissLabel = "Cancel",
+            initialTime = LocalTime(14, 0),
+            hourLabel = "Hour",
+            minuteLabel = "Minute",
+            amLabel = "AM",
+            pmLabel = "PM",
+        )
+    }
 }
