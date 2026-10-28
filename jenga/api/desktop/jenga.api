@@ -724,7 +724,7 @@ public final class io/github/joelkanyi/jenga/component/fab/JengaFabStyle {
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaBottomSheetKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaBottomSheetKt;
 	public fun <init> ()V
-	public final fun getLambda$-1482962231$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1548408595$jenga ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetKt {
@@ -735,8 +735,10 @@ public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingle
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaBottomSheetKt {
 	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun rememberJengaSheetState (ZLandroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
+	public static final synthetic fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBottomSheet (Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final synthetic fun rememberJengaSheetState (ZLandroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
+	public static final fun rememberJengaSheetState (ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogColors {

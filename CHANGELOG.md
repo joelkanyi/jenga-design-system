@@ -1,5 +1,11 @@
 # Change Log
 
+## Unreleased
+
+ * New: `rememberJengaSheetState` takes `confirmDismiss`, called before the sheet closes from a drag, a scrim tap, Back or `hide()`; returning false keeps it open.
+ * New: `JengaBottomSheet` (state overload) takes `gesturesEnabled` to turn off dragging the sheet.
+ * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
+
 ## Version 0.8.3
 
 _2026-10-26_
