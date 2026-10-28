@@ -1467,6 +1467,7 @@ public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroKt {
 public final class io/github/joelkanyi/jenga/component/menu/JengaDropdownMenuDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/menu/JengaDropdownMenuDefaults;
+	public final fun getBorder (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/BorderStroke;
 	public final fun getDividerPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getItemContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getItemMinHeight-D9Ej5fM ()F

@@ -125,6 +125,14 @@ public object JengaDropdownMenuDefaults {
     /** Default menu width; [Dp.Unspecified] sizes the menu to its items. */
     public val Width: Dp = Dp.Unspecified
 
+    /**
+     * Default menu outline: a hairline in the border color in dark themes, where a
+     * menu on a dark surface has no visible edge, and none in light themes, where the
+     * shadow shows it.
+     */
+    public val border: BorderStroke?
+        @Composable get() = if (JengaTheme.colors.isLight) null else BorderStroke(1.dp, JengaTheme.colors.border)
+
     /** Default menu shadow elevation. */
     public val ShadowElevation: Dp = MenuDefaults.ShadowElevation
 
@@ -170,7 +178,8 @@ public object JengaDropdownMenuDefaults {
  * @param modifier the [Modifier] for the menu surface.
  * @param offset offset from the anchor.
  * @param shape the menu shape.
- * @param border optional outline around the menu; defaults to the theme's border, else none.
+ * @param border outline around the menu; defaults to the theme's border, else
+ *   [JengaDropdownMenuDefaults.border] (a hairline in dark themes only). Pass null for none.
  * @param shadowElevation the menu shadow elevation; defaults to the theme's value, else
  *   [JengaDropdownMenuDefaults.ShadowElevation].
  * @param width the menu width; defaults to the theme's value, else [JengaDropdownMenuDefaults.Width].
@@ -183,7 +192,7 @@ public fun JengaDropdownMenu(
     modifier: Modifier = Modifier,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
     shape: Shape = JengaDropdownMenuDefaults.shape,
-    border: BorderStroke? = JengaTheme.components.dropdownMenu?.border,
+    border: BorderStroke? = JengaTheme.components.dropdownMenu?.border ?: JengaDropdownMenuDefaults.border,
     shadowElevation: Dp = JengaTheme.components.dropdownMenu?.shadowElevation ?: JengaDropdownMenuDefaults.ShadowElevation,
     width: Dp = JengaTheme.components.dropdownMenu?.width ?: JengaDropdownMenuDefaults.Width,
     content: @Composable ColumnScope.() -> Unit,

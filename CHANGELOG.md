@@ -10,6 +10,7 @@
  * New: `JengaTimeInput` and `JengaTimePickerDialog` for entering a time with scroll wheels (hour and minute loop) or typed fields, in 12- or 24-hour mode.
  * New: `JengaCaptureFrame`, a capture guide over a camera preview (oval or rectangle at an aspect ratio) with a ready color and hold progress, and `JengaShutterButton`.
  * New: `JengaImageViewer` overload with pages: swipe between images, each zoomed on its own, with a bottom bar that can move to any page.
+ * New: `JengaDropdownMenu` draws a 1dp outline in dark themes by default (`JengaDropdownMenuDefaults.border`), so the menu's edge shows on dark screens. Pass `border = null` for none.
  * Fix: a ring `JengaTimelineMarker` now gives its content the ring color by default, so a number inside it reads on light backgrounds.
  * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
 

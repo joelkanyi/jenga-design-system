@@ -3202,6 +3202,8 @@ final object io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults 
         final fun <get-ShadowElevation>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.ShadowElevation.<get-ShadowElevation>|<get-ShadowElevation>(){}[0]
     final val Width // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.Width|{}Width[0]
         final fun <get-Width>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.Width.<get-Width>|<get-Width>(){}[0]
+    final val border // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.border|{}border[0]
+        final fun <get-border>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.foundation/BorderStroke? // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.border.<get-border>|<get-border>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val dividerPadding // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.dividerPadding|{}dividerPadding[0]
         final fun <get-dividerPadding>(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.foundation.layout/PaddingValues // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.dividerPadding.<get-dividerPadding>|<get-dividerPadding>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val itemContentPadding // io.github.joelkanyi.jenga.component.menu/JengaDropdownMenuDefaults.itemContentPadding|{}itemContentPadding[0]
