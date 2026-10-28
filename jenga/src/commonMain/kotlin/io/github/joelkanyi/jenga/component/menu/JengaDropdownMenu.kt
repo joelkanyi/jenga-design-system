@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
+import io.github.joelkanyi.jenga.component.feedback.darkThemeHairline
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -131,7 +132,7 @@ public object JengaDropdownMenuDefaults {
      * shadow shows it.
      */
     public val border: BorderStroke?
-        @Composable get() = if (JengaTheme.colors.isLight) null else BorderStroke(1.dp, JengaTheme.colors.border)
+        @Composable get() = darkThemeHairline()
 
     /** Default menu shadow elevation. */
     public val ShadowElevation: Dp = MenuDefaults.ShadowElevation

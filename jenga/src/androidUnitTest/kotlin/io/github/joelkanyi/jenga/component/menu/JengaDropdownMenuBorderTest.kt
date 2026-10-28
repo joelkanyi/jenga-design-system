@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.feedback.JengaDialogDefaults
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -33,5 +34,22 @@ class JengaDropdownMenuBorderTest {
         compose.waitForIdle()
         assertEquals(BorderStroke(1.dp, darkBorderColor), dark)
         assertNull(light)
+    }
+
+    @Test
+    fun dialogsShareTheDarkThemeHairline() {
+        var menu: BorderStroke? = null
+        var dialog: BorderStroke? = null
+        var lightDialog: BorderStroke? = BorderStroke(9.dp, Color.Red)
+        compose.setContent {
+            JengaTheme(darkTheme = true) {
+                menu = JengaDropdownMenuDefaults.border
+                dialog = JengaDialogDefaults.border
+            }
+            JengaTheme(darkTheme = false) { lightDialog = JengaDialogDefaults.border }
+        }
+        compose.waitForIdle()
+        assertEquals(menu, dialog)
+        assertNull(lightDialog)
     }
 }

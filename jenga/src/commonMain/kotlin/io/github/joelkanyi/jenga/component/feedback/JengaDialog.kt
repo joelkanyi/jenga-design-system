@@ -1,6 +1,8 @@
 package io.github.joelkanyi.jenga.component.feedback
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -71,6 +73,13 @@ public class JengaDialogStyle(
 
 /** Defaults for [JengaDialog]. Each one follows the theme's [JengaDialogStyle]. */
 public object JengaDialogDefaults {
+    /**
+     * Default dialog outline: a hairline in the border color in dark themes, where a
+     * dialog on a dark scrim has no visible edge, and none in light themes.
+     */
+    public val border: BorderStroke?
+        @Composable get() = darkThemeHairline()
+
     /** Default dialog shape. */
     public val shape: Shape
         @Composable get() = JengaTheme.components.dialog?.shape ?: JengaTheme.shapes.card
@@ -118,6 +127,8 @@ public object JengaDialogDefaults {
  * @param textStyle the [text] text style.
  * @param actionSpacing gap between the actions.
  * @param colors the color set; defaults to [JengaDialogDefaults.colors].
+ * @param border outline around the dialog; defaults to [JengaDialogDefaults.border]
+ *   (a hairline in dark themes only). Pass null for none.
  */
 @Composable
 public fun JengaDialog(
@@ -133,11 +144,12 @@ public fun JengaDialog(
     textStyle: TextStyle = JengaDialogDefaults.textStyle,
     actionSpacing: Dp = JengaDialogDefaults.actionSpacing,
     colors: JengaDialogColors = JengaDialogDefaults.colors(),
+    border: BorderStroke? = JengaDialogDefaults.border,
 ) {
     Dialog(onDismissRequest = onDismissRequest) {
         JengaDialogSurface(
             confirmButton = confirmButton,
-            modifier = modifier,
+            modifier = modifier.dialogOutline(border, shape),
             title = title,
             text = text,
             dismissButton = dismissButton,
@@ -149,6 +161,39 @@ public fun JengaDialog(
             colors = colors,
         )
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    text: String? = null,
+    dismissButton: (@Composable () -> Unit)? = null,
+    shape: Shape = JengaDialogDefaults.shape,
+    contentPadding: PaddingValues = JengaDialogDefaults.contentPadding,
+    titleStyle: TextStyle = JengaDialogDefaults.titleStyle,
+    textStyle: TextStyle = JengaDialogDefaults.textStyle,
+    actionSpacing: Dp = JengaDialogDefaults.actionSpacing,
+    colors: JengaDialogColors = JengaDialogDefaults.colors(),
+) {
+    JengaDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = confirmButton,
+        modifier = modifier,
+        title = title,
+        text = text,
+        dismissButton = dismissButton,
+        shape = shape,
+        contentPadding = contentPadding,
+        titleStyle = titleStyle,
+        textStyle = textStyle,
+        actionSpacing = actionSpacing,
+        colors = colors,
+        border = JengaDialogDefaults.border,
+    )
 }
 
 @Composable
@@ -192,3 +237,5 @@ internal fun JengaDialogSurface(
         }
     }
 }
+
+internal fun Modifier.dialogOutline(border: BorderStroke?, shape: Shape): Modifier = if (border == null) this else border(border, shape)

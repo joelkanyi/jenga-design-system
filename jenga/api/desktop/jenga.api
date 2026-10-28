@@ -822,6 +822,7 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogDefau
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/JengaDialogDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;
 	public final fun getActionSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getBorder (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/BorderStroke;
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
@@ -829,7 +830,8 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogDefau
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogKt {
-	public static final fun JengaDialog-gKLzdoI (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaDialog-ajgufuY (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaDialog-gKLzdoI (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogStyle {
