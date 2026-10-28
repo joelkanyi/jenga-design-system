@@ -1,6 +1,8 @@
 # Change Log
 
-## Unreleased
+## Version 0.8.4
+
+_2026-10-28_
 
  * New: `rememberJengaSheetState` takes `confirmDismiss`, called before the sheet closes from a drag, a scrim tap, Back or `hide()`; returning false keeps it open. With it set, Back skips the system shrink animation so a refused close leaves the sheet in place.
  * New: `JengaBottomSheet` (state overload) takes `gesturesEnabled` to turn off dragging the sheet.
@@ -15,6 +17,7 @@
  * New: in dark themes, `JengaSideSheet` and the elevated `JengaCard` draw the same 1dp outline, since shadows and surface edges don't show on dark backgrounds.
  * Fix: a ring `JengaTimelineMarker` now gives its content the ring color by default, so a number inside it reads on light backgrounds.
  * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
+ * Change: `JengaImageViewer` only takes one-finger drags while zoomed in, so a pager or list around it can scroll; pinch and double tap are unchanged.
 
 ## Version 0.8.3
 
