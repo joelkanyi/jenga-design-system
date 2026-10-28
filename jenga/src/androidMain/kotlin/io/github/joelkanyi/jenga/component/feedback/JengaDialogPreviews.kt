@@ -36,7 +36,7 @@ private fun DialogShowcase() {
         // Render the dialog surface inline (the Dialog window itself can't be
         // captured in a static screenshot).
         JengaDialogSurface(
-            modifier = Modifier.dialogOutline(JengaDialogDefaults.border, JengaDialogDefaults.shape),
+            modifier = Modifier.overlayOutline(JengaDialogDefaults.border, JengaDialogDefaults.shape),
             title = "Reset device?",
             text = "This clears the cached gate session on this device. You can sign in again anytime.",
             confirmButton = {

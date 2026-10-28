@@ -12,6 +12,7 @@
  * New: `JengaImageViewer` overload with pages: swipe between images, each zoomed on its own, with a bottom bar that can move to any page.
  * New: `JengaDropdownMenu` draws a 1dp outline in dark themes by default (`JengaDropdownMenuDefaults.border`), so the menu's edge shows on dark screens. Pass `border = null` for none.
  * New: `JengaDialog` (and the date and time picker dialogs) draws the same dark-theme outline (`JengaDialogDefaults.border`); `JengaDialog` takes `border` to change or remove it.
+ * New: in dark themes, `JengaBottomSheet` (and `JengaListSheet`), `JengaSideSheet` and the elevated `JengaCard` draw the same 1dp outline, since shadows and surface edges don't show on dark backgrounds.
  * Fix: a ring `JengaTimelineMarker` now gives its content the ring color by default, so a number inside it reads on light backgrounds.
  * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
 

@@ -149,7 +149,7 @@ public fun JengaDialog(
     Dialog(onDismissRequest = onDismissRequest) {
         JengaDialogSurface(
             confirmButton = confirmButton,
-            modifier = modifier.dialogOutline(border, shape),
+            modifier = modifier.overlayOutline(border, shape),
             title = title,
             text = text,
             dismissButton = dismissButton,
@@ -238,4 +238,4 @@ internal fun JengaDialogSurface(
     }
 }
 
-internal fun Modifier.dialogOutline(border: BorderStroke?, shape: Shape): Modifier = if (border == null) this else border(border, shape)
+internal fun Modifier.overlayOutline(border: BorderStroke?, shape: Shape): Modifier = if (border == null) this else border(border, shape)

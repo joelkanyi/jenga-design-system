@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.feedback
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -191,40 +192,19 @@ private fun JengaSideSheetImpl(
     content: LazyListScope.() -> Unit,
 ) {
     val visible = remember { MutableTransitionState(false).apply { targetState = true } }
-    val motion = JengaTheme.motion
-    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     JengaFullWindowPopup(onDismissRequest = onDismissRequest) {
         Box(modifier = modifier.fillMaxSize()) {
-            AnimatedVisibility(
-                visibleState = visible,
-                enter = fadeIn(tween(motion.durationMedium)),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(JengaTheme.colors.scrim)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = onDismissRequest,
-                        ),
-                )
-            }
+            SideSheetScrim(visible = visible, onClick = onDismissRequest)
             AnimatedVisibility(
                 visibleState = visible,
                 modifier = Modifier.align(Alignment.CenterEnd),
-                enter = slideInHorizontally(tween(motion.durationSlowest, easing = motion.emphasized)) { if (isRtl) -it else it },
+                enter = slideInFromEnd(),
             ) {
                 JengaListSheetLayout(
                     title = title,
                     subtitle = subtitle,
                     footer = footer,
-                    modifier = Modifier
-                        .width(width)
-                        .fillMaxHeight()
-                        .clip(shape)
-                        .background(JengaTheme.colors.surface)
-                        .windowInsetsPadding(WindowInsets.safeDrawing),
+                    modifier = Modifier.sideSheetPanel(width, shape),
                     headerAction = headerAction,
                     titleStyle = titleStyle,
                     subtitleStyle = subtitleStyle,
@@ -238,4 +218,31 @@ private fun JengaSideSheetImpl(
             }
         }
     }
+}
+
+@Composable
+private fun SideSheetScrim(visible: MutableTransitionState<Boolean>, onClick: () -> Unit) {
+    AnimatedVisibility(visibleState = visible, enter = fadeIn(tween(JengaTheme.motion.durationMedium))) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(JengaTheme.colors.scrim)
+                .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = onClick),
+        )
+    }
+}
+
+@Composable
+private fun Modifier.sideSheetPanel(width: Dp, shape: Shape): Modifier = width(width)
+    .fillMaxHeight()
+    .clip(shape)
+    .background(JengaTheme.colors.surface)
+    .overlayOutline(darkThemeHairline(), shape)
+    .windowInsetsPadding(WindowInsets.safeDrawing)
+
+@Composable
+private fun slideInFromEnd(): EnterTransition {
+    val motion = JengaTheme.motion
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    return slideInHorizontally(tween(motion.durationSlowest, easing = motion.emphasized)) { if (isRtl) -it else it }
 }
