@@ -2,7 +2,7 @@
 
 ## Unreleased
 
- * New: `rememberJengaSheetState` takes `confirmDismiss`, called before the sheet closes from a drag, a scrim tap, Back or `hide()`; returning false keeps it open.
+ * New: `rememberJengaSheetState` takes `confirmDismiss`, called before the sheet closes from a drag, a scrim tap, Back or `hide()`; returning false keeps it open. With it set, Back skips the system shrink animation so a refused close leaves the sheet in place.
  * New: `JengaBottomSheet` (state overload) takes `gesturesEnabled` to turn off dragging the sheet.
  * New: `JengaDatePicker` and `JengaDatePickerDialog` take `dateRange`; days outside it are disabled and the month buttons stop at its ends.
  * New: `JengaDatePicker` and `JengaDatePickerDialog` take `yearPickerLabel`; when set, tapping the month title opens a grid of years.

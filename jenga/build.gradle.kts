@@ -62,6 +62,7 @@ kotlin {
             api(compose.ui)
             @Suppress("DEPRECATION")
             api(compose.uiUtil)
+            implementation(libs.compose.ui.backhandler)
             // LocalDate, YearMonth, DayOfWeek and Month appear in the calendar and
             // date-picker signatures.
             api(libs.kotlinx.datetime)
