@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.menu
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -38,8 +39,7 @@ private fun MenuSurfacePreview() {
     ) {
         Column(
             modifier = Modifier
-                .clip(JengaTheme.shapes.card)
-                .background(JengaTheme.colors.surface),
+                .menuSurface(),
         ) {
             JengaDropdownMenuItem(
                 text = "Re-enter",
@@ -61,7 +61,7 @@ private fun MenuSurfacePreview() {
 internal fun JengaDropdownMenuStatesPreview() {
     JengaTheme {
         Column(modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg)) {
-            Column(modifier = Modifier.clip(JengaTheme.shapes.card).background(JengaTheme.colors.surface)) {
+            Column(modifier = Modifier.menuSurface()) {
                 JengaDropdownMenuItem(
                     text = "Edit",
                     onClick = {},
@@ -84,4 +84,12 @@ internal fun JengaDropdownMenuStatesPreview() {
             }
         }
     }
+}
+
+@Composable
+private fun Modifier.menuSurface(): Modifier {
+    val shape = JengaDropdownMenuDefaults.shape
+    val border = JengaDropdownMenuDefaults.border
+    val outlined = if (border == null) this else this.border(border, shape)
+    return outlined.clip(shape).background(JengaTheme.colors.surface)
 }

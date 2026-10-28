@@ -1,7 +1,7 @@
 # Jenga
 
 A Kotlin Multiplatform and Compose Multiplatform design system. Brandable design tokens and
-ready-made `Jenga*` blocks that render the same on Android, iOS and Desktop, from one shared
+ready-made `Jenga*` blocks that render the same on Android, iOS, Desktop and the Web (Wasm), from one shared
 `commonMain` codebase.
 
 > *Jenga* is Swahili for "to build". You build screens out of Jenga blocks, not out of raw
@@ -10,7 +10,7 @@ ready-made `Jenga*` blocks that render the same on Android, iOS and Desktop, fro
 [![CI](https://github.com/joelkanyi/jenga/actions/workflows/ci.yml/badge.svg)](https://github.com/joelkanyi/jenga/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.joelkanyi/jenga.svg)](https://central.sonatype.com/artifact/io.github.joelkanyi/jenga)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20Desktop-brightgreen)
+![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20Desktop%20%7C%20Web-brightgreen)
 
 ```kotlin
 JengaTheme {                                  // light and dark follow the system
@@ -31,13 +31,16 @@ JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
 
 ## Platforms
 
-| Android | iOS | Desktop (JVM) |
-|---------|-----|---------------|
-| `minSdk 23` | `iosArm64`, `iosSimulatorArm64` | yes |
+| Android | iOS | Desktop (JVM) | Web |
+|---------|-----|---------------|-----|
+| `minSdk 23` | `iosArm64`, `iosSimulatorArm64` | yes | `wasmJs` |
 
 The whole public API lives in `commonMain`, so every platform shares the same components and
 tokens. The Intel iOS simulator slice (`iosX64`) is not shipped, because Compose Multiplatform
 no longer publishes it.
+
+`JengaImage` loads images from a URL on Android only (through Coil 3, using your app's image
+loader). On iOS, Desktop and Web it shows its placeholder for now.
 
 ## Install
 
@@ -91,17 +94,17 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 |------|--------|
 | Text | `JengaText` |
 | Buttons and links | `JengaButton`, `JengaIconButton`, `JengaFab`, `JengaExtendedFab`, `JengaLink` |
-| Inputs | `JengaTextField`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker`, `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` |
+| Inputs | `JengaTextField`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker`, `JengaTimeInput`, `JengaTimePickerDialog`, `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` |
 | Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
 | Containers | `JengaCard`, `JengaCardFooter`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
 | Status and tags | `JengaBadge`, `JengaChip`, `JengaStatusPill`, `JengaBanner`, `JengaInfoBar`, `JengaVerdictBar` |
 | Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaBottomBar`, `JengaNavigationBar` + `JengaNavigationBarItem`, `JengaNavigationRailItem`, `JengaTabs` |
-| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar` + `JengaSnackbarHost`, `JengaTooltip`, `JengaDropdownMenu` + `JengaDropdownMenuItem` |
+| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar` + `JengaSnackbarHost`, `JengaTooltip`, `JengaDropdownMenu` + `JengaDropdownMenuItem` + `JengaDropdownMenuDivider` |
 | Refresh | `JengaPullToRefresh` |
 | Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaImage`, `JengaMediaHero`, `JengaImageShelf` + `JengaShelfCard`, `JengaThumbnailStrip`, `JengaImageViewer` |
 | Charts | `JengaBarChart` |
-| Progress | `JengaLinearProgress`, `JengaLinearProgressIndeterminate`, `JengaLabelledProgress`, `JengaTimelineItem`, `JengaCircularProgress`, `JengaCircularProgressIndeterminate`, `JengaDotStrip`, shimmer |
-| Scanner | `JengaScannerViewfinder`, `JengaScanFeedback` |
+| Progress | `JengaLinearProgress`, `JengaLinearProgressIndeterminate`, `JengaLabelledProgress`, `JengaTimelineItem` + `JengaTimelineMarker`, `JengaStepIndicator`, `JengaCircularProgress`, `JengaCircularProgressIndeterminate`, `JengaDotStrip`, shimmer |
+| Scanner and camera | `JengaScannerViewfinder`, `JengaScanFeedback`, `JengaCaptureFrame`, `JengaShutterButton` |
 | Empty and error | `JengaEmptyState`, `JengaErrorState` |
 | Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection`, `JengaFormLayout` |
 | Patterns | `JengaSectionHeader`, `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |
@@ -150,6 +153,18 @@ Fonts and icons are yours. Jenga does not ship third-party fonts; you supply a `
 
 ```kotlin
 JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron)) { App() }
+```
+
+Components can be styled once for the whole app. A value passed to a call still wins, and
+anything you leave unset keeps Jenga's default:
+
+```kotlin
+JengaTheme(
+    components = JengaComponentStyles(
+        button = JengaButtonStyle(medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp))),
+        card = JengaCardStyle(shape = RoundedCornerShape(8.dp)),
+    ),
+) { App() }
 ```
 
 For full control, override any single token off the derived theme, or hand-author both schemes

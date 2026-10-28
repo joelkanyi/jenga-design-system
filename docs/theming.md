@@ -126,6 +126,34 @@ JengaTheme(
 `border`, the status roles, and so on). Overriding via `copy(...)` keeps every role
 you don't name.
 
+## Component styles
+
+Tokens set the palette, type and shapes. To change how a component looks everywhere,
+for example a squarer button or a tighter card, set its style once in the theme
+instead of passing the same arguments on every call:
+
+```kotlin
+JengaTheme(
+    brand = jengaBrand(seed = Color(0xFF6D28D9)),
+    components = JengaComponentStyles(
+        button = JengaButtonStyle(
+            medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp), minHeight = 44.dp),
+        ),
+        card = JengaCardStyle(contentPadding = PaddingValues(12.dp)),
+    ),
+) { App() }
+```
+
+The order is always: a value passed to a call wins, then the theme style, then
+Jenga's default. Every field is optional, so an unset field keeps the default.
+
+Components with a style: button, icon button, floating action button, link, text
+field, search field, search trigger, list item, selection list item, key value row,
+card, card footer, chip, segmented control, stepper, dialog, snackbar, list sheet,
+dropdown menu, top app bar, tabs, navigation rail item, status pill, info bar,
+avatar, icon tile, thumbnail strip, empty and error states, linear and circular
+progress.
+
 ## Reading tokens
 
 Inside a theme, read tokens off `JengaTheme.*`, never inline a raw value:

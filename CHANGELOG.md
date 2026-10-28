@@ -1,5 +1,24 @@
 # Change Log
 
+## Version 0.8.4
+
+_2026-10-28_
+
+ * New: `rememberJengaSheetState` takes `confirmDismiss`, called before the sheet closes from a drag, a scrim tap, Back or `hide()`; returning false keeps it open. With it set, Back skips the system shrink animation so a refused close leaves the sheet in place.
+ * New: `JengaBottomSheet` (state overload) takes `gesturesEnabled` to turn off dragging the sheet.
+ * New: `JengaDatePicker` and `JengaDatePickerDialog` take `dateRange`; days outside it are disabled and the month buttons stop at its ends.
+ * New: `JengaDatePicker` and `JengaDatePickerDialog` take `yearPickerLabel`; when set, tapping the month title opens a grid of years.
+ * New: `JengaStepIndicator`, a horizontal row of steps (done, current, pending, locked) joined by lines, with `JengaStep`, `JengaStepState` and `JengaStepIndicatorColors`.
+ * New: `JengaTimeInput` and `JengaTimePickerDialog` for entering a time with scroll wheels (hour and minute loop) or typed fields, in 12- or 24-hour mode.
+ * New: `JengaCaptureFrame`, a capture guide over a camera preview (oval or rectangle at an aspect ratio) with a ready color and hold progress, and `JengaShutterButton`.
+ * New: `JengaImageViewer` overload with pages: swipe between images, each zoomed on its own, with a bottom bar that can move to any page.
+ * New: `JengaDropdownMenu` draws a 1dp outline in dark themes by default (`JengaDropdownMenuDefaults.border`), so the menu's edge shows on dark screens. Pass `border = null` for none.
+ * New: `JengaDialog` (and the date and time picker dialogs) draws the same dark-theme outline (`JengaDialogDefaults.border`); `JengaDialog` takes `border` to change or remove it.
+ * New: in dark themes, `JengaSideSheet` and the elevated `JengaCard` draw the same 1dp outline, since shadows and surface edges don't show on dark backgrounds.
+ * Fix: a ring `JengaTimelineMarker` now gives its content the ring color by default, so a number inside it reads on light backgrounds.
+ * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
+ * Change: `JengaImageViewer` only takes one-finger drags while zoomed in, so a pager or list around it can scroll; pinch and double tap are unchanged.
+
 ## Version 0.8.3
 
 _2026-10-26_

@@ -4,6 +4,7 @@ package io.github.joelkanyi.jenga.samples
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -32,6 +33,9 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
+import io.github.joelkanyi.jenga.component.camera.JengaShutterButton
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
@@ -79,6 +83,8 @@ import io.github.joelkanyi.jenga.component.otp.JengaOtpResendDefaults
 import io.github.joelkanyi.jenga.component.otp.JengaOtpVerification
 import io.github.joelkanyi.jenga.component.otp.rememberJengaCountdown
 import io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker
+import io.github.joelkanyi.jenga.component.picker.JengaTimeInput
+import io.github.joelkanyi.jenga.component.picker.JengaTimePickerDialog
 import io.github.joelkanyi.jenga.component.picker.JengaWheelPicker
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
@@ -106,6 +112,9 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
@@ -125,6 +134,7 @@ import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
 import kotlin.time.Duration.Companion.minutes
@@ -853,4 +863,80 @@ internal fun JengaOtpVerificationSample() {
             )
         },
     )
+}
+
+@Composable
+internal fun JengaStepIndicatorSample() {
+    val steps = listOf(
+        JengaStep("Details", JengaStepState.Done),
+        JengaStep("Choices", JengaStepState.Current),
+        JengaStep("Review", JengaStepState.Pending),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+    )
+}
+
+@Composable
+internal fun JengaTimeInputSample() {
+    var time by remember { mutableStateOf(LocalTime(9, 30)) }
+    JengaTimeInput(
+        time = time,
+        onTimeChange = { time = it },
+        hourLabel = "Hour",
+        minuteLabel = "Minute",
+        amLabel = "AM",
+        pmLabel = "PM",
+    )
+}
+
+@Composable
+internal fun JengaTimePickerDialogSample() {
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaTimePickerDialog(
+            onDismissRequest = { open = false },
+            onConfirm = { open = false },
+            title = "Delivery time",
+            confirmLabel = "OK",
+            dismissLabel = "Cancel",
+            initialTime = LocalTime(14, 0),
+            hourLabel = "Hour",
+            minuteLabel = "Minute",
+            amLabel = "AM",
+            pmLabel = "PM",
+        )
+    }
+}
+
+@Composable
+internal fun JengaCaptureFrameSample() {
+    JengaCaptureFrame(
+        shape = JengaCaptureShape.Rectangle(aspectRatio = 1.586f),
+        modifier = Modifier.fillMaxSize(),
+        ready = false,
+        holdProgress = 0.4f,
+    )
+}
+
+@Composable
+internal fun JengaShutterButtonSample() {
+    JengaShutterButton(onClick = {}, contentDescription = "Take photo")
+}
+
+@Composable
+internal fun JengaImageViewerPagesSample() {
+    val urls = listOf("https://example.com/1.jpg", "https://example.com/2.jpg")
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaImageViewer(
+            pageCount = urls.size,
+            onDismissRequest = { open = false },
+            title = { page -> "Photo ${page + 1} of ${urls.size}" },
+            closeContentDescription = "Close",
+        ) { page ->
+            JengaImage(url = urls[page], contentDescription = null, fit = JengaImageFit.Contain)
+        }
+    }
 }

@@ -47,7 +47,8 @@ private fun JengaSideSheetShowcase() {
                 .width(360.dp)
                 .fillMaxHeight()
                 .clip(JengaSideSheetDefaults.shape)
-                .background(JengaTheme.colors.surface),
+                .background(JengaTheme.colors.surface)
+                .overlayOutline(darkThemeHairline(), JengaSideSheetDefaults.shape),
             headerPadding = JengaSideSheetDefaults.headerPadding,
             fillHeight = true,
         ) {

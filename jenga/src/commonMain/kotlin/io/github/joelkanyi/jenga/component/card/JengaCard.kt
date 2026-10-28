@@ -126,7 +126,7 @@ public object JengaCardDefaults {
     public fun colors(variant: JengaCardVariant, selected: Boolean = false): JengaCardColors {
         val c = JengaTheme.colors
         val colors = JengaTheme.components.card?.colors(variant) ?: when (variant) {
-            JengaCardVariant.Elevated -> JengaCardColors(c.surface, Color.Transparent)
+            JengaCardVariant.Elevated -> JengaCardColors(c.surface, if (c.isLight) Color.Transparent else c.border)
             JengaCardVariant.Outlined -> JengaCardColors(c.surface, c.border)
             JengaCardVariant.Filled -> JengaCardColors(c.surfaceVariant, Color.Transparent)
         }

@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.card
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
@@ -56,5 +57,22 @@ class JengaCardSelectedTest {
                 assertEquals(JengaTheme.colors.error, JengaProgressDefaults.colors(JengaProgressTone.Error).indicator)
             }
         }
+    }
+
+    @Test
+    fun elevatedCardGetsAnOutlineOnlyInDarkThemes() {
+        var dark = JengaCardColors(Color.Unspecified, Color.Unspecified)
+        var light = JengaCardColors(Color.Unspecified, Color.Unspecified)
+        var darkBorder = Color.Unspecified
+        compose.setContent {
+            JengaTheme(darkTheme = true) {
+                dark = JengaCardDefaults.colors(JengaCardVariant.Elevated)
+                darkBorder = JengaTheme.colors.border
+            }
+            JengaTheme(darkTheme = false) { light = JengaCardDefaults.colors(JengaCardVariant.Elevated) }
+        }
+        compose.waitForIdle()
+        assertEquals(darkBorder, dark.border)
+        assertEquals(Color.Transparent, light.border)
     }
 }

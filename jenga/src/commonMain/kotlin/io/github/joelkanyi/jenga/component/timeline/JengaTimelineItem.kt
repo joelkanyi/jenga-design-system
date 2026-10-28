@@ -297,7 +297,9 @@ public fun JengaTimelineItem(
  * @param style filled or ring; see [JengaTimelineMarkerStyle].
  * @param size the marker diameter.
  * @param ringWidth the outline width of a ring marker.
- * @param contentColor the color provided to [content].
+ * @param contentColor the color provided to [content]; the ring color for a ring
+ *   marker, so its content reads on any background, and the on-marker color for a
+ *   filled one.
  * @param content optional centered content.
  */
 @Composable
@@ -307,7 +309,7 @@ public fun JengaTimelineMarker(
     style: JengaTimelineMarkerStyle = JengaTimelineMarkerStyle.Filled,
     size: Dp = JengaTimelineDefaults.MarkerSize,
     ringWidth: Dp = JengaTimelineDefaults.RingWidth,
-    contentColor: Color = JengaTimelineDefaults.colors().onMarker,
+    contentColor: Color = if (style == JengaTimelineMarkerStyle.Ring) color else JengaTimelineDefaults.colors().onMarker,
     content: (@Composable () -> Unit)? = null,
 ) {
     val shape = JengaTheme.shapes.pill

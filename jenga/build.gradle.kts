@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.8.4-SNAPSHOT"
+version = "0.8.4"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -62,6 +62,7 @@ kotlin {
             api(compose.ui)
             @Suppress("DEPRECATION")
             api(compose.uiUtil)
+            implementation(libs.compose.ui.backhandler)
             // LocalDate, YearMonth, DayOfWeek and Month appear in the calendar and
             // date-picker signatures.
             api(libs.kotlinx.datetime)
@@ -139,6 +140,8 @@ android {
                 it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
                 // Every preview renders in one Robolectric JVM; the 512m default runs out.
                 it.maxHeapSize = "2g"
+                it.inputs.file(rootProject.file("README.md"))
+                it.inputs.dir(rootProject.file("catalog/src/commonMain"))
             }
         }
     }

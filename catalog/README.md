@@ -58,3 +58,6 @@ The catalog is itself screenshot-tested on the Android target (Roborazzi). Recor
 ./gradlew :catalog:recordRoborazziDebug
 ./gradlew :catalog:verifyRoborazziDebug
 ```
+
+The components gallery screenshot is a fixed 4250dp tall, so it covers the first groups only.
+Every component also has its own light, dark, large-font and RTL screenshots in the library.
