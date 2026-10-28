@@ -8,6 +8,8 @@
  * New: `JengaDatePicker` and `JengaDatePickerDialog` take `yearPickerLabel`; when set, tapping the month title opens a grid of years.
  * New: `JengaStepIndicator`, a horizontal row of steps (done, current, pending, locked) joined by lines, with `JengaStep`, `JengaStepState` and `JengaStepIndicatorColors`.
  * New: `JengaTimeInput` and `JengaTimePickerDialog` for entering a time with scroll wheels (hour and minute loop) or typed fields, in 12- or 24-hour mode.
+ * New: `JengaCaptureFrame`, a capture guide over a camera preview (oval or rectangle at an aspect ratio) with a ready color and hold progress, and `JengaShutterButton`.
+ * New: `JengaImageViewer` overload with pages: swipe between images, each zoomed on its own, with a bottom bar that can move to any page.
  * Fix: `JengaBottomSheet` no longer calls `onDismissRequest` on Back when the sheet did not close.
 
 ## Version 0.8.3

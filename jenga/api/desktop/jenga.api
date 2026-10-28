@@ -424,6 +424,67 @@ public final class io/github/joelkanyi/jenga/component/calendar/JengaDatePickerK
 	public static final fun JengaDatePicker (Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/ClosedRange;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarState;Lkotlin/jvm/functions/Function1;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarColors;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 }
 
+public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors;
+	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorder-0d7_KjU ()J
+	public final fun getProgress-0d7_KjU ()J
+	public final fun getReadyBorder-0d7_KjU ()J
+	public final fun getScrim-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureFrameDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameDefaults;
+	public static final field OvalAspectRatio F
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors;
+	public final fun getBorderWidth-D9Ej5fM ()F
+	public final fun getCornerRadius-D9Ej5fM ()F
+	public final fun getProgressWidth-D9Ej5fM ()F
+	public final fun getReadyBorderWidth-D9Ej5fM ()F
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureFrameKt {
+	public static final fun JengaCaptureFrame (Lio/github/joelkanyi/jenga/component/camera/JengaCaptureShape;Landroidx/compose/ui/Modifier;ZLjava/lang/Float;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class io/github/joelkanyi/jenga/component/camera/JengaCaptureShape {
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureShape$Oval : io/github/joelkanyi/jenga/component/camera/JengaCaptureShape {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/camera/JengaCaptureShape$Oval;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureShape$Rectangle : io/github/joelkanyi/jenga/component/camera/JengaCaptureShape {
+	public static final field $stable I
+	public fun <init> (F)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAspectRatio ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaShutterButtonDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/camera/JengaShutterButtonDefaults;
+	public final fun getDiscSize-D9Ej5fM ()F
+	public final fun getRingWidth-D9Ej5fM ()F
+	public final fun getSize-D9Ej5fM ()F
+}
+
+public final class io/github/joelkanyi/jenga/component/camera/JengaShutterButtonKt {
+	public static final fun JengaShutterButton (Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZLandroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/card/JengaCardColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1346,6 +1407,8 @@ public final class io/github/joelkanyi/jenga/component/media/ComposableSingleton
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/media/ComposableSingletons$JengaImageViewerKt;
 	public fun <init> ()V
 	public final fun getLambda$-1767910608$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-2115860698$jenga ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda$167296204$jenga ()Lkotlin/jvm/functions/Function4;
 	public final fun getLambda$450484031$jenga ()Lkotlin/jvm/functions/Function3;
 }
 
@@ -1371,6 +1434,7 @@ public final class io/github/joelkanyi/jenga/component/media/JengaImageViewerDef
 }
 
 public final class io/github/joelkanyi/jenga/component/media/JengaImageViewerKt {
+	public static final fun JengaImageViewer (ILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;ILkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/media/JengaImageViewerColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 	public static final fun JengaImageViewer (Lkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/media/JengaImageViewerColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 

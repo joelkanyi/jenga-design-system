@@ -4,6 +4,7 @@ package io.github.joelkanyi.jenga.samples
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -32,6 +33,9 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
+import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
+import io.github.joelkanyi.jenga.component.camera.JengaShutterButton
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
@@ -903,5 +907,36 @@ internal fun JengaTimePickerDialogSample() {
             amLabel = "AM",
             pmLabel = "PM",
         )
+    }
+}
+
+@Composable
+internal fun JengaCaptureFrameSample() {
+    JengaCaptureFrame(
+        shape = JengaCaptureShape.Rectangle(aspectRatio = 1.586f),
+        modifier = Modifier.fillMaxSize(),
+        ready = false,
+        holdProgress = 0.4f,
+    )
+}
+
+@Composable
+internal fun JengaShutterButtonSample() {
+    JengaShutterButton(onClick = {}, contentDescription = "Take photo")
+}
+
+@Composable
+internal fun JengaImageViewerPagesSample() {
+    val urls = listOf("https://example.com/1.jpg", "https://example.com/2.jpg")
+    var open by remember { mutableStateOf(true) }
+    if (open) {
+        JengaImageViewer(
+            pageCount = urls.size,
+            onDismissRequest = { open = false },
+            title = { page -> "Photo ${page + 1} of ${urls.size}" },
+            closeContentDescription = "Close",
+        ) { page ->
+            JengaImage(url = urls[page], contentDescription = null, fit = JengaImageFit.Contain)
+        }
     }
 }

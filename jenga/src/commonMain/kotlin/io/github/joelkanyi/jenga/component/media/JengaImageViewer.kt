@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -22,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +44,7 @@ import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
+import kotlinx.coroutines.launch
 
 /** Resolved colors for a [JengaImageViewer]. Override via [JengaImageViewerDefaults.colors]. */
 @Poko
@@ -141,66 +145,141 @@ internal fun JengaImageViewerContent(
             .background(colors.container)
             .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
-        CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = JengaTheme.spacing.xs),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
-            ) {
-                JengaIconButton(onClick = onClose, variant = JengaIconButtonVariant.Overlay) {
-                    JengaIcon(JengaTheme.icons.close, contentDescription = closeContentDescription)
-                }
-                JengaText(
-                    text = title,
-                    style = titleStyle,
-                    color = colors.content,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                actions()
-            }
-        }
+        ViewerTopBar(onClose, title, closeContentDescription, titleStyle, colors, actions)
         ZoomableBox(maxScale = maxScale, modifier = Modifier.weight(1f).fillMaxWidth(), content = content)
+    }
+}
+
+/**
+ * A full-screen viewer for several images: swipe sideways between [pageCount]
+ * pages, each pinch-zoomed on its own. Pages swipe only while the current page is
+ * not zoomed in, and a page's zoom resets when it leaves the screen. Pressing back
+ * or the close button calls [onDismissRequest].
+ *
+ * Control visibility by conditional composition.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaImageViewerPagesSample
+ *
+ * @param pageCount the number of pages.
+ * @param onDismissRequest called when the viewer should close.
+ * @param title the title for a page (e.g. "Photo 2 of 3").
+ * @param closeContentDescription accessibility label for the close button.
+ * @param modifier the [Modifier] for the viewer.
+ * @param initialPage the page shown first.
+ * @param actions trailing actions in the top row for the shown page.
+ * @param bottomBar content under the pages (e.g. a strip of thumbnails), given the
+ *   shown page and a function that moves to another page.
+ * @param titleStyle the title text style.
+ * @param maxScale the largest zoom factor; at least 1.
+ * @param colors the color set; defaults to [JengaImageViewerDefaults.colors].
+ * @param pageContent the image for a page.
+ */
+@Composable
+public fun JengaImageViewer(
+    pageCount: Int,
+    onDismissRequest: () -> Unit,
+    title: (page: Int) -> String,
+    closeContentDescription: String,
+    modifier: Modifier = Modifier,
+    initialPage: Int = 0,
+    actions: @Composable RowScope.(page: Int) -> Unit = {},
+    bottomBar: @Composable (page: Int, goToPage: (Int) -> Unit) -> Unit = { _, _ -> },
+    titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
+    maxScale: Float = JengaImageViewerDefaults.MaxScale,
+    colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    pageContent: @Composable (page: Int) -> Unit,
+) {
+    require(maxScale >= 1f) { "maxScale must be at least 1" }
+    val pagerState = rememberPagerState(initialPage = initialPage) { pageCount }
+    val scope = rememberCoroutineScope()
+    val page = pagerState.currentPage
+    JengaFullWindowPopup(onDismissRequest = onDismissRequest) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colors.container)
+                .windowInsetsPadding(WindowInsets.safeDrawing),
+        ) {
+            ViewerTopBar(onDismissRequest, title(page), closeContentDescription, titleStyle, colors) { actions(page) }
+            HorizontalPager(state = pagerState, modifier = Modifier.weight(1f).fillMaxWidth()) { shown ->
+                ZoomableBox(maxScale = maxScale, modifier = Modifier.fillMaxSize()) { pageContent(shown) }
+            }
+            bottomBar(page) { target -> scope.launch { pagerState.animateScrollToPage(target) } }
+        }
+    }
+}
+
+@Composable
+private fun ViewerTopBar(
+    onClose: () -> Unit,
+    title: String,
+    closeContentDescription: String,
+    titleStyle: TextStyle,
+    colors: JengaImageViewerColors,
+    actions: @Composable RowScope.() -> Unit,
+) {
+    CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = JengaTheme.spacing.xs),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
+        ) {
+            JengaIconButton(onClick = onClose, variant = JengaIconButtonVariant.Overlay) {
+                JengaIcon(JengaTheme.icons.close, contentDescription = closeContentDescription)
+            }
+            JengaText(
+                text = title,
+                style = titleStyle,
+                color = colors.content,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            actions()
+        }
     }
 }
 
 @Composable
 private fun ZoomableBox(maxScale: Float, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    var scale by remember { mutableFloatStateOf(1f) }
-    var offset by remember { mutableStateOf(Offset.Zero) }
-    var size by remember { mutableStateOf(IntSize.Zero) }
-    fun clamp(raw: Offset, atScale: Float): Offset {
-        val maxX = size.width * (atScale - 1f) / 2f
-        val maxY = size.height * (atScale - 1f) / 2f
-        return Offset(raw.x.coerceIn(-maxX, maxX), raw.y.coerceIn(-maxY, maxY))
-    }
-    val transformState = rememberTransformableState { zoomChange, panChange, _ ->
-        scale = (scale * zoomChange).coerceIn(1f, maxScale)
-        offset = clamp(offset + panChange, scale)
-    }
+    val zoom = remember(maxScale) { ZoomState(maxScale) }
+    val transformState = rememberTransformableState { zoomChange, panChange, _ -> zoom.transform(zoomChange, panChange) }
     Box(
         modifier = modifier
-            .onSizeChanged { size = it }
-            .pointerInput(maxScale) {
-                detectTapGestures(
-                    onDoubleTap = {
-                        scale = if (scale > 1f) 1f else JengaImageViewerDefaults.DoubleTapScale.coerceAtMost(maxScale)
-                        offset = Offset.Zero
-                    },
-                )
-            }
-            .transformable(transformState)
+            .onSizeChanged { zoom.size = it }
+            .pointerInput(zoom) { detectTapGestures(onDoubleTap = { zoom.toggle() }) }
+            .transformable(transformState, canPan = { zoom.scale > 1f })
             .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-                translationX = offset.x
-                translationY = offset.y
+                scaleX = zoom.scale
+                scaleY = zoom.scale
+                translationX = zoom.offset.x
+                translationY = zoom.offset.y
             },
         contentAlignment = Alignment.Center,
     ) {
         content()
+    }
+}
+
+internal class ZoomState(private val maxScale: Float) {
+    var scale by mutableFloatStateOf(1f)
+        private set
+    var offset by mutableStateOf(Offset.Zero)
+        private set
+    var size: IntSize = IntSize.Zero
+
+    fun transform(zoomChange: Float, panChange: Offset) {
+        scale = (scale * zoomChange).coerceIn(1f, maxScale)
+        val maxX = size.width * (scale - 1f) / 2f
+        val maxY = size.height * (scale - 1f) / 2f
+        val moved = offset + panChange
+        offset = Offset(moved.x.coerceIn(-maxX, maxX), moved.y.coerceIn(-maxY, maxY))
+    }
+
+    fun toggle() {
+        scale = if (scale > 1f) 1f else JengaImageViewerDefaults.DoubleTapScale.coerceAtMost(maxScale)
+        offset = Offset.Zero
     }
 }
