@@ -23,6 +23,7 @@ import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.tabs.JengaTabs
+import io.github.joelkanyi.jenga.component.tabs.JengaTabsArrangement
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -70,6 +71,7 @@ fun CatalogScreen(
             tabs = surfaces,
             onSelect = { surface = it },
             modifier = Modifier.padding(horizontal = JengaTheme.spacing.xl),
+            arrangement = JengaTabsArrangement.Start,
         )
         Box(modifier = Modifier.weight(1f)) {
             when (surface) {

@@ -1,9 +1,11 @@
 package io.github.joelkanyi.jenga.component.timeline
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -38,5 +40,26 @@ class JengaTimelineSlotsTest {
         }
         compose.onNodeWithText("1").assertExists()
         compose.onNodeWithText("Visit the customer").assertExists()
+    }
+
+    @Test
+    fun ringMarkerContentTakesTheRingColorAndFilledTakesOnMarker() {
+        var ringContent = Color.Unspecified
+        var filledContent = Color.Unspecified
+        var onMarker = Color.Unspecified
+        compose.setContent {
+            JengaTheme {
+                onMarker = JengaTimelineDefaults.colors().onMarker
+                JengaTimelineMarker(color = Color.Red, style = JengaTimelineMarkerStyle.Ring) {
+                    ringContent = LocalJengaContentColor.current
+                }
+                JengaTimelineMarker(color = Color.Red) {
+                    filledContent = LocalJengaContentColor.current
+                }
+            }
+        }
+        compose.waitForIdle()
+        assertEquals(Color.Red, ringContent)
+        assertEquals(onMarker, filledContent)
     }
 }
