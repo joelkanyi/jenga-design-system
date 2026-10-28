@@ -301,6 +301,19 @@ final enum class io.github.joelkanyi.jenga.component.stat/JengaStatTone : kotlin
     final fun values(): kotlin/Array<io.github.joelkanyi.jenga.component.stat/JengaStatTone> // io.github.joelkanyi.jenga.component.stat/JengaStatTone.values|values#static(){}[0]
 }
 
+final enum class io.github.joelkanyi.jenga.component.stepindicator/JengaStepState : kotlin/Enum<io.github.joelkanyi.jenga.component.stepindicator/JengaStepState> { // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState|null[0]
+    enum entry Current // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.Current|null[0]
+    enum entry Done // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.Done|null[0]
+    enum entry Locked // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.Locked|null[0]
+    enum entry Pending // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.Pending|null[0]
+
+    final val entries // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.joelkanyi.jenga.component.stepindicator/JengaStepState> // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.joelkanyi.jenga.component.stepindicator/JengaStepState // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.joelkanyi.jenga.component.stepindicator/JengaStepState> // io.github.joelkanyi.jenga.component.stepindicator/JengaStepState.values|values#static(){}[0]
+}
+
 final enum class io.github.joelkanyi.jenga.component.swipe/JengaSwipeDirection : kotlin/Enum<io.github.joelkanyi.jenga.component.swipe/JengaSwipeDirection> { // io.github.joelkanyi.jenga.component.swipe/JengaSwipeDirection|null[0]
     enum entry Both // io.github.joelkanyi.jenga.component.swipe/JengaSwipeDirection.Both|null[0]
     enum entry EndToStart // io.github.joelkanyi.jenga.component.swipe/JengaSwipeDirection.EndToStart|null[0]
@@ -1896,6 +1909,41 @@ final class io.github.joelkanyi.jenga.component.status/JengaStatusPillStyle { //
     final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.status/JengaStatusPillStyle.toString|toString(){}[0]
 }
 
+final class io.github.joelkanyi.jenga.component.stepindicator/JengaStep { // io.github.joelkanyi.jenga.component.stepindicator/JengaStep|null[0]
+    constructor <init>(kotlin/String, io.github.joelkanyi.jenga.component.stepindicator/JengaStepState) // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.<init>|<init>(kotlin.String;io.github.joelkanyi.jenga.component.stepindicator.JengaStepState){}[0]
+
+    final val label // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.label|{}label[0]
+        final fun <get-label>(): kotlin/String // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.label.<get-label>|<get-label>(){}[0]
+    final val state // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.state|{}state[0]
+        final fun <get-state>(): io.github.joelkanyi.jenga.component.stepindicator/JengaStepState // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.state.<get-state>|<get-state>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.stepindicator/JengaStep.toString|toString(){}[0]
+}
+
+final class io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors { // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors|null[0]
+    constructor <init>(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color) // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.<init>|<init>(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+
+    final val active // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.active|{}active[0]
+        final fun <get-active>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.active.<get-active>|<get-active>(){}[0]
+    final val currentLabel // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.currentLabel|{}currentLabel[0]
+        final fun <get-currentLabel>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.currentLabel.<get-currentLabel>|<get-currentLabel>(){}[0]
+    final val label // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.label|{}label[0]
+        final fun <get-label>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.label.<get-label>|<get-label>(){}[0]
+    final val line // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.line|{}line[0]
+        final fun <get-line>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.line.<get-line>|<get-line>(){}[0]
+    final val onActive // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.onActive|{}onActive[0]
+        final fun <get-onActive>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.onActive.<get-onActive>|<get-onActive>(){}[0]
+    final val pending // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.pending|{}pending[0]
+        final fun <get-pending>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.pending.<get-pending>|<get-pending>(){}[0]
+
+    final fun copy(androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ...): io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.copy|copy(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors.toString|toString(){}[0]
+}
+
 final class io.github.joelkanyi.jenga.component.stepper/JengaStepperColors { // io.github.joelkanyi.jenga.component.stepper/JengaStepperColors|null[0]
     constructor <init>(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color) // io.github.joelkanyi.jenga.component.stepper/JengaStepperColors.<init>|<init>(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
 
@@ -3396,6 +3444,15 @@ final object io.github.joelkanyi.jenga.component.status/JengaStatusPillDefaults 
     final fun colors(io.github.joelkanyi.jenga.component.badge/JengaBadgeTone, androidx.compose.runtime/Composer?, kotlin/Int): io.github.joelkanyi.jenga.component.status/JengaStatusPillColors // io.github.joelkanyi.jenga.component.status/JengaStatusPillDefaults.colors|colors(io.github.joelkanyi.jenga.component.badge.JengaBadgeTone;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 }
 
+final object io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults { // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults|null[0]
+    final val ColumnWidth // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults.ColumnWidth|{}ColumnWidth[0]
+        final fun <get-ColumnWidth>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults.ColumnWidth.<get-ColumnWidth>|<get-ColumnWidth>(){}[0]
+    final val NodeSize // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults.NodeSize|{}NodeSize[0]
+        final fun <get-NodeSize>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults.NodeSize.<get-NodeSize>|<get-NodeSize>(){}[0]
+
+    final fun colors(androidx.compose.runtime/Composer?, kotlin/Int): io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorDefaults.colors|colors(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
 final object io.github.joelkanyi.jenga.component.stepper/JengaStepperDefaults { // io.github.joelkanyi.jenga.component.stepper/JengaStepperDefaults|null[0]
     final val ButtonSize // io.github.joelkanyi.jenga.component.stepper/JengaStepperDefaults.ButtonSize|{}ButtonSize[0]
         final fun <get-ButtonSize>(): androidx.compose.ui.unit/Dp // io.github.joelkanyi.jenga.component.stepper/JengaStepperDefaults.ButtonSize.<get-ButtonSize>|<get-ButtonSize>(){}[0]
@@ -3681,6 +3738,9 @@ final val io.github.joelkanyi.jenga.component.state/io_github_joelkanyi_jenga_co
 final val io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop|#static{}io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop[0]
 final val io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop|#static{}io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop[0]
+final val io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop|#static{}io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop[0]
+final val io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop|#static{}io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop[0]
+final val io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop // io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop|#static{}io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop[0]
 final val io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop // io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperStyle$stableprop // io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperStyle$stableprop|#static{}io_github_joelkanyi_jenga_component_stepper_JengaStepperStyle$stableprop[0]
@@ -3971,6 +4031,10 @@ final fun io.github.joelkanyi.jenga.component.status/JengaStatusPill(kotlin/Stri
 final fun io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop_getter|io_github_joelkanyi_jenga_component_status_JengaStatusPillColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_status_JengaStatusPillDefaults$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.status/io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop_getter|io_github_joelkanyi_jenga_component_status_JengaStatusPillStyle$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicator(kotlin.collections/List<io.github.joelkanyi.jenga.component.stepindicator/JengaStep>, kotlin/Function2<kotlin/Int, io.github.joelkanyi.jenga.component.stepindicator/JengaStep, kotlin/String>, androidx.compose.ui/Modifier?, kotlin/Function1<kotlin/Int, kotlin/Unit>?, io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicatorColors?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.stepindicator/JengaStepIndicator|JengaStepIndicator(kotlin.collections.List<io.github.joelkanyi.jenga.component.stepindicator.JengaStep>;kotlin.Function2<kotlin.Int,io.github.joelkanyi.jenga.component.stepindicator.JengaStep,kotlin.String>;androidx.compose.ui.Modifier?;kotlin.Function1<kotlin.Int,kotlin.Unit>?;io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorColors?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop_getter|io_github_joelkanyi_jenga_component_stepindicator_JengaStep$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop_getter|io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorColors$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.stepindicator/io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_stepindicator_JengaStepIndicatorDefaults$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.stepper/JengaStepper(kotlin/Int, kotlin/Function1<kotlin/Int, kotlin/Unit>, androidx.compose.ui/Modifier?, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Boolean, kotlin/String?, kotlin/String?, kotlin/Function1<kotlin/Int, kotlin/String>?, io.github.joelkanyi.jenga.component.stepper/JengaStepperColors?, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, kotlin/String?, androidx.compose.ui.graphics/Shape?, androidx.compose.ui.graphics/Shape?, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.unit/Dp, androidx.compose.ui.text/TextStyle?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.stepper/JengaStepper|JengaStepper(kotlin.Int;kotlin.Function1<kotlin.Int,kotlin.Unit>;androidx.compose.ui.Modifier?;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Boolean;kotlin.String?;kotlin.String?;kotlin.Function1<kotlin.Int,kotlin.String>?;io.github.joelkanyi.jenga.component.stepper.JengaStepperColors?;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;kotlin.String?;androidx.compose.ui.graphics.Shape?;androidx.compose.ui.graphics.Shape?;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.unit.Dp;androidx.compose.ui.text.TextStyle?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop_getter|io_github_joelkanyi_jenga_component_stepper_JengaStepperColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.stepper/io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_stepper_JengaStepperDefaults$stableprop_getter(){}[0]

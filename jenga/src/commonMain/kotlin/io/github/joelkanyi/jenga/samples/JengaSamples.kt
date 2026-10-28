@@ -106,6 +106,9 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
@@ -852,5 +855,18 @@ internal fun JengaOtpVerificationSample() {
                 resendText = "Resend code",
             )
         },
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorSample() {
+    val steps = listOf(
+        JengaStep("Details", JengaStepState.Done),
+        JengaStep("Choices", JengaStepState.Current),
+        JengaStep("Review", JengaStepState.Pending),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
     )
 }
