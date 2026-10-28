@@ -33,8 +33,8 @@ private fun JengaDatePickerShowcase() {
     JengaDatePicker(
         selectedDate = LocalDate(2026, 3, 18),
         onSelectedDateChange = {},
-        monthTitle = { "${it.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${it.year}" },
-        dayOfWeekLabel = { it.name.take(2).lowercase().replaceFirstChar(Char::uppercase) },
+        monthTitle = ::previewMonthTitle,
+        dayOfWeekLabel = ::previewDayLabel,
         previousMonthContentDescription = "Previous month",
         nextMonthContentDescription = "Next month",
         modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
@@ -43,3 +43,26 @@ private fun JengaDatePickerShowcase() {
         today = LocalDate(2026, 3, 14),
     )
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaDatePickerDateOfBirthPreview() {
+    JengaTheme {
+        JengaDatePicker(
+            selectedDate = LocalDate(1990, 10, 12),
+            onSelectedDateChange = {},
+            monthTitle = ::previewMonthTitle,
+            dayOfWeekLabel = ::previewDayLabel,
+            previousMonthContentDescription = "Previous month",
+            nextMonthContentDescription = "Next month",
+            modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
+            dateRange = LocalDate(1906, 1, 1)..LocalDate(2008, 10, 28),
+            today = LocalDate(2026, 10, 28),
+            yearPickerLabel = { "Choose year, ${it.month} ${it.year}" },
+        )
+    }
+}
+
+private fun previewMonthTitle(month: YearMonth): String = "${month.month.name.lowercase().replaceFirstChar(Char::uppercase)} ${month.year}"
+
+private fun previewDayLabel(day: DayOfWeek): String = day.name.take(2).lowercase().replaceFirstChar(Char::uppercase)

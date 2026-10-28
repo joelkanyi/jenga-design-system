@@ -43,6 +43,8 @@ import kotlinx.datetime.YearMonth
  * @param isSelectable whether a date can be picked.
  * @param dateContentDescription accessibility label for a day cell; the ISO date by default.
  * @param colors the color set; defaults to [JengaCalendarDefaults.colors].
+ * @param dateRange the earliest and latest dates that can be picked; see [JengaDatePicker].
+ * @param yearPickerLabel when set, the month title opens a grid of years; see [JengaDatePicker].
  */
 @Composable
 public fun JengaDatePickerDialog(
@@ -59,15 +61,13 @@ public fun JengaDatePickerDialog(
     isSelectable: (LocalDate) -> Boolean = { true },
     dateContentDescription: (LocalDate) -> String = { it.toString() },
     colors: JengaCalendarColors = JengaCalendarDefaults.colors(),
+    dateRange: ClosedRange<LocalDate>? = null,
+    yearPickerLabel: ((YearMonth) -> String)? = null,
 ) {
     var selected by remember { mutableStateOf(initialSelectedDate) }
     Dialog(onDismissRequest = onDismissRequest) {
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .clip(JengaDialogDefaults.shape)
-                .background(JengaDialogDefaults.colors().container)
-                .padding(JengaTheme.spacing.lg),
+            modifier = modifier.dialogCard(),
             verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
         ) {
             JengaDatePicker(
@@ -80,24 +80,85 @@ public fun JengaDatePickerDialog(
                 isSelectable = isSelectable,
                 dateContentDescription = dateContentDescription,
                 colors = colors,
+                dateRange = dateRange,
+                yearPickerLabel = yearPickerLabel,
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm, Alignment.End),
-            ) {
-                JengaButton(
-                    text = dismissLabel,
-                    onClick = onDismissRequest,
-                    variant = JengaButtonVariant.Ghost,
-                    size = JengaButtonSize.Small,
-                )
-                JengaButton(
-                    text = confirmLabel,
-                    onClick = { selected?.let(onConfirm) },
-                    size = JengaButtonSize.Small,
-                    enabled = selected != null,
-                )
-            }
+            DialogActions(
+                confirmLabel = confirmLabel,
+                dismissLabel = dismissLabel,
+                confirmEnabled = selected != null,
+                onConfirm = { selected?.let(onConfirm) },
+                onDismiss = onDismissRequest,
+            )
         }
     }
+}
+
+@Composable
+private fun Modifier.dialogCard(): Modifier = fillMaxWidth()
+    .clip(JengaDialogDefaults.shape)
+    .background(JengaDialogDefaults.colors().container)
+    .padding(JengaTheme.spacing.lg)
+
+@Composable
+private fun DialogActions(
+    confirmLabel: String,
+    dismissLabel: String,
+    confirmEnabled: Boolean,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm, Alignment.End),
+    ) {
+        JengaButton(
+            text = dismissLabel,
+            onClick = onDismiss,
+            variant = JengaButtonVariant.Ghost,
+            size = JengaButtonSize.Small,
+        )
+        JengaButton(
+            text = confirmLabel,
+            onClick = onConfirm,
+            size = JengaButtonSize.Small,
+            enabled = confirmEnabled,
+        )
+    }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaDatePickerDialog(
+    onDismissRequest: () -> Unit,
+    onConfirm: (LocalDate) -> Unit,
+    confirmLabel: String,
+    dismissLabel: String,
+    monthTitle: (YearMonth) -> String,
+    dayOfWeekLabel: (DayOfWeek) -> String,
+    previousMonthContentDescription: String,
+    nextMonthContentDescription: String,
+    modifier: Modifier = Modifier,
+    initialSelectedDate: LocalDate? = null,
+    isSelectable: (LocalDate) -> Boolean = { true },
+    dateContentDescription: (LocalDate) -> String = { it.toString() },
+    colors: JengaCalendarColors = JengaCalendarDefaults.colors(),
+) {
+    JengaDatePickerDialog(
+        onDismissRequest = onDismissRequest,
+        onConfirm = onConfirm,
+        confirmLabel = confirmLabel,
+        dismissLabel = dismissLabel,
+        monthTitle = monthTitle,
+        dayOfWeekLabel = dayOfWeekLabel,
+        previousMonthContentDescription = previousMonthContentDescription,
+        nextMonthContentDescription = nextMonthContentDescription,
+        modifier = modifier,
+        initialSelectedDate = initialSelectedDate,
+        isSelectable = isSelectable,
+        dateContentDescription = dateContentDescription,
+        colors = colors,
+        dateRange = null,
+        yearPickerLabel = null,
+    )
 }
